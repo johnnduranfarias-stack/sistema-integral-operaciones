@@ -1,0 +1,237 @@
+﻿[
+    {
+        "code":  1,
+        "name":  "Falta de montacarga",
+        "description":  "No se previnieron los montacargas necesarios en producción / daño de montacargas."
+    },
+    {
+        "code":  2,
+        "name":  "Falta de materia prima / Planificación",
+        "description":  "Se planificó sin materia prima en producción, o se dañó alguna para a la mezcla."
+    },
+    {
+        "code":  3,
+        "name":  "Falta de personal",
+        "description":  "No hay personal sufiiente para la producción del día, por inasistencia o no se ha completado el personal para dicha línea de producción."
+    },
+    {
+        "code":  4,
+        "name":  "Mantenimiento preventivo",
+        "description":  "Mantenimiento previsto a realizar."
+    },
+    {
+        "code":  5,
+        "name":  "Mantenimieto correctivo",
+        "description":  "Mantenimiento no previsto, surgio en el instante."
+    },
+    {
+        "code":  6,
+        "name":  "Parqueo de camion",
+        "description":  "Salida y entrada de vehículos para la carga en línea."
+    },
+    {
+        "code":  7,
+        "name":  "Falta de pallets",
+        "description":  "No hay pallets para la operación dl día."
+    },
+    {
+        "code":  8,
+        "name":  "Materia prima compactada",
+        "description":  "Materia prima en mal estado."
+    },
+    {
+        "code":  9,
+        "name":  "Mantenimiento correctivo cosedora",
+        "description":  "Cosedora en reparación en mal estado."
+    },
+    {
+        "code":  10,
+        "name":  "Mantenimiento correctivo ensacadora.",
+        "description":  "Ensacadora en reparación en mal estado."
+    },
+    {
+        "code":  11,
+        "name":  "Calibracion máquinas",
+        "description":  "Por inicio de jornada, preparación de pesos."
+    },
+    {
+        "code":  12,
+        "name":  "falta de formula / programado sin código.",
+        "description":  "Programación incompleta, retraso en entrega de formula."
+    },
+    {
+        "code":  13,
+        "name":  "falta de etiquetas",
+        "description":  "Retraso o no hay etiquetas para despacho."
+    },
+    {
+        "code":  14,
+        "name":  "falta de payloder / gallinetas.",
+        "description":  "No se previnieron las gallinetas necesarias en producción / o hubo un daño en las gallinetas."
+    },
+    {
+        "code":  15,
+        "name":  "Dosificacion lenta por # componentes.",
+        "description":  "Numero de componentes mayores a 6 unidades por dosificación."
+    },
+    {
+        "code":  16,
+        "name":  "Falta de aprobación para despacho.",
+        "description":  "No está aprobado por credito."
+    },
+    {
+        "code":  17,
+        "name":  "Inducción planificada.",
+        "description":  "Inducción que se planificó tener día indicado."
+    },
+    {
+        "code":  18,
+        "name":  "Mantenimiento correctivo en bandas.",
+        "description":  "Daño en las bandas de la línea."
+    },
+    {
+        "code":  19,
+        "name":  "Falta de transporte cliente",
+        "description":  "No llega el transporte de los clientes para cargar."
+    },
+    {
+        "code":  20,
+        "name":  "Cambio siguiente producción",
+        "description":  "Se pasa a la siguiente mezcla o despacho."
+    },
+    {
+        "code":  21,
+        "name":  "Falta de Sacos Vacios / entrega en línea",
+        "description":  "Si hay sacos vacíos, entrega lenta de bodega."
+    },
+    {
+        "code":  22,
+        "name":  "Paralización por lluvia / entrega de materia prima.",
+        "description":  "Si hay componentes pero están afuera, por lluvia no se puede mover a bodega."
+    },
+    {
+        "code":  23,
+        "name":  "Hora de almuerzo",
+        "description":  "Hora reglamentaria de almuerzo."
+    },
+    {
+        "code":  24,
+        "name":  "Actividades fuera de producción",
+        "description":  "Actividades independientes de producción."
+    },
+    {
+        "code":  25,
+        "name":  "Preparación de equipos y limpieza",
+        "description":  "Inicio de actividades en producción y despacho, preparación de balanzas de piso, ensacadora, cosedora."
+    },
+    {
+        "code":  26,
+        "name":  "Falta de hilo",
+        "description":  "Se terminó el hilo para producir."
+    },
+    {
+        "code":  27,
+        "name":  "Producto no planificado",
+        "description":  "Producto fuera de planificación."
+    },
+    {
+        "code":  28,
+        "name":  "Distancia Producto Granel",
+        "description":  "Por espacios el producto no se encuentra estrategicamente ubicado."
+    },
+    {
+        "code":  29,
+        "name":  "Meriendas",
+        "description":  "Meriendas."
+    },
+    {
+        "code":  30,
+        "name":  "Produccion solo Montacargas",
+        "description":  "Producción muy lenta por uso de montcargas."
+    },
+    {
+        "code":  31,
+        "name":  "Cambio de Carga del Cliente",
+        "description":  "Cambio de lo planificado a cargar por parte del cliente."
+    },
+    {
+        "code":  32,
+        "name":  "Daño de aguja cosedora - cambio",
+        "description":  "Daño en aguja cosedora, por cumplimiento de uso."
+    },
+    {
+        "code":  33,
+        "name":  "Abastecimiento de tolva lenta",
+        "description":  "Producción muy lenta por dosificación."
+    },
+    {
+        "code":  34,
+        "name":  "Falta de energia electrica",
+        "description":  "Fallo, o ausencia de energía eléctrica."
+    },
+    {
+        "code":  35,
+        "name":  "Variación y calibración de pesos",
+        "description":  "Daño constante en el control de pesaje de la ensacadora."
+    },
+    {
+        "code":  36,
+        "name":  "Falta de materia prima / demora en entrega",
+        "description":  "Montacarga lento en maniobra."
+    },
+    {
+        "code":  37,
+        "name":  "Calibración Inicial",
+        "description":  "Calibración para inicio de producción."
+    },
+    {
+        "code":  38,
+        "name":  "Mantenimiento correctivo en sistema de pesaje.",
+        "description":  "Daños generales en basculas de piso, sistema de pesaje de mezclador o bascula para interquimec."
+    },
+    {
+        "code":  39,
+        "name":  "Mantenimiento correctivo mezclador",
+        "description":  "Daño estructural en mezclador de tolvas Mixer."
+    },
+    {
+        "code":  40,
+        "name":  "Demora por materia prima compactada.",
+        "description":  "Materia prima en mal estado."
+    },
+    {
+        "code":  41,
+        "name":  "Inducción no planificada.",
+        "description":  "Inducción que no se planificó, se presento imprevisto."
+    },
+    {
+        "code":  42,
+        "name":  "Falta de transporte Ferpacific",
+        "description":  "No hay transporte para despacho o transferencia donde Ferpacific pone el transporte."
+    },
+    {
+        "code":  43,
+        "name":  "Cambio sin limpieza / siguiente producto.",
+        "description":  "Cambio a la siguiente producción donde no se hace limpieza y el tiempo entre producto es menor."
+    },
+    {
+        "code":  44,
+        "name":  "Cambio con limpieza / siguiente producto.",
+        "description":  "Cambio a la siguiente producción donde si se hace limpieza y el tiempo entre producto es mayor."
+    },
+    {
+        "code":  45,
+        "name":  "Falta de Big Bags",
+        "description":  "No hay big bags para la producción solicitada."
+    },
+    {
+        "code":  46,
+        "name":  "Falta de Sacos Vacios",
+        "description":  "No se pidieron los sacos vacíos a tiempo para la planificación solicitada."
+    },
+    {
+        "code":  47,
+        "name":  "Retraso orden de entrega",
+        "description":  "Demora en entrega, por falta de información en despacho, o modificación realizada por departamnto de ventas."
+    }
+]
