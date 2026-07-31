@@ -66,6 +66,15 @@
         <div id="login-error" class="error-message hidden">Usuario o contraseña incorrectos</div>
         <button type="submit" id="btn-login" class="btn btn-primary btn-block">Iniciar Sesión</button>
       </form>
+
+      <!-- BOTON DESCARGAR APLICACION PARA CELULAR -->
+      <div class="pwa-install-container" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.12); text-align: center;">
+        <button type="button" id="btn-install-pwa" class="btn-install-mobile" onclick="triggerPWAInstall()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; border-radius: 8px; padding: 11px 16px; font-size: 0.92rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35); transition: all 0.2s ease;">
+          <span style="font-size: 1.25rem;">📱</span>
+          <span>Descargar Aplicación para Celular</span>
+        </button>
+        <p style="font-size: 11px; color: #94a3b8; margin-top: 7px; margin-bottom: 0;">Instala la App Oficial de Ferpacific en tu Android o iPhone</p>
+      </div>
     </div>
   </div>
 
@@ -203,9 +212,6 @@
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#plan-turns" class="submenu-item" id="menu-plan-turns">
-              <span>⏱️</span> Planificación de Turnos
-            </a>
             <a href="#plan-dispatch-details" class="submenu-item" id="menu-plan-dispatch-details">
               <span>📋</span> Detalle Despachos
             </a>
@@ -229,7 +235,10 @@
 
       </nav>
 
-      <div class="sidebar-footer">
+      <div class="sidebar-footer" style="display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" class="btn btn-block" onclick="triggerPWAInstall()" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981; font-weight: 600; font-size: 0.85rem; padding: 8px 12px; display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 6px; cursor: pointer;">
+          <span>📱</span> Instalar App en Celular
+        </button>
         <button id="btn-logout" class="btn btn-outline btn-block">Cerrar Sesión</button>
       </div>
     </aside>
