@@ -1,0 +1,21 @@
+{
+  "name": "Sistema Integral de Operaciones Ferpacific",
+  "short_name": "Ferpacific Ops",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
+  "description": "Sistema de Control de Sacos Vacíos e Inventario Ferpacific",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
