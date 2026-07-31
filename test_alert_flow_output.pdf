@@ -1,0 +1,1161 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R 6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R 20 0 R 22 0 R 24 0 R 26 0 R 28 0 R 30 0 R 32 0 R 34 0 R 36 0 R 38 0 R] /Count 18 >>
+endobj
+3 0 obj
+<< /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 5 0 R >>
+endobj
+5 0 obj
+<< /Length 2553 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+/F1 14 Tf
+(FERPACIFIC - REPORTE DE ALERTAS CRITICAS DE SACOS VACIOS) Tj T*
+/F2 10 Tf
+12 TL
+(Fecha de Emision: 21/6/2026, 11:00:39 p. m.) Tj T*
+(Total de Items en Alerta: 44) Tj T*
+() Tj T*
+/F1 10 Tf
+(=========================================================================) Tj T*
+/F2 10 Tf
+() Tj T*
+/F1 10 Tf
+(1. PRODUCTO: 12.01.01.1088.01 - SACO VACIO LAMINADO SULFATO DE AMONIO  GR 60X90) Tj T*
+/F2 10 Tf
+(   Linea: Tradicionales | Tipo: SIMPLE) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 29.186 ud \(Ferpasur: 20.202 ud, Unica: 8.984 ud\)) Tj T*
+(   Transito: 50.000 ud) Tj T*
+(     Detalle Transito: Interama: 50.000) Tj T*
+(   Proyeccion Ventas Julio 2026: 60.241 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 180.723 ud) Tj T*
+(   Pedido Sugerido: 101.537 ud) Tj T*
+(   Requisicion Manual Registrada: 100.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 15 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 31.055 sacos. Ha) Tj T*
+(                   y 50.000 sacos en transito via Interama \(50.000\). Agilizar entrega con) Tj T*
+(                    urgencia. Requisicion de 100.000 ud insuficiente. Sugerido minimo: 10) Tj T*
+(                   1.537 ud.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(2. PRODUCTO: 12.01.01.1047.01 - SACO VACIO UREA PRILADA CON FUNDA TERMO SELLADA \(60X100\)) Tj T*
+/F2 10 Tf
+(   Linea: Tradicionales | Tipo: SIMPLE) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 22.285 ud \(Ferpasur: 12.143 ud, Unica: 10.142 ud\)) Tj T*
+(   Transito: 104.300 ud) Tj T*
+(     Detalle Transito: Interama: 104.300) Tj T*
+(   Proyeccion Ventas Julio 2026: 41.166 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 123.498 ud) Tj T*
+(   Pedido Sugerido: 0 ud) Tj T*
+(   Requisicion Manual Registrada: 60.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 16 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 18.881 sacos. Ha) Tj T*
+(                   y 104.300 sacos en transito via Interama \(104.300\). Agilizar entrega c) Tj T*
+(                   on urgencia. Requisicion de 60.000 ud es adecuada para mitigar el quie) Tj T*
+(                   bre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 7 0 R >>
+endobj
+7 0 obj
+<< /Length 2647 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+/F1 10 Tf
+(3. PRODUCTO: 12.01.01.1081.01 - SACO BILAMINADO BLANCO FONDO PLANO SUPRAN ACTIVE TAMANO 60X90X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 21.183 ud \(Ferpasur: 20.903 ud, Unica: 280 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 15.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 40.000 ud) Tj T*
+(   Pedido Sugerido: 18.817 ud) Tj T*
+(   Requisicion Manual Registrada: 20.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 43 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 18.817 sacos a 3 meses.) Tj T*
+(                    Requisicion de 20.000 ud excede el sugerido por 1.183 ud \(recomendado) Tj T*
+(                    por seguridad\). Al ser Especialidad, considerar mayor tiempo de entre) Tj T*
+(                   ga.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(4. PRODUCTO: 12.01.01.1124.01 - SACO BLANCO LAMINADO SOLEI NITROS GRAMAJE 75 CON FUNDA TERMO SELLADA 30 MORAS \(60X100\).) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 20.009 ud \(Ferpasur: 19.734 ud, Unica: 275 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 10.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 28.000 ud) Tj T*
+(   Pedido Sugerido: 7.991 ud) Tj T*
+(   Requisicion Manual Registrada: 10.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 62 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 7.991 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 10.000 ud excede el sugerido por 2.009 ud \(recomendado ) Tj T*
+(                   por seguridad\). Al ser Especialidad, considerar mayor tiempo de entreg) Tj T*
+(                   a.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(5. PRODUCTO: 12.01.01.1068.01 - SACO URAM BILAMINADO TRANSPARENTE BRILLANTE FONDO PLANO. TAMANO 60X90X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 18.827 ud \(Ferpasur: 18.704 ud, Unica: 123 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 10.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 28.000 ud) Tj T*
+(   Pedido Sugerido: 9.173 ud) Tj T*
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 9 0 R >>
+endobj
+9 0 obj
+<< /Length 2747 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Requisicion Manual Registrada: 10.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 58 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 9.173 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 10.000 ud excede el sugerido por 827 ud \(recomendado po) Tj T*
+(                   r seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(6. PRODUCTO: 12.01.01.1102.01 - SACO NITRAN BILAMINADO BLANCO BRILLANTE FONDO PLANO 60X96X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 10.058 ud \(Ferpasur: 10.053 ud, Unica: 5 ud\)) Tj T*
+(   Transito: 3.257 ud) Tj T*
+(     Detalle Transito: Sacoplast: 3.257) Tj T*
+(   Proyeccion Ventas Julio 2026: 15.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 35.000 ud) Tj T*
+(   Pedido Sugerido: 21.685 ud) Tj T*
+(   Requisicion Manual Registrada: 25.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 20 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 4.942 sacos. Hay) Tj T*
+(                    3.257 sacos en transito via Sacoplast \(3.257\). Agilizar entrega con u) Tj T*
+(                   rgencia. Requisicion de 25.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(7. PRODUCTO: 12.01.01.1110.01 - SACO VACIO BLANCO SULFATO AMONIO STANDARD CON FUNDA TERMOSELLADA PRESENTACION 50 KG \(60X86\)) Tj T*
+/F2 10 Tf
+(   Linea: Tradicionales | Tipo: SIMPLE) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 9.732 ud \(Ferpasur: 0 ud, Unica: 9.732 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 5.446 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 16.338 ud) Tj T*
+(   Pedido Sugerido: 6.606 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 55 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 6.606 sacos a 3 meses. ) Tj T*
+(                   Sugerido generar orden por 6.606 ud.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(8. PRODUCTO: 12.01.01.1086.01 - SACO VACIO BLANCO LAMINADO CON FUNDA TERMOSELLADA INICIO 16-10-16 / 60*96) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 11 0 R >>
+endobj
+11 0 obj
+<< /Length 2577 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 14.010 ud \(Ferpasur: 210 ud, Unica: 13.800 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 0 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 29.499 ud) Tj T*
+(   Pedido Sugerido: 15.489 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 32 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 15.489 sacos a 3 meses.) Tj T*
+(                    Sugerido generar orden por 15.489 ud. Al ser Especialidad, considerar) Tj T*
+(                    mayor tiempo de entrega.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(9. PRODUCTO: 12.01.01.1091.01 - SACO BILAMINADO TRANSPARENTE FONDO PLANO FERPAMIX TODO CULTIVO TAMANO 60X86X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 9.435 ud \(Ferpasur: 9.185 ud, Unica: 250 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 5.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 15.000 ud) Tj T*
+(   Pedido Sugerido: 5.565 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 58 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 5.565 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 8.000 ud excede el sugerido por 2.435 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(10. PRODUCTO: 12.01.01.1113.01 - SACO FERPAMIX BLANCO LAMINADO CON FUNDA TERMOSELLADA 60X96 GRAMAJE 70) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 1.953 ud \(Ferpasur: 1.953 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 50.000 ud) Tj T*
+(     Detalle Transito: Interama: 50.000) Tj T*
+(   Proyeccion Ventas Julio 2026: 30.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 80.000 ud) Tj T*
+(   Pedido Sugerido: 28.047 ud) Tj T*
+(   Requisicion Manual Registrada: 50.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 2 dias \(Ruptura en Julio 2026\)) Tj T*
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 13 0 R >>
+endobj
+13 0 obj
+<< /Length 2747 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 28.047 sacos. Ha) Tj T*
+(                   y 50.000 sacos en transito via Interama \(50.000\). Agilizar entrega con) Tj T*
+(                    urgencia. Requisicion de 50.000 ud es adecuada para mitigar el quiebr) Tj T*
+(                   e.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(11. PRODUCTO: 12.01.01.1159.01 - SACO BILAMINADO TRANSPARENTE CON FUELLE NITRO FORCE 40 DE 7CMS TAMANO 60X105cm 90 gramaje.) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 8.773 ud \(Ferpasur: 8.773 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 4.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 13.000 ud) Tj T*
+(   Pedido Sugerido: 4.227 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 60 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 4.227 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 8.000 ud excede el sugerido por 3.773 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(12. PRODUCTO: 12.01.01.1150.01 - SACO BILAMINADO 90 gr TRANSPARENTE FONDO PLANO FERPAMIX CACAO PRODUCCION LC TAMANO 60X86X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 7.317 ud \(Ferpasur: 7.217 ud, Unica: 100 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 5.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 15.000 ud) Tj T*
+(   Pedido Sugerido: 7.683 ud) Tj T*
+(   Requisicion Manual Registrada: 12.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 45 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 7.683 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 12.000 ud excede el sugerido por 4.317 ud \(recomendado ) Tj T*
+(                   por seguridad\). Al ser Especialidad, considerar mayor tiempo de entreg) Tj T*
+(                   a.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(13. PRODUCTO: 12.01.01.1082.01 - SACOS BILAMINADOS AMARILLO CON FONDO PLANO BLUE RISE ACTIVE. TAMANO 60X90X15) Tj T*
+/F2 10 Tf
+ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 15 0 R >>
+endobj
+15 0 obj
+<< /Length 2584 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 7.744 ud \(Ferpasur: 7.731 ud, Unica: 13 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 3.500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 9.500 ud) Tj T*
+(   Pedido Sugerido: 1.756 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 74 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 1.756 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 8.000 ud excede el sugerido por 6.244 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(14. PRODUCTO: 12.01.01.1029.01 - SACO BILAMINADO 60X96 FERPAMIX TC INICIO FRENTE BLANCO Y  REVERSO TRANSPARENTE) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 295 ud \(Ferpasur: 45 ud, Unica: 250 ud\)) Tj T*
+(   Transito: 12.000 ud) Tj T*
+(     Detalle Transito: Plasticsack: 12.000) Tj T*
+(   Proyeccion Ventas Julio 2026: 5.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 13.000 ud) Tj T*
+(   Pedido Sugerido: 705 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 1 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 4.705 sacos. Hay) Tj T*
+(                    12.000 sacos en transito via Plasticsack \(12.000\). Agilizar entrega c) Tj T*
+(                   on urgencia. Requisicion de 8.000 ud es adecuada para mitigar el quieb) Tj T*
+(                   re.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(15. PRODUCTO: 12.01.01.1003.01 - SACO BILAMINADO BLANCO FONDO PLANO ABOMAX TAMANO 60X86X15 90GR) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 3.821 ud \(Ferpasur: 3.755 ud, Unica: 66 ud\)) Tj T*
+(   Transito: 14.000 ud) Tj T*
+(     Detalle Transito: Plasticsack: 14.000) Tj T*
+(   Proyeccion Ventas Julio 2026: 5.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 15.000 ud) Tj T*
+ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 17 0 R >>
+endobj
+17 0 obj
+<< /Length 2715 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Pedido Sugerido: 0 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 23 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 1.179 sacos. Hay) Tj T*
+(                    14.000 sacos en transito via Plasticsack \(14.000\). Agilizar entrega c) Tj T*
+(                   on urgencia.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(16. PRODUCTO: 12.01.01.1093.01 - SACO BILAMINADO TRANSPARENTE FONDO PLANO FERPAMIX ARROZ INICIO LC TAMANO 60X86X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 6.003 ud \(Ferpasur: 6.003 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 2.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 18.000 ud) Tj T*
+(   Pedido Sugerido: 11.997 ud) Tj T*
+(   Requisicion Manual Registrada: 12.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 68 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 11.997 sacos a 3 meses.) Tj T*
+(                    Requisicion de 12.000 ud excede el sugerido por 3 ud \(recomendado por) Tj T*
+(                    seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(17. PRODUCTO: 12.01.01.1071.01 - SACO VAC LAMINADO TRANSPARENTE MAIZ DESARROLLO 60X96 C/FUNDA TERMOSELLADA) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 220 ud \(Ferpasur: 13 ud, Unica: 207 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 1.500 ud) Tj T*
+(   Pedido Sugerido: 1.280 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 13 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 280 sacos. No ha) Tj T*
+(                   y transito registrado. Colocar orden urgente inmediatamente. Requisici) Tj T*
+(                   on de 8.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(18. PRODUCTO: 12.01.01.1004.01 - SACO BLANCO LAMINADO CON FUNDA TERMOSELLADA 60*100 ULTRAPEC NITRO) Tj T*
+/F2 10 Tf
+ET
+endstream
+endobj
+18 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 19 0 R >>
+endobj
+19 0 obj
+<< /Length 2507 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 6.176 ud \(Ferpasur: 6.175 ud, Unica: 1 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 3.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 10.500 ud) Tj T*
+(   Pedido Sugerido: 4.324 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 55 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 4.324 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 8.000 ud excede el sugerido por 3.676 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(19. PRODUCTO: 12.01.01.1090.01 - SACOS BILAMINADOS TRANS FONDO PLANO DESARROLLO LC 60X86X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 4.481 ud \(Ferpasur: 4.138 ud, Unica: 343 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 3.500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 9.500 ud) Tj T*
+(   Pedido Sugerido: 5.019 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 39 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 5.019 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 8.000 ud excede el sugerido por 2.981 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(20. PRODUCTO: 12.01.01.1158.01 - SACO BILAMINADO FONDO PLANO BLANCO PHOSMAX 60X90X15CM 90 GR.) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 4.112 ud \(Ferpasur: 4.105 ud, Unica: 7 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 1.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 7.000 ud) Tj T*
+(   Pedido Sugerido: 2.888 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+ET
+endstream
+endobj
+20 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 21 0 R >>
+endobj
+21 0 obj
+<< /Length 2734 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Tiempo Cobertura Estimado: aproximadamente 74 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 2.888 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 8.000 ud excede el sugerido por 5.112 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(21. PRODUCTO: 12.01.01.1161.01 - SACO TRANSPARENTE BILAMINADO FONDO PLANO BRIOFERSA 60x86x15cm 90Gr.) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 1.663 ud \(Ferpasur: 1.663 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 3.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 5.000 ud) Tj T*
+(   Pedido Sugerido: 3.337 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 17 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 1.337 sacos. No ) Tj T*
+(                   hay transito registrado. Colocar orden urgente inmediatamente. Requisi) Tj T*
+(                   cion de 6.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(22. PRODUCTO: 12.01.01.1030.01 - SACO BILAMINADO 60X96 FERPAMIX NK ACTIVE BLANCO MATE) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 1.997 ud \(Ferpasur: 1.814 ud, Unica: 183 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 1.500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 4.000 ud) Tj T*
+(   Pedido Sugerido: 2.003 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 41 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 2.003 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 8.000 ud excede el sugerido por 5.997 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(23. PRODUCTO: 12.01.01.1073.01 - SACO VAC BILAMINADO BLANCO POTASSIUM PLUS FONDO PLANO \(60X80X15\)) Tj T*
+/F2 10 Tf
+ET
+endstream
+endobj
+22 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 23 0 R >>
+endobj
+23 0 obj
+<< /Length 2564 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 3.480 ud \(Ferpasur: 3.480 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 3.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 6.500 ud) Tj T*
+(   Pedido Sugerido: 3.020 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 36 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 3.020 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 6.000 ud excede el sugerido por 2.980 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(24. PRODUCTO: 12.01.01.1044.01 - SACO LAMINADO BLANCO CON FUNDA TERMO SELLADA EQ BALANCE 16+12+28+2S \(60X96\)) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 3.285 ud \(Ferpasur: 3.285 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 0 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 16.166 ud) Tj T*
+(   Pedido Sugerido: 12.881 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 6 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 12.881 sacos a 3 meses.) Tj T*
+(                    Sugerido generar orden por 12.881 ud. Al ser Especialidad, considerar) Tj T*
+(                    mayor tiempo de entrega.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(25. PRODUCTO: 12.01.01.1061.01 - SAC VAC FERPAMIX BANANERO BILAMINADO BRILLANTE FRENTE BLANCO Y REVERSO TRANSPARENTE 60X96) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 1.723 ud \(Ferpasur: 1.600 ud, Unica: 123 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 1.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 3.000 ud) Tj T*
+(   Pedido Sugerido: 1.277 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 53 dias \(Ruptura en Agosto 2026\)) Tj T*
+ET
+endstream
+endobj
+24 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 25 0 R >>
+endobj
+25 0 obj
+<< /Length 2815 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 1.277 sacos a 3 meses. ) Tj T*
+(                   Requisicion de 6.000 ud excede el sugerido por 4.723 ud \(recomendado p) Tj T*
+(                   or seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega) Tj T*
+(                   .) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(26. PRODUCTO: 12.01.01.1116.01 - SACO VACIO LAMINADO FERPAGROW 60*96 FRENTE BLANCOY REVERSO TRANSPARETNE MATE C/FUNDA INTERIOR GRAMAJE 75+FUNDA30 MICRA) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 2.037 ud \(Ferpasur: 1.958 ud, Unica: 79 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 2.300 ud) Tj T*
+(   Pedido Sugerido: 263 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 82 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 263 sacos a 3 meses. Re) Tj T*
+(                   quisicion de 6.000 ud excede el sugerido por 5.737 ud \(recomendado por) Tj T*
+(                    seguridad\). Al ser Especialidad, considerar mayor tiempo de entrega.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(27. PRODUCTO: 12.01.01.1115.01 - SACOS LAMINADOS TRANSPARENTES CON FUNDA TERMOSELLADA FERPAMIX PALMA ACTIVE. TAMANO 60X105) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 120 ud \(Ferpasur: 120 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 1.500 ud) Tj T*
+(   Pedido Sugerido: 1.380 ud) Tj T*
+(   Requisicion Manual Registrada: 5.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 7 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 380 sacos. No ha) Tj T*
+(                   y transito registrado. Colocar orden urgente inmediatamente. Requisici) Tj T*
+(                   on de 5.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(28. PRODUCTO: 12.01.01.1074.01 - SACO LAMINADO FERPAMIX BANANO COMPLETO CON FUNDA TERMOSELLADA) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+ET
+endstream
+endobj
+26 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 27 0 R >>
+endobj
+27 0 obj
+<< /Length 2699 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Stock Fisico: 1.685 ud \(Ferpasur: 1.685 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 2.000 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 6.000 ud) Tj T*
+(   Pedido Sugerido: 4.315 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 26 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 315 sacos. No ha) Tj T*
+(                   y transito registrado. Colocar orden urgente inmediatamente. Requisici) Tj T*
+(                   on de 6.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(29. PRODUCTO: 12.01.01.1128.01 - SACO BLANCO LAMINADO SOLEI BANANO GRAMAJE 75 CON FUNDA TERMO SELLADA 30 MORAS \(60X96\)) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 455 ud \(Ferpasur: 429 ud, Unica: 26 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 1.500 ud) Tj T*
+(   Pedido Sugerido: 1.045 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 28 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 45 sacos. No hay) Tj T*
+(                    transito registrado. Colocar orden urgente inmediatamente. Requisicio) Tj T*
+(                   n de 6.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(30. PRODUCTO: 12.01.01.1157.01 - SACO BLANCO LAMINADO FERPAMIX GENERICO \(60X100\) GRAMAJE 75) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 677 ud \(Ferpasur: 677 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 2.755 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 6.862 ud) Tj T*
+(   Pedido Sugerido: 6.185 ud) Tj T*
+(   Requisicion Manual Registrada: 8.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 7 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 2.078 sacos. No ) Tj T*
+(                   hay transito registrado. Colocar orden urgente inmediatamente. Requisi) Tj T*
+(                   cion de 8.000 ud es adecuada para mitigar el quiebre.) Tj T*
+ET
+endstream
+endobj
+28 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 29 0 R >>
+endobj
+29 0 obj
+<< /Length 2648 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(31. PRODUCTO: 12.01.01.1121.01 - SACO VACIO BANANO ACTIVE, LAMINADO 75 GR CON LINER 30 MICRA TERMOSELLADOE FRENTE BLANCO REVERSO TRANSPARENTE \(60X96\)) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 457 ud \(Ferpasur: 457 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 2.500 ud) Tj T*
+(   Pedido Sugerido: 2.043 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 28 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 43 sacos. No hay) Tj T*
+(                    transito registrado. Colocar orden urgente inmediatamente. Requisicio) Tj T*
+(                   n de 6.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(32. PRODUCTO: 12.01.01.1092.01 - SACO BILAMINADO TRANSPARENTE FONDO PLANO FERPAMIX MAIZ INICIO LC TAMANO 60X86X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 445 ud \(Ferpasur: 0 ud, Unica: 445 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 650 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 1.275 ud) Tj T*
+(   Pedido Sugerido: 830 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 21 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 205 sacos. No ha) Tj T*
+(                   y transito registrado. Colocar orden urgente inmediatamente. Requisici) Tj T*
+(                   on de 6.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(33. PRODUCTO: 12.01.01.1149.01 - SACO BILAMINADO FERPAMIX BLANCO 60*96 GRAMAJE 90 FUNDA TERMOSELLADA) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 300 ud \(Ferpasur: 0 ud, Unica: 300 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 16.437 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 18.288 ud) Tj T*
+ET
+endstream
+endobj
+30 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 31 0 R >>
+endobj
+31 0 obj
+<< /Length 2624 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Pedido Sugerido: 17.988 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 16.137 sacos. No) Tj T*
+(                    hay transito registrado. Colocar orden urgente inmediatamente.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(34. PRODUCTO: 12.01.01.1104.01 - SACO LAMINADO TRANSPARENTE CON FDA TERMOSELLADA NITRAN AGROVENTANENSE. TAMANO 60X100) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 273 ud \(Ferpasur: 273 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 0 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 750 ud) Tj T*
+(   Pedido Sugerido: 477 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 11 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 477 sacos a 3 meses. Su) Tj T*
+(                   gerido generar orden por 477 ud. Al ser Especialidad, considerar mayor) Tj T*
+(                    tiempo de entrega.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(35. PRODUCTO: 12.01.01.1084.01 - SACO BILAMINADO BLANCO UREA ADVANCE 40KG TAMANO 60X100) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 37 ud \(Ferpasur: 37 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 500 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 1.150 ud) Tj T*
+(   Pedido Sugerido: 1.113 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 2 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 463 sacos. No ha) Tj T*
+(                   y transito registrado. Colocar orden urgente inmediatamente.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(36. PRODUCTO: 12.01.01.1123.01 - SACO  BILAMINADO FEPAMIX BLANCO GRAMAJE 90 CON FUNDA TERMO SELLADA \(60X96\)) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+ET
+endstream
+endobj
+32 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 33 0 R >>
+endobj
+33 0 obj
+<< /Length 2533 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Stock Fisico: 27 ud \(Ferpasur: 0 ud, Unica: 27 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 676 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 840 ud) Tj T*
+(   Pedido Sugerido: 813 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 1 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 649 sacos. No ha) Tj T*
+(                   y transito registrado. Colocar orden urgente inmediatamente.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(37. PRODUCTO: 12.01.01.1094.01 - SACO BILAMINADO TRANSPARENTE FONDO PLANO FERPAMIX CACAO PRODUCCION LC TAMANO 60X86X15) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 13 ud \(Ferpasur: 0 ud, Unica: 13 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 4.213 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 9.026 ud) Tj T*
+(   Pedido Sugerido: 9.013 ud) Tj T*
+(   Requisicion Manual Registrada: 12.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 4.200 sacos. No ) Tj T*
+(                   hay transito registrado. Colocar orden urgente inmediatamente. Requisi) Tj T*
+(                   cion de 12.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(38. PRODUCTO: 12.01.01.1145.01 - SACO FERPAMIX BLANCO  BILAMINADO 60X96) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 9 ud \(Ferpasur: 9 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 0 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 28.092 ud) Tj T*
+(   Pedido Sugerido: 28.083 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 28.083 sacos a 3 meses.) Tj T*
+(                    Sugerido generar orden por 28.083 ud. Al ser Especialidad, considerar) Tj T*
+(                    mayor tiempo de entrega.) Tj T*
+() Tj T*
+ET
+endstream
+endobj
+34 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 35 0 R >>
+endobj
+35 0 obj
+<< /Length 2513 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(39. PRODUCTO: 12.01.01.1005.01 - SACOS BILAMINADOS PLANO TRANSPARENTE 90GR INICIUM LC \(60*90*15\)) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 0 ud \(Ferpasur: 0 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 85 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 1.190 ud) Tj T*
+(   Pedido Sugerido: 1.190 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 85 sacos. No hay) Tj T*
+(                    transito registrado. Colocar orden urgente inmediatamente. Requisicio) Tj T*
+(                   n de 6.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(40. PRODUCTO: 12.01.01.1122.01 - SACO VACIO LAMINADO NITRATO DE AMONIO 75GR CON LINER 30 MICRA TERMOSELLADO 60X90) Tj T*
+/F2 10 Tf
+(   Linea: Tradicionales | Tipo: SIMPLE) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 25.115 ud \(Ferpasur: 115 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 15.311 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 45.933 ud) Tj T*
+(   Pedido Sugerido: 20.818 ud) Tj T*
+(   Requisicion Manual Registrada: 20.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 50 dias \(Ruptura en Agosto 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 20.818 sacos a 3 meses.) Tj T*
+(                    Requisicion de 20.000 ud es baja. Faltan 818 ud para cubrir el trimes) Tj T*
+(                   tre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(41. PRODUCTO: 12.01.01.1107.01 - SACO LAMINADO BLANCO GRANUMAX 2.1 TAMANO 60X96) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: SIMPLE) Tj T*
+/F1 10 Tf
+(   Estado Alerta: SOLICITAR PEDIDO) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 0 ud \(Ferpasur: 0 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 0 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 50 ud) Tj T*
+(   Pedido Sugerido: 50 ud) Tj T*
+ET
+endstream
+endobj
+36 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 37 0 R >>
+endobj
+37 0 obj
+<< /Length 2797 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Septiembre 2026\)) Tj T*
+(   Observacion IA:  [REPOSICION]  REPOSICION REQUERIDA: Deficit proyectado de 50 sacos a 3 meses. Sug) Tj T*
+(                   erido generar orden por 50 ud. Al ser Especialidad, considerar mayor t) Tj T*
+(                   iempo de entrega.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(42. PRODUCTO: 12.01.01.1144.01 - SACO LAMINADO BLANCO CON FUNDA TERMOSELLADA. 75GRM TAMANO 60X100 INCLUIDO FUELLE \(7CMS DE CADA LADO\) DISENO MULTICAMPO UREASIL) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 0 ud \(Ferpasur: 0 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 50 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 850 ud) Tj T*
+(   Pedido Sugerido: 850 ud) Tj T*
+(   Requisicion Manual Registrada: 5.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 50 sacos. No hay) Tj T*
+(                    transito registrado. Colocar orden urgente inmediatamente. Requisicio) Tj T*
+(                   n de 5.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(43. PRODUCTO: 12.01.01.1148.01 - SACO BILAMINADO FERPAMIX TRANSPARENTE CON FUNDA TERMOSELLADA GRAMAJE 90 / MEDIDA 60X96) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+(   Stock Fisico: 0 ud \(Ferpasur: 0 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 184 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 184 ud) Tj T*
+(   Pedido Sugerido: 184 ud) Tj T*
+(   Requisicion Manual Registrada: 0 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 184 sacos. No ha) Tj T*
+(                   y transito registrado. Colocar orden urgente inmediatamente.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+/F1 10 Tf
+(44. PRODUCTO: 12.01.01.1155.01 - SACO LAM BICOLOR / BLANCO FRONTAL Y REVERSO TRANSPARENTE CON FUNDA TERMOSELLADA PROABONO COMPLETO / GRAMAJE 70) Tj T*
+/F2 10 Tf
+(   Linea: Especialidades | Tipo: MEZCLA) Tj T*
+/F1 10 Tf
+(   Estado Alerta: ALERTA URGENTE \(Quiebre Inminente\)) Tj T*
+/F2 10 Tf
+ET
+endstream
+endobj
+38 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 39 0 R >>
+endobj
+39 0 obj
+<< /Length 772 >>
+stream
+BT
+/F2 10 Tf
+50 740 Td
+18 TL
+(   Stock Fisico: 0 ud \(Ferpasur: 0 ud, Unica: 0 ud\)) Tj T*
+(   Transito: 0 ud) Tj T*
+(   Proyeccion Ventas Julio 2026: 1.450 ud) Tj T*
+(   Demanda Proyectada 3 Meses: 2.850 ud) Tj T*
+(   Pedido Sugerido: 2.850 ud) Tj T*
+(   Requisicion Manual Registrada: 6.000 ud) Tj T*
+(   Tiempo Cobertura Estimado: aproximadamente 0 dias \(Ruptura en Julio 2026\)) Tj T*
+(   Observacion IA:  [!]  ALERTA CRITICA: Ruptura inminente en Julio. Faltan 1.450 sacos. No ) Tj T*
+(                   hay transito registrado. Colocar orden urgente inmediatamente. Requisi) Tj T*
+(                   cion de 6.000 ud es adecuada para mitigar el quiebre.) Tj T*
+() Tj T*
+(-------------------------------------------------------------------------) Tj T*
+() Tj T*
+ET
+endstream
+endobj
+xref
+0 40
+0000000000 65535 f
+
+trailer
+<< /Size 40 /Root 1 0 R >>
+startxref
+310
+%%EOF

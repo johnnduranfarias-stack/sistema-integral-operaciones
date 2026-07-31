@@ -1,0 +1,407 @@
+{
+  "c6f7d82475f042d2e230211ae80c9822ddd64af2fec531475b422f459c8c494a": {
+    "user": {
+      "username": "binsumos",
+      "name": "Bodega Insumos",
+      "role": "insumos",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784239105807
+  },
+  "4180f52fffe2e3bf980d164279a1e9ee84f51b4b19b520d7c9dd335b91bf018c": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784238989914
+  },
+  "baf040402c9a2c7481b5e3a486fce89d0e2f1280412132b0c5b558bd2b4992a4": {
+    "user": {
+      "username": "binsumos",
+      "name": "Bodega Insumos",
+      "role": "insumos",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784248509421
+  },
+  "5b55f44ca2eb9d3762ee4a6e5c0936b9bbaf3a0800e4d7bc590f60ac7c7c3508": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784448222877
+  },
+  "f0bda984ea018523e482214cd843e6dbc2064dd12498c9226498188f6fe84aaa": {
+    "user": {
+      "username": "binsumos",
+      "name": "Bodega Insumos",
+      "role": "insumos",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784571487299
+  },
+  "14323de20639b7d407216032b90ca6629e01a1f534bc6895deb7801c4eced0d8": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784585360237
+  },
+  "bce898deba102f85c6a5d43173d90fb00340d2ec759ad0ad383e5004b6b0e1c2": {
+    "user": {
+      "username": "binsumos",
+      "name": "Bodega Insumos",
+      "role": "insumos",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784594090640
+  },
+  "00ef4265dd821fbc5c34a535c4a78940d52ec986e79828bcec5a574426af6886": {
+    "user": {
+      "username": "binsumos",
+      "name": "Bodega Insumos",
+      "role": "insumos",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784670076033
+  },
+  "f742b1ac21313f40412f681cdca0a83e1df038eac8cc8c9cf64f582c91d856da": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784670266005
+  },
+  "d43c912780b0a7ae3557f9ba709ef6b5c12d740444dd90d8b52dad7d80578395": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784750367221
+  },
+  "c497162923f7dcebe6b30600a60fd54da8e25720e9ce74b53135251d3398fbc0": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784784300899
+  },
+  "77f9fdab163bb1aff803687658cfacd1d187f58b4aa13df162e360756397fa39": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784829557595
+  },
+  "b1a4cf39ea3d4bc362c334be8cd9aaf6c61c2a2f8a29b5fad56699daa98ec79b": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784831524043
+  },
+  "60a5c9c0eb0d3152a0e2876aff719181d90e3b995089d689531fa2b591abc4a6": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784836157350
+  },
+  "f44c7662d80eb818f8d20b51ba587f26f0cf758ccf7e06725ec197b0efcc5e5b": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784836257325
+  },
+  "83ed30518523ba88436e56ef6d3312b554205663d75a475eef33a5032c515ea6": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784923763791
+  },
+  "65b05e99f8fbb8b14a4f4f89355572612d2ddce0dcac0981d520b55bc985b0cb": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784925303341
+  },
+  "0831f30060053a7e6227900929f8591b43aeae084250e8c449207f5bd4fd4c5b": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784846168604
+  },
+  "1a793057177c9643df8dd1facacda6309ad0a6990548a26d4054ae6e79f56896": {
+    "user": {
+      "username": "binsumos",
+      "name": "Bodega Insumos",
+      "role": "insumos",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784850301327
+  },
+  "7031b57dd423be37e47af82963d54815e5e0a53d82bf4cafcb040f6bef6ca58e": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784848010205
+  },
+  "3bac5ee2049520111aba839ca4c0f14cda8a5541f7aa5c540ea80231bbb061b7": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1784930495495
+  },
+  "c9d019b89cbaba238905b3e137ab86cdda71683696152d95dbb368cd775eaa46": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785249322072
+  },
+  "4660c4727b2e72e8e1efd7c974d285925b1460f2518016d2a5053b221cd32e1a": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785171301178
+  },
+  "7afc8a6a3ed8c0e5549d63b7c5bec0f4433bd6aab754b1f86eacfa219fcf15fd": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785270951048
+  },
+  "40a43c80da90a406505a2e15da91e1cf4a325a525b6fe5a07c8d0f892498f870": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785191800051
+  },
+  "09c791495f0360b4ae51db5279bb971acd4effbc31948a39293a33bfd2e36342": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785271485958
+  },
+  "76137209d3cc17ee29951cae0c63a3aa3f31a0dbfd02f87fa110f2df87c4fc98": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785276987965
+  },
+  "2785e16efbdd5c944c980f81891815564efa0069cb2f08f41275a894b8a2af82": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785199353961
+  },
+  "a43e7444c415dadca019eb2df323c8b4661104190f72d2e52aaa95cc3148a024": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785259828714
+  },
+  "a14d0557a858766ea9fba5ca269446806b970c97df5e077e7cd0ee8431db3637": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785267340827
+  },
+  "8f7086695b664e8dbc9543ae72e08bd031e4a8987c9c8af9569c79eb92e043ff": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785450713210
+  },
+  "55502611b0290e610fc8caf050f432fae2d137a18ecbc844c64a9ab421a223c4": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785451387424
+  },
+  "4cc7dc727715a155c7d242df2fc7282332b6d10df3a54c48b85814b0ee8e2839": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785451530996
+  },
+  "9a649ce41516e5fa18753957d03f9df98029e6c8ccf179fc32756384c41f19b7": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785372489553
+  },
+  "83900e4e97e20a01ade0e2ef5f5368846a2e6d7b728fa9dc6a05417c017ed045": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785511827766
+  },
+  "2d519defb73797f2a94623a00bec6b59e17f7d840b902615c8310e75db2728bf": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785441297759
+  },
+  "713ea8541f81111500b2d3ce37179876a74f05c4424324bc65e2f8f28993f3af": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785524607325
+  },
+  "075d1a16837159ebe25eebca32a8bd6eca2965864ec4c1be663b51e42d8a2230": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785524677655
+  },
+  "43eabe0efd018cdab285528b25f293c0dd34a578050695d7c545eec6794a0fd0": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785450521811
+  },
+  "58548289a71033be2431cc4d82f97b356b637cbcf6cf776e96dfa4acf313cd92": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785446262921
+  },
+  "9b2362906334aaa8d93f784c961e82891ef8ecc01cd3209370396d86ab28dd8d": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785530438058
+  },
+  "457c130c1ff9d2c31bcf3daa937b5a06f2f463538fe0bcaf7e4278be93658c04": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785451295349
+  },
+  "87150b3f8e382dedc64fb6dc6f98299f785022737a8dcb48dc5dc70ea937bab8": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785596419504
+  },
+  "fafd7a345b1a10de59b574e8b511acb7004badcd05c320b79563ba43c8235194": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785517296330
+  },
+  "b429ab199b029ba16f5dc36e72244b45f4c715249695209f16bffd12c4e1f5df": {
+    "user": {
+      "username": "jduran_admin",
+      "name": "Johnny Durán (Admin)",
+      "role": "admin",
+      "mustChangePassword": false
+    },
+    "expiresAt": 1785596996893
+  }
+}

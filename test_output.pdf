@@ -1,0 +1,188 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [4 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >> /F4 << /Type /Font /Subtype /Type1 /BaseFont /Times-BoldItalic >> >> >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 3 0 R /MediaBox [0 0 612 792] /Contents 5 0 R >>
+endobj
+5 0 obj
+<< /Length 6103 >>
+stream
+BT
+18 TL
+ET
+0.2 0.27 0.35 RG
+0.7 w
+20 30 572 732 re S
+20 702 m 592 702 l S
+430 702 m 430 762 l S
+430 742 m 592 742 l S
+430 722 m 592 722 l S
+20 672 m 592 672 l S
+20 642 m 592 642 l S
+130 672 m 130 702 l S
+270 672 m 270 702 l S
+400 672 m 400 702 l S
+180 642 m 180 672 l S
+300 642 m 300 672 l S
+0.85 0.88 0.92 rg
+20 617 572 25 re f
+0.2 0.27 0.35 RG
+45 222 m 45 642 l S
+115 222 m 115 642 l S
+160 222 m 160 642 l S
+205 222 m 205 642 l S
+400 222 m 400 642 l S
+455 222 m 455 642 l S
+495 222 m 495 642 l S
+540 222 m 540 642 l S
+20 603.85 m 592 603.85 l S
+20 590.7 m 592 590.7 l S
+20 577.55 m 592 577.55 l S
+20 564.4 m 592 564.4 l S
+20 551.25 m 592 551.25 l S
+20 538.1 m 592 538.1 l S
+20 524.95 m 592 524.95 l S
+20 511.8 m 592 511.8 l S
+20 498.65 m 592 498.65 l S
+20 485.5 m 592 485.5 l S
+20 472.35 m 592 472.35 l S
+20 459.2 m 592 459.2 l S
+20 446.04999999999995 m 592 446.04999999999995 l S
+20 432.9 m 592 432.9 l S
+20 419.75 m 592 419.75 l S
+20 406.6 m 592 406.6 l S
+20 393.45 m 592 393.45 l S
+20 380.29999999999995 m 592 380.29999999999995 l S
+20 367.15 m 592 367.15 l S
+20 354 m 592 354 l S
+20 340.84999999999997 m 592 340.84999999999997 l S
+20 327.7 m 592 327.7 l S
+20 314.55 m 592 314.55 l S
+20 301.4 m 592 301.4 l S
+20 288.25 m 592 288.25 l S
+20 275.09999999999997 m 592 275.09999999999997 l S
+20 261.95 m 592 261.95 l S
+20 248.8 m 592 248.8 l S
+20 235.64999999999998 m 592 235.64999999999998 l S
+20 222.5 m 592 222.5 l S
+20 202 m 592 202 l S
+20 160 m 592 160 l S
+20 118 m 592 118 l S
+20 76 m 592 76 l S
+200 30 m 200 202 l S
+390 30 m 390 202 l S
+BT /F1 13 Tf 0.05 0.2 0.4 rg 25 735 Td (FERPACIFIC) Tj ET
+BT /F1 12 Tf 140 735 Td (Requisicion de Bodega y/o Solicitud de Compras.) Tj ET
+BT /F1 6.5 Tf 435 749 Td (Codigo: 2.4.3 FP COMP FOR) Tj ET
+BT /F1 6.5 Tf 435 729 Td (VERSION: 000) Tj ET
+BT /F1 6.5 Tf 435 709 Td (FECHA : 05/05/2025) Tj ET
+BT /F1 7.5 Tf 25 685 Td (SUCURSAL:) Tj ET
+BT /F2 7.5 Tf 80 685 Td (FERPASUR) Tj ET
+BT /F1 7.5 Tf 145 685 Td (FECHA:) Tj ET
+BT /F2 7.5 Tf 185 685 Td (1/7/2026 10:55:33) Tj ET
+BT /F1 7.5 Tf 410 685 Td (N? de Requisicion:) Tj ET
+BT /F1 7.5 Tf 25 655 Td (DEPARTAMENTO:) Tj ET
+BT /F2 7.5 Tf 105 655 Td (OPERACIONES) Tj ET
+BT /F1 7.5 Tf 185 655 Td (Prioridad:) Tj ET
+BT /F1 8 Tf 0.9 0.1 0.1 rg 235 655 Td (URGENTE) Tj ET
+BT /F1 9.5 Tf 410 655 Td (20260701658) Tj ET
+BT /F1 6.5 Tf 23 627 Td (# items) Tj ET
+BT /F1 6.5 Tf 52 627 Td (Codigo del sistema) Tj ET
+BT /F1 6.5 Tf 122 627 Td (Cantidad) Tj ET
+BT /F1 6.5 Tf 164 627 Td (Unidad de medida) Tj ET
+BT /F1 6.5 Tf 210 627 Td (Nombre de articulo. Descripcion de servicio.) Tj ET
+BT /F1 5.5 Tf 402 631 Td (Fecha de) Tj ET
+BT /F1 5.5 Tf 402 623 Td (ultimo pedido) Tj ET
+BT /F1 5.5 Tf 458 627 Td (Stock actual) Tj ET
+BT /F1 5.5 Tf 498 631 Td (REFERENCIA) Tj ET
+BT /F1 5.5 Tf 498 623 Td (SIST. SIEMPRE) Tj ET
+BT /F1 5.5 Tf 543 631 Td (CRONOGRAMA) Tj ET
+BT /F1 5.5 Tf 543 623 Td (DE ENTREGA) Tj ET
+BT /F2 7.5 Tf 25 607.5 Td (1\)) Tj ET
+BT /F2 7.5 Tf 48 607.5 Td (12.01.01.1161.01) Tj ET
+BT /F1 7.5 Tf 122 607.5 Td (45000) Tj ET
+BT /F2 7.5 Tf 168 607.5 Td (U) Tj ET
+BT /F2 6.5 Tf 210 607.5 Td (SACO VACIO LAMINADO UREA GR 60X105) Tj ET
+BT /F2 7.5 Tf 423 607.5 Td (-) Tj ET
+BT /F2 7.5 Tf 468 607.5 Td (15000) Tj ET
+BT /F2 7.5 Tf 513 607.5 Td (-) Tj ET
+BT /F2 7.5 Tf 558 607.5 Td (-) Tj ET
+BT /F2 7.5 Tf 25 594.35 Td (2\)) Tj ET
+BT /F2 7.5 Tf 48 594.35 Td (12.01.01.1023.01) Tj ET
+BT /F1 7.5 Tf 122 594.35 Td (22000) Tj ET
+BT /F2 7.5 Tf 168 594.35 Td (U) Tj ET
+BT /F2 6.5 Tf 210 594.35 Td (SACO VACIO AMARILLO + FDA DOLE MEZCLA FISICA \(60) Tj ET
+BT /F2 7.5 Tf 423 594.35 Td (-) Tj ET
+BT /F2 7.5 Tf 468 594.35 Td (8000) Tj ET
+BT /F2 7.5 Tf 513 594.35 Td (-) Tj ET
+BT /F2 7.5 Tf 558 594.35 Td (-) Tj ET
+BT /F2 7.5 Tf 25 581.2 Td (3\)) Tj ET
+BT /F2 7.5 Tf 25 568.05 Td (4\)) Tj ET
+BT /F2 7.5 Tf 25 554.9 Td (5\)) Tj ET
+BT /F2 7.5 Tf 25 541.75 Td (6\)) Tj ET
+BT /F2 7.5 Tf 25 528.6 Td (7\)) Tj ET
+BT /F2 7.5 Tf 25 515.45 Td (8\)) Tj ET
+BT /F2 7.5 Tf 25 502.3 Td (9\)) Tj ET
+BT /F2 7.5 Tf 25 489.15 Td (10\)) Tj ET
+BT /F2 7.5 Tf 25 476 Td (11\)) Tj ET
+BT /F2 7.5 Tf 25 462.85 Td (12\)) Tj ET
+BT /F2 7.5 Tf 25 449.7 Td (13\)) Tj ET
+BT /F2 7.5 Tf 25 436.54999999999995 Td (14\)) Tj ET
+BT /F2 7.5 Tf 25 423.4 Td (15\)) Tj ET
+BT /F2 7.5 Tf 25 410.25 Td (16\)) Tj ET
+BT /F2 7.5 Tf 25 397.1 Td (17\)) Tj ET
+BT /F2 7.5 Tf 25 383.95 Td (18\)) Tj ET
+BT /F2 7.5 Tf 25 370.79999999999995 Td (19\)) Tj ET
+BT /F2 7.5 Tf 25 357.65 Td (20\)) Tj ET
+BT /F2 7.5 Tf 25 344.5 Td (21\)) Tj ET
+BT /F2 7.5 Tf 25 331.34999999999997 Td (22\)) Tj ET
+BT /F2 7.5 Tf 25 318.2 Td (23\)) Tj ET
+BT /F2 7.5 Tf 25 305.05 Td (24\)) Tj ET
+BT /F2 7.5 Tf 25 291.9 Td (25\)) Tj ET
+BT /F2 7.5 Tf 25 278.75 Td (26\)) Tj ET
+BT /F2 7.5 Tf 25 265.59999999999997 Td (27\)) Tj ET
+BT /F2 7.5 Tf 25 252.45 Td (28\)) Tj ET
+BT /F2 7.5 Tf 25 239.3 Td (29\)) Tj ET
+BT /F2 7.5 Tf 25 226.14999999999998 Td (30\)) Tj ET
+BT /F1 7 Tf 25 211 Td (Justificacion:) Tj ET
+BT /F2 7 Tf 85 211 Td (Reposicion automatica para evitar desabastecimiento de sacos. Riesgo de quiebre de stock en 5 dias.) Tj ET
+BT /F1 6.5 Tf 25 192 Td (Nombre del solicitante:) Tj ET
+BT /F1 7.5 Tf 25 172 Td (JOHNNY DURAN) Tj ET
+BT /F1 6.5 Tf 205 192 Td (Firma:) Tj ET
+BT /F4 11 Tf 0.1 0.2 0.6 rg 230 174 Td (Johnny Duran T.) Tj ET
+BT /F1 6.5 Tf 395 192 Td (Fecha de visita tecnica:) Tj ET
+BT /F2 7.5 Tf 395 172 Td (-) Tj ET
+BT /F1 6.5 Tf 25 150 Td (Gerente General:) Tj ET
+BT /F1 7.5 Tf 25 130 Td (JUAN CARLOS DE YCAZA) Tj ET
+BT /F1 6.5 Tf 205 150 Td (Firma:) Tj ET
+BT /F1 6.5 Tf 395 150 Td (A ser recibido a mas tardar:) Tj ET
+BT /F2 7.5 Tf 395 130 Td (-) Tj ET
+BT /F1 6.5 Tf 25 108 Td (Responsable tecnico :) Tj ET
+BT /F1 7.5 Tf 25 88 Td (JOHNNY DURAN) Tj ET
+BT /F1 6.5 Tf 205 108 Td (Firma:) Tj ET
+BT /F1 6.5 Tf 395 108 Td (Lugar de entrega:) Tj ET
+BT /F1 7.5 Tf 430 88 Td (FERPASUR) Tj ET
+BT /F1 6.5 Tf 25 66 Td (Firma de autorizacion:) Tj ET
+BT /F1 7.5 Tf 25 52 Td (ING EMILIO ESPINOZA) Tj ET
+BT /F1 6 Tf 25 42 Td (SUB GERENTE ADMINISTRATIVO - FINANCIERO) Tj ET
+BT /F1 6.5 Tf 205 66 Td (Firma:) Tj ET
+BT /F1 6.5 Tf 395 66 Td (Nombre de personal asignado a recibir:) Tj ET
+BT /F1 7.5 Tf 430 48 Td (WALTER PENA) Tj ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f
+
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+310
+%%EOF
