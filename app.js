@@ -8614,4 +8614,34 @@ function resetLinkForm() {
 }
 window.resetLinkForm = resetLinkForm;
 
+// --- PWA MOBILE APPLICATION INSTALLATION HANDLER ---
+let deferredPWAInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPWAInstallPrompt = e;
+  console.log("PWA install prompt captured");
+});
+
+function triggerPWAInstall() {
+  if (deferredPWAInstallPrompt) {
+    deferredPWAInstallPrompt.prompt();
+    deferredPWAInstallPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('Usuario aceptó instalar la App Móvil de Ferpacific');
+      }
+      deferredPWAInstallPrompt = null;
+    });
+  } else {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      alert("📱 PARA INSTALAR EN TU IPHONE / IPAD:\n\n1. Toca el botón 'Compartir' 📤 (el ícono del cuadrado con flecha hacia arriba en Safari).\n2. Selecciona 'Agregar a la pantalla de inicio' (Add to Home Screen).\n\n¡Y listo! Tendrás el ícono del Sistema de Ferpacific en tu celular.");
+    } else {
+      alert("📱 PARA INSTALAR EN TU CELULAR / TABLET / PC:\n\n1. En la barra superior de tu navegador, toca el ícono 'Instalar App' ➕ o los 3 puntos del menú ⋮\n2. Selecciona 'Instalar aplicación' o 'Agregar a la pantalla principal'.\n\n¡Tendrás el acceso directo del Sistema de Ferpacific directamente en tu pantalla!");
+    }
+  }
+}
+window.triggerPWAInstall = triggerPWAInstall;
+
+
 
