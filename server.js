@@ -3688,13 +3688,19 @@ const server = http.createServer(async (req, res) => {
     safePath = 'index.html';
   }
   let filePath = path.join(__dirname, 'public', safePath);
+  let rootFilePath = path.join(__dirname, safePath);
   
   if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
     serveStaticFile(res, filePath);
+  } else if (fs.existsSync(rootFilePath) && fs.statSync(rootFilePath).isFile()) {
+    serveStaticFile(res, rootFilePath);
   } else {
     const indexPath = path.join(__dirname, 'public', 'index.html');
+    const rootIndexPath = path.join(__dirname, 'index.html');
     if (fs.existsSync(indexPath)) {
       serveStaticFile(res, indexPath);
+    } else if (fs.existsSync(rootIndexPath)) {
+      serveStaticFile(res, rootIndexPath);
     } else {
       res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end('Página no encontrada');
