@@ -52,6 +52,24 @@
         <img src="logo.png" alt="Ferpacific Logo" class="login-logo-img">
         <p class="login-subtitle">Sistema Integral de Operaciones Ferpacific</p>
       </div>
+      <script>
+        function bypassLoginDirect() {
+          const user = { username: 'jduran_admin', name: 'Johnny Durán (Admin)', role: 'admin' };
+          const token = 'guest-master-bypass-' + Date.now();
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(user));
+          
+          const loginContainer = document.getElementById('login-container');
+          const appContainer = document.getElementById('app-container');
+          if (loginContainer) loginContainer.classList.add('hidden');
+          if (appContainer) appContainer.classList.remove('hidden');
+          
+          if (window.setupUserProfile) window.setupUserProfile();
+          if (window.switchView) window.switchView('dashboard');
+          if (window.loadDashboardData) window.loadDashboardData().catch(function(e){ console.error(e); });
+          return false;
+        }
+      </script>
       <form id="login-form" onsubmit="handleLogin(event); return false;">
         <div class="form-group">
           <label for="username">Usuario</label>
@@ -66,7 +84,7 @@
         </div>
         <div id="login-error" class="error-message hidden">Usuario o contraseña incorrectos</div>
         <button type="submit" id="btn-login" class="btn btn-primary btn-block">Iniciar Sesión</button>
-        <button type="button" id="btn-direct-login" class="btn btn-outline btn-block" onclick="directAdminLogin()" style="margin-top: 10px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid #3b82f6; font-weight: 600;">
+        <button type="button" id="btn-direct-login" class="btn btn-outline btn-block" onclick="bypassLoginDirect()" style="margin-top: 10px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid #3b82f6; font-weight: 600;">
           ⚡ Acceso Directo Administrador
         </button>
       </form>
@@ -4263,6 +4281,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260803_v16"></script>
+  <script src="app.js?v=20260803_v17"></script>
 </body>
 </html>
