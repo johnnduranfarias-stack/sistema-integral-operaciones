@@ -1506,16 +1506,7 @@ async function validateTokenAndLoad() {
   } finally {
     hideLoader();
   }
-}
-
-async function directAdminLogin() {
-  const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
-  if (usernameInput) usernameInput.value = 'jduran_admin';
-  if (passwordInput) passwordInput.value = 'Jduran2026!';
-  return handleLogin();
-}
-window.directAdminLogin = directAdminLogin;
+// End validateTokenAndLoad
 
 // End validateTokenAndLoad
 
