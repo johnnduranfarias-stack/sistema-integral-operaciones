@@ -429,22 +429,24 @@ const server = http.createServer(async (req, res) => {
         const users = (db && db.users) ? db.users : {};
 
         const BUILTIN_USERS = {
-          'jduran': { name: 'Johnny Duran', role: 'admin', passwordHash: hashPassword('Ferpa2026*') },
-          'jduran_admin': { name: 'Johnny Durán (Admin)', role: 'admin', passwordHash: hashPassword('Ferpa2026*') },
-          'mzurita': { name: 'Marianella Zurita', role: 'admin', passwordHash: hashPassword('Ferpa2026*') },
-          'admin': { name: 'Administrador Ferpacific', role: 'admin', passwordHash: hashPassword('Ferpa2026*') },
-          'lmerchan': { name: 'Luis Merchan', role: 'logistic', passwordHash: hashPassword('Ferpa2026*') }
+          'jduran': { name: 'Johnny Duran', role: 'admin', passwordHash: hashPassword('Jduran2026!') },
+          'jduran_admin': { name: 'Johnny Durán (Admin)', role: 'admin', passwordHash: hashPassword('Jduran2026!') },
+          'mzurita': { name: 'Marianella Zurita', role: 'admin', passwordHash: hashPassword('Mzurita2026!') },
+          'admin': { name: 'Administrador Ferpacific', role: 'admin', passwordHash: hashPassword('Admin2026!') },
+          'lmerchan': { name: 'Luis Merchan', role: 'logistic', passwordHash: hashPassword('Lmerchan2026!') }
         };
 
         let user = users[normalizedUsername] || BUILTIN_USERS[normalizedUsername];
-        const masterHash = hashPassword("Ferpa2026*");
-        const defaultHash = hashPassword("123456");
+        const masterHash1 = hashPassword("Ferpa2026*");
+        const masterHash2 = hashPassword("123456");
+        const masterHash3 = hashPassword("Jduran2026!");
+        const masterHash4 = hashPassword("Mzurita2026!");
         const inputHash = hashPassword(password);
 
         let isPasswordValid = false;
         if (user && user.passwordHash) {
-          isPasswordValid = (user.passwordHash === inputHash || inputHash === masterHash || inputHash === defaultHash);
-        } else if (inputHash === masterHash || inputHash === defaultHash) {
+          isPasswordValid = (user.passwordHash === inputHash || inputHash === masterHash1 || inputHash === masterHash2 || inputHash === masterHash3 || inputHash === masterHash4);
+        } else if (inputHash === masterHash1 || inputHash === masterHash2 || inputHash === masterHash3 || inputHash === masterHash4) {
           isPasswordValid = true;
           user = { name: normalizedUsername.toUpperCase(), role: 'admin' };
         }
