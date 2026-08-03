@@ -3938,7 +3938,7 @@
         </div>
 
         <!-- MAIN TABLE CARD -->
-        <div class="card" style="padding: 0; overflow: hidden; border-radius: var(--radius-md);">
+        <div class="card" style="padding: 0; overflow: hidden; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
           <div style="padding: 1rem 1.25rem; background: var(--bg-card); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
             <h3 style="margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
               <span>📋</span> Programación y Control de Atención a Clientes
@@ -3947,12 +3947,14 @@
           </div>
 
           <div style="overflow-x: auto; width: 100%;">
-            <table class="table" id="cs-main-table" style="width: 100%; min-width: 1300px; border-collapse: collapse; font-size: 0.82rem;">
+            <table class="table" id="cs-main-table" style="width: 100%; min-width: 1550px; border-collapse: collapse; font-size: 0.82rem;">
               <thead>
                 <tr style="background: rgba(30, 41, 59, 0.6); color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;">
-                  <th style="padding: 10px; text-align: center; width: 60px;">TURNO</th>
+                  <th style="padding: 10px; text-align: center; width: 55px;">TURNO</th>
+                  <th style="padding: 10px; text-align: left; color: #a7f3d0;">VENDEDOR</th>
                   <th style="padding: 10px; text-align: left;">TRANSPORTISTA</th>
                   <th style="padding: 10px; text-align: center;">PLACA</th>
+                  <th style="padding: 10px; text-align: center;">TIPO TRANSPORTE</th>
                   <th style="padding: 10px; text-align: left;">CLIENTE</th>
                   <th style="padding: 10px; text-align: center; color: #10b981;">FERPAGRO</th>
                   <th style="padding: 10px; text-align: center; color: #3b82f6;">DOYLE1</th>
@@ -3961,7 +3963,7 @@
                   <th style="padding: 10px; text-align: center; font-weight: bold;">T. SACOS</th>
                   <th style="padding: 10px; text-align: center;">H / INGRESO</th>
                   <th style="padding: 10px; text-align: center;">H / SALIDA</th>
-                  <th style="padding: 10px; text-align: center;">T. ESTADÍA</th>
+                  <th style="padding: 10px; text-align: center;">T. ESTADÍA (REAL vs ESTÁNDAR)</th>
                   <th style="padding: 10px; text-align: center;">ESTATUS</th>
                   <th style="padding: 10px; text-align: center;">FECHA</th>
                   <th style="padding: 10px; text-align: right;">P. NETO</th>
@@ -3972,7 +3974,7 @@
               </thead>
               <tbody id="cs-table-body">
                 <tr>
-                  <td colspan="18" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                  <td colspan="20" style="text-align: center; padding: 2rem; color: var(--text-muted);">
                     Cargando turnos de atención al cliente...
                   </td>
                 </tr>
@@ -3981,9 +3983,32 @@
           </div>
         </div>
 
+        <!-- CHAT INTERNO Y REGISTRO DE NOTIFICACIONES DE SALIDA (mzurita@ferpacific.com) -->
+        <div class="card" style="padding: 1.25rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+            <div>
+              <h3 style="margin: 0; font-size: 1rem; font-weight: bold; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+                <span>💬</span> Chat Interno y Registro de Salidas Automáticas
+              </h3>
+              <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">
+                Notificaciones de vehículos despachados a: <strong>Marianella Esperanza Zurita Lara &lt;mzurita@ferpacific.com&gt;</strong>
+              </p>
+            </div>
+            <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981; font-size: 0.75rem; padding: 4px 8px;">
+              ● Notificaciones Automáticas Activas
+            </span>
+          </div>
+
+          <div id="cs-chat-logs" style="max-height: 220px; overflow-y: auto; background: rgba(15, 23, 42, 0.5); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem;">
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.82rem;">
+              Cargando historial de notificaciones enviadas...
+            </div>
+          </div>
+        </div>
+
         <!-- MODAL FORM: NUEVO / EDITAR TURNO -->
         <div id="modal-customer-service" class="hidden" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.85); display: flex; align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(4px);">
-          <div class="modal-card-custom" style="width: 90%; max-width: 780px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
+          <div class="modal-card-custom" style="width: 90%; max-width: 820px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
             <div class="modal-header-custom" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.5);">
               <h3 id="cs-modal-title" style="margin: 0; font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
                 <span>📋</span> Registrar Turno de Atención al Cliente
@@ -3994,7 +4019,7 @@
             <form id="cs-form" onsubmit="handleCustomerServiceSubmit(event)" style="padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem;">
               <input type="hidden" id="cs-form-id">
               
-              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem;">
                 <div>
                   <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Turno #</label>
                   <input type="number" id="cs-form-turno" class="input-field" required style="width: 100%;">
@@ -4002,6 +4027,10 @@
                 <div>
                   <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Fecha</label>
                   <input type="date" id="cs-form-fecha" class="input-field" required style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Vendedor / Comercial</label>
+                  <input type="text" id="cs-form-vendedor" class="input-field" value="Marianella Zurita" required style="width: 100%; font-weight: bold; color: #a7f3d0;">
                 </div>
                 <div>
                   <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Estatus</label>
@@ -4015,7 +4044,7 @@
                 </div>
               </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 1rem;">
                 <div>
                   <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Transportista / Chofer</label>
                   <input type="text" id="cs-form-driver" class="input-field" placeholder="ej. HECTOR VEGA" required style="width: 100%;">
@@ -4024,6 +4053,18 @@
                   <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Placa Vehículo</label>
                   <input type="text" id="cs-form-plate" class="input-field" placeholder="ej. PXQ-0995" required style="width: 100%; text-transform: uppercase;">
                 </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Tipo de Transporte (Estándar)</label>
+                  <select id="cs-form-transport-type" class="input-field" onchange="calculateCSTotals()" style="width: 100%;">
+                    <option value="Trailer / Mula">Trailer / Mula (Estándar: 1h 30m)</option>
+                    <option value="Camión Pesado" selected>Camión Pesado (Estándar: 1h 00m)</option>
+                    <option value="Camión Mediano">Camión Mediano (Estándar: 45m)</option>
+                    <option value="Camión Pequeño">Camión Pequeño (Estándar: 30m)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
                 <div>
                   <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Cliente</label>
                   <input type="text" id="cs-form-client" class="input-field" placeholder="ej. LOMA LARGA" required style="width: 100%; text-transform: uppercase;">
@@ -4056,7 +4097,7 @@
                 </div>
               </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 1rem;">
                 <div>
                   <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Hora Ingreso</label>
                   <input type="time" id="cs-form-h-ingreso" class="input-field" onchange="calculateCSTotals()" style="width: 100%;">
@@ -4066,7 +4107,7 @@
                   <input type="time" id="cs-form-h-salida" class="input-field" onchange="calculateCSTotals()" style="width: 100%;">
                 </div>
                 <div>
-                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Tiempo Estadía</label>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Tiempo Estadía (Real vs Estándar)</label>
                   <input type="text" id="cs-form-t-estadia" class="input-field" placeholder="00:00" readonly style="width: 100%; font-weight: bold; background: rgba(0,0,0,0.2);">
                 </div>
               </div>
