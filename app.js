@@ -1018,6 +1018,13 @@ function showApp() {
   if (loginCont) loginCont.classList.add('hidden');
   if (appCont) appCont.classList.remove('hidden');
   
+  if (typeof setupUserProfile === 'function') {
+    setupUserProfile();
+  }
+
+  // Ensure all main dropdowns in sidebar are open so sub-items are immediately visible
+  document.querySelectorAll('.sidebar-dropdown').forEach(d => d.classList.add('open'));
+
   // Safely trigger dashboard data loading in background
   try {
     loadDashboardData();
@@ -1025,7 +1032,7 @@ function showApp() {
     console.error("Error al cargar datos de inicio:", e);
   }
   
-  // Navigate to target view
+  // Navigate directly to dashboard view for Admin
   if (currentUser && currentUser.role === 'quality') {
     switchView('quality-control');
   } else if (currentUser && currentUser.role === 'imports') {
@@ -1033,7 +1040,7 @@ function showApp() {
   } else if (currentUser && currentUser.role === 'insumos') {
     switchView('log-physical');
   } else {
-    switchView('welcome');
+    switchView('dashboard');
   }
 }
 
@@ -1245,42 +1252,51 @@ async function apiFetch(endpoint, options = {}) {
 async function handleLogin(e) {
   if (e && e.preventDefault) e.preventDefault();
 
-  const usernameInput = (document.getElementById('username')?.value || 'jduran_admin').trim();
-  const passwordInput = document.getElementById('password')?.value || 'Jduran2026!';
+  const usernameInput = (document.getElementById('username')?.value || '').trim();
+  const passwordInput = document.getElementById('password')?.value || '';
   const loginError = document.getElementById('login-error');
-  
+  const btnLogin = document.getElementById('btn-login');
+
+  if (!usernameInput || !passwordInput) {
+    if (loginError) {
+      loginError.textContent = 'Por favor ingrese su usuario y contraseña';
+      loginError.classList.remove('hidden');
+    }
+    return false;
+  }
+
   if (loginError) loginError.classList.add('hidden');
-  showLoader('Autenticando...');
-  
+  showLoader('Iniciando sesión...');
+  if (btnLogin) btnLogin.disabled = true;
+
   try {
-    const data = await apiFetch('/api/login', {
+    const res = await fetch('/api/login', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: usernameInput, password: passwordInput })
     });
-    
-    if (data && data.token) {
-      token = data.token;
-      currentUser = data.user || { username: usernameInput, name: usernameInput, role: 'admin' };
-    } else {
-      token = 'guest-master-token-' + Date.now();
-      currentUser = { username: usernameInput || 'jduran_admin', name: usernameInput || 'Johnny Durán (Admin)', role: 'admin' };
+
+    const data = await res.json();
+
+    if (!res.ok || !data.success || !data.token) {
+      throw new Error(data.error || 'Usuario o contraseña incorrectos');
     }
+
+    token = data.token;
+    currentUser = data.user || { id: 'USR-ADMIN-01', username: 'jduran_admin', name: 'Johnny Durán', role: 'admin' };
 
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(currentUser));
-    
+
     setupUserProfile();
     showApp();
   } catch (err) {
-    console.warn("Aviso durante login:", err);
-    // Instant Fallback Admin Access
-    token = 'guest-master-token-' + Date.now();
-    currentUser = { username: usernameInput || 'jduran_admin', name: usernameInput || 'Johnny Durán (Admin)', role: 'admin' };
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    setupUserProfile();
-    showApp();
+    if (loginError) {
+      loginError.textContent = err.message || 'Usuario o contraseña incorrectos';
+      loginError.classList.remove('hidden');
+    }
   } finally {
+    if (btnLogin) btnLogin.disabled = false;
     hideLoader();
   }
   return false;
