@@ -852,11 +852,33 @@ input, button, select, textarea {
 }
 
 .table th {
-  font-weight: 600;
-  color: var(--text-muted);
-  background-color: rgba(15, 23, 42, 0.3);
+  font-weight: 700;
+  color: #f8fafc;
+  background-color: #0f172a;
   border-bottom: 2px solid var(--primary); /* Raya azul debajo de la cabecera */
 }
+
+/* High Contrast Header rules for Control de Turnos y Despachos */
+#cs-main-table thead th {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  font-weight: 800 !important;
+  font-size: 0.82rem !important;
+  padding: 12px 8px !important;
+  border-bottom: 2px solid #3b82f6 !important;
+}
+
+#cs-main-table thead th.col-turno { color: #60a5fa !important; }
+#cs-main-table thead th.col-vendedor { color: #34d399 !important; }
+#cs-main-table thead th.col-transporte { color: #fbbf24 !important; }
+#cs-main-table thead th.col-cliente { color: #38bdf8 !important; }
+#cs-main-table thead th.col-ferpagro { color: #10b981 !important; }
+#cs-main-table thead th.col-doyle1 { color: #60a5fa !important; }
+#cs-main-table thead th.col-nacional { color: #fbbf24 !important; }
+#cs-main-table thead th.col-sackett { color: #a78bfa !important; }
+#cs-main-table thead th.col-total { color: #34d399 !important; }
+#cs-main-table thead th.col-estadia { color: #f43f5e !important; }
+#cs-main-table thead th.col-estatus { color: #fbbf24 !important; }
 
 .table tbody tr {
   transition: var(--transition);
