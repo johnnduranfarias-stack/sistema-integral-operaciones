@@ -8825,8 +8825,10 @@ function renderCustomerServiceModule() {
       }
     }
 
-    const tType = record.transportType || 'Camión Pesado';
-    const status = record.estatus || 'ESPERA DE CARGA';
+    const now = new Date();
+    const liveTimeNow = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const isHOutSet = Boolean(record.hSalida && String(record.hSalida).trim());
+    const hOutBg = isHOutSet ? 'background: #fef08a !important; color: #854d0e !important; font-weight: bold !important; border: 2px solid #eab308 !important;' : '';
 
     tr.innerHTML = `
       <td style="text-align: center; padding: 4px;">
@@ -8871,17 +8873,20 @@ function renderCustomerServiceModule() {
         <input type="time" id="cs-grid-hingreso-${record.id}" class="input-field" value="${record.hIngreso || ''}" style="width: 90px; padding: 4px; text-align: center; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
       </td>
       <td style="padding: 4px; text-align: center;">
-        <input type="time" id="cs-grid-hsalida-${record.id}" class="input-field" value="${record.hSalida || ''}" style="width: 90px; padding: 4px; text-align: center; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
+        <input type="time" id="cs-grid-hsalida-${record.id}" class="input-field" value="${record.hSalida || ''}" placeholder="${liveTimeNow}" style="width: 90px; padding: 4px; text-align: center; font-family: monospace; ${hOutBg}" onchange="confirmCSDepartureTime('${record.id}')" onkeydown="if(event.key==='Enter'){ confirmCSDepartureTime('${record.id}'); }">
       </td>
       <td style="padding: 4px; text-align: center;">
         <div id="cs-grid-badge-${record.id}">${timeBadge}</div>
       </td>
       <td style="padding: 4px; text-align: center;">
-        <select id="cs-grid-estatus-${record.id}" class="input-field" style="width: 125px; padding: 4px; font-size: 0.76rem; font-weight: bold;" onchange="updateCSRowTotals('${record.id}')">
+        <select id="cs-grid-estatus-${record.id}" class="input-field" style="width: 145px; padding: 4px; font-size: 0.76rem; font-weight: bold;" onchange="updateCSRowTotals('${record.id}')">
           <option value="ESPERA DE CARGA" ${status === 'ESPERA DE CARGA' ? 'selected' : ''}>ESPERA DE CARGA</option>
           <option value="EN CARGA" ${status === 'EN CARGA' ? 'selected' : ''}>EN CARGA</option>
           <option value="EN BÁSCULA" ${status === 'EN BÁSCULA' ? 'selected' : ''}>EN BÁSCULA</option>
           <option value="DESPACHADO" ${status === 'DESPACHADO' ? 'selected' : ''}>DESPACHADO</option>
+          <option value="GUIA DE REMISIÓN" ${status === 'GUIA DE REMISIÓN' ? 'selected' : ''}>GUIA DE REMISIÓN</option>
+          <option value="NO CARGO EN FERPASUR" ${status === 'NO CARGO EN FERPASUR' ? 'selected' : ''}>NO CARGO EN FERPASUR</option>
+          <option value="CARGA MAÑANA" ${status === 'CARGA MAÑANA' ? 'selected' : ''}>CARGA MAÑANA</option>
           <option value="CANCELADO" ${status === 'CANCELADO' ? 'selected' : ''}>CANCELADO</option>
         </select>
       </td>
@@ -8903,8 +8908,43 @@ function renderCustomerServiceModule() {
     `;
     tbody.appendChild(tr);
   });
+
+let csLiveClockInterval = null;
+
+function startCSLiveClock() {
+  if (csLiveClockInterval) clearInterval(csLiveClockInterval);
+  csLiveClockInterval = setInterval(() => {
+    const now = new Date();
+    const liveTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    customerServiceRecords.forEach(r => {
+      const input = document.getElementById(`cs-grid-hsalida-${r.id}`);
+      if (input && !input.value && r.estatus !== 'DESPACHADO' && r.estatus !== 'CANCELADO' && r.estatus !== 'NO CARGO EN FERPASUR' && r.estatus !== 'CARGA MAÑANA') {
+        input.placeholder = liveTime;
+      }
+    });
+  }, 10000);
 }
-window.renderCustomerServiceModule = renderCustomerServiceModule;
+window.startCSLiveClock = startCSLiveClock;
+
+function confirmCSDepartureTime(id) {
+  const input = document.getElementById(`cs-grid-hsalida-${id}`);
+  if (!input) return;
+  
+  if (!input.value) {
+    const now = new Date();
+    input.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  }
+  
+  input.style.cssText = 'width: 90px; padding: 4px; text-align: center; font-family: monospace; background: #fef08a !important; color: #854d0e !important; font-weight: bold !important; border: 2px solid #eab308 !important;';
+  
+  const estatusSelect = document.getElementById(`cs-grid-estatus-${id}`);
+  if (estatusSelect && estatusSelect.value !== 'CANCELADO') {
+    estatusSelect.value = 'DESPACHADO';
+  }
+  
+  updateCSRowTotals(id);
+}
+window.confirmCSDepartureTime = confirmCSDepartureTime;
 
 function updateCSRowTotals(id, isManualTotal = false) {
   const fer = Number(document.getElementById(`cs-grid-ferpagro-${id}`)?.value) || 0;
