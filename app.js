@@ -978,13 +978,19 @@ function showLogin() {
 }
 
 function showApp() {
-  document.getElementById('login-container').classList.add('hidden');
-  document.getElementById('app-container').classList.remove('hidden');
+  const loginCont = document.getElementById('login-container');
+  const appCont = document.getElementById('app-container');
+  if (loginCont) loginCont.classList.add('hidden');
+  if (appCont) appCont.classList.remove('hidden');
   
-  // Load initial dashboard data
-  loadDashboardData();
+  // Safely trigger dashboard data loading in background
+  try {
+    loadDashboardData();
+  } catch (e) {
+    console.error("Error al cargar datos de inicio:", e);
+  }
   
-  // Navigate to welcome page by default, or quality-control for quality role, or imports-status for imports role
+  // Navigate to target view
   if (currentUser && currentUser.role === 'quality') {
     switchView('quality-control');
   } else if (currentUser && currentUser.role === 'imports') {
