@@ -66,7 +66,27 @@
         </div>
         <div id="login-error" class="error-message hidden">Usuario o contraseña incorrectos</div>
         <button type="submit" id="btn-login" class="btn btn-primary btn-block">Iniciar Sesión</button>
+        <button type="button" id="btn-reset-cache" class="btn btn-secondary btn-block" onclick="forceCleanResetApp()" style="margin-top: 10px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #cbd5e1; font-size: 0.85rem; padding: 8px;">🔄 Limpiar Caché y Restablecer</button>
       </form>
+      <script>
+        function forceCleanResetApp() {
+          try {
+            localStorage.clear();
+            sessionStorage.clear();
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(regs => {
+                regs.forEach(reg => reg.unregister());
+              });
+            }
+            if ('caches' in window) {
+              caches.keys().then(keys => {
+                keys.forEach(key => caches.delete(key));
+              });
+            }
+          } catch(e) {}
+          window.location.href = window.location.pathname + '?reset=' + Date.now();
+        }
+      </script>
 
       <!-- BOTON DESCARGAR APLICACION PARA CELULAR -->
       <div class="pwa-install-container" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.12); text-align: center;">
@@ -4258,6 +4278,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260803_v26"></script>
+  <script src="app.js?v=20260803_v27"></script>
 </body>
 </html>
