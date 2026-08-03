@@ -5,23 +5,23 @@
       "username": "jduran_admin",
       "alias": "jduran",
       "name": "Johnny Durán",
-      "passwordHash": "$2b$10$gHLWFpefY843Aj/Tx5vQLOeAFndlizxCStTRFL/fOkb3wJakAZTCG",
+      "passwordHash": "$2b$10$sDqzj4qiaSeZzzXSGjy2DOHmTHb6RUmNGt/L8ERNFLA9yjnbaS1sq",
       "role": "admin",
       "displayRole": "Administrador General",
       "activo": true,
-      "updatedAt": "2026-08-03T21:06:14.081Z"
+      "updatedAt": "2026-08-03T21:23:30.689Z"
     },
     "jduran": {
       "id": "USR-ADMIN-01",
       "username": "jduran_admin",
       "alias": "jduran",
       "name": "Johnny Durán",
-      "passwordHash": "$2b$10$gHLWFpefY843Aj/Tx5vQLOeAFndlizxCStTRFL/fOkb3wJakAZTCG",
+      "passwordHash": "$2b$10$sDqzj4qiaSeZzzXSGjy2DOHmTHb6RUmNGt/L8ERNFLA9yjnbaS1sq",
       "role": "admin",
       "displayRole": "Administrador General",
       "activo": true,
       "isAlias": true,
-      "updatedAt": "2026-08-03T21:06:14.084Z"
+      "updatedAt": "2026-08-03T21:23:30.691Z"
     },
     "lmerchan": {
       "name": "Luis Merchán",
@@ -58,12 +58,141 @@
       "passwordHash": "d344c34d6bc582c451640ddf0f5042e12eb79105d46fec030dc0d17282df1abe",
       "role": "insumos"
     },
-    "user_inactivo_test": {
-      "id": "USR-INACTIVO",
-      "username": "user_inactivo_test",
-      "passwordHash": "$2a$10$abcdefghijklmnopqrstuuu",
+    "admin": {
+      "name": "Administrador Ferpacific",
+      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
       "role": "viewer",
-      "activo": false
+      "mustChangePassword": true
     }
-  }
+  },
+  "credentials": [
+    {
+      "id": "1",
+      "category": "Sistema de Operaciones",
+      "name": "Administrador",
+      "username": "admin",
+      "password": "ValentinA041()"
+    },
+    {
+      "id": "2",
+      "category": "Sistema de Operaciones",
+      "name": "Logística",
+      "username": "grosas",
+      "password": "ValentinA041()"
+    },
+    {
+      "id": "3",
+      "category": "Sistema de Operaciones",
+      "name": "Calidad / Insumos",
+      "username": "binsumos",
+      "password": "ValentinA041()"
+    },
+    {
+      "id": "4",
+      "category": "Sistema de Operaciones",
+      "name": "Importaciones",
+      "username": "importaciones",
+      "password": "ValentinA041()"
+    },
+    {
+      "id": "5",
+      "category": "Correo Corporativo",
+      "name": "SMTP de Alertas (jduran)",
+      "username": "jduran@ferpacific.com",
+      "password": "ValentinA042"
+    },
+    {
+      "id": "6",
+      "category": "Correo Corporativo",
+      "name": "SMTP Soporte (lmerchan)",
+      "username": "lmerchan@ferpacific.com",
+      "password": "ValentinA042"
+    }
+  ],
+  "links": [
+    {
+      "id": "1",
+      "type": "Local",
+      "name": "Servidor Principal del Sistema",
+      "url": "/",
+      "desc": "Acceso al servidor web principal de operaciones en producción."
+    },
+    {
+      "id": "2",
+      "type": "Local",
+      "name": "Puerta de Enlace (Router Principal)",
+      "url": "http://192.168.79.1",
+      "desc": "Acceso de administración al enrutador de la oficina (Gateway local)."
+    },
+    {
+      "id": "3",
+      "type": "Local",
+      "name": "Servidor de Base de Datos Local",
+      "url": "http://192.168.79.100",
+      "desc": "Instancia local de base de datos SQL para el almacenamiento de registros."
+    },
+    {
+      "id": "4",
+      "type": "Local",
+      "name": "Servidor de Almacenamiento NAS",
+      "url": "http://192.168.79.10",
+      "desc": "Servidor centralizado local para respaldos y compartición de archivos corporativos."
+    },
+    {
+      "id": "5",
+      "type": "Local",
+      "name": "Impresora Térmica de Bodega",
+      "url": "http://192.168.79.200",
+      "desc": "Consola de administración web para la impresora de etiquetas Zebra."
+    },
+    {
+      "id": "6",
+      "type": "Externa",
+      "name": "Google Workspace Mail (Gmail)",
+      "url": "https://mail.google.com",
+      "desc": "Acceso al correo corporativo @ferpacific.com"
+    },
+    {
+      "id": "7",
+      "type": "Externa",
+      "name": "Consola de Administración de Google",
+      "url": "https://admin.google.com",
+      "desc": "Gestión de usuarios, políticas y dominios de Google Workspace."
+    },
+    {
+      "id": "8",
+      "type": "Externa",
+      "name": "Dropbox Web",
+      "url": "https://www.dropbox.com",
+      "desc": "Portal para visualizar y descargar los respaldos automatizados en la nube."
+    },
+    {
+      "id": "9",
+      "type": "Externa",
+      "name": "Portal Web Oficial Ferpacific",
+      "url": "https://www.ferpacific.com",
+      "desc": "Portal de la empresa y recursos públicos."
+    },
+    {
+      "id": "10",
+      "type": "Externa",
+      "name": "Portal Ecuapass (Aduanas)",
+      "url": "https://ecuapass.aduana.gob.ec",
+      "desc": "Sistema oficial de aduana para la consulta de importaciones y manifiestos."
+    },
+    {
+      "id": "11",
+      "type": "Externa",
+      "name": "SRI en Línea",
+      "url": "https://srienlinea.sri.gob.ec",
+      "desc": "Portal oficial del Servicio de Rentas Internas para facturación y declaraciones."
+    },
+    {
+      "id": "12",
+      "type": "Externa",
+      "name": "Portal de FormSubmit",
+      "url": "https://formsubmit.co",
+      "desc": "Servicio de reenvío, auditoría y respaldo de correos electrónicos SMTP."
+    }
+  ]
 }
