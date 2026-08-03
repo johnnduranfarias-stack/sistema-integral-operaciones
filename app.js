@@ -890,10 +890,13 @@ function switchView(viewName) {
   else if (viewName === 'quality-control') pageTitle.textContent = 'Control de Calidad (Liberación de Insumos)';
   else if (viewName === 'production-digitacion') pageTitle.textContent = 'Digitación de Registro de Producción';
   else if (viewName === 'prod-destajo') pageTitle.textContent = 'Reporte de Destajo y Nómina de Producción';
+  else if (viewName === 'customer-service') pageTitle.textContent = 'Atención al Cliente - Control de Turnos y Despachos';
   else if (viewName === 'log-physical-consumption') pageTitle.textContent = 'Movimientos de Sacos Vacíos (Ingresos y Consumos)';
 
   // Load view-specific data
-  if (viewName === 'prod-destajo') {
+  if (viewName === 'customer-service') {
+    loadCustomerServiceData();
+  } else if (viewName === 'prod-destajo') {
     renderProdDestajoView();
   } else if (viewName === 'inventory') {
     renderInventoryTable();
@@ -8642,6 +8645,409 @@ function triggerPWAInstall() {
   }
 }
 window.triggerPWAInstall = triggerPWAInstall;
+
+// --- CUSTOMER SERVICE (ATENCION AL CLIENTE) MODULE LOGIC ---
+let customerServiceRecords = [];
+
+async function loadCustomerServiceData() {
+  const dateInput = document.getElementById('cs-filter-date');
+  const statusInput = document.getElementById('cs-filter-status');
+  
+  if (dateInput && !dateInput.value) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+  }
+
+  const dateVal = dateInput ? dateInput.value : '';
+  const statusVal = statusInput ? statusInput.value : '';
+
+  try {
+    let url = `/api/customer-service?date=${dateVal}`;
+    if (statusVal) url += `&status=${encodeURIComponent(statusVal)}`;
+
+    const res = await apiFetch(url);
+    if (res && res.records) {
+      customerServiceRecords = res.records;
+      renderCustomerServiceModule();
+    }
+  } catch (err) {
+    console.error("Error al cargar datos de atención al cliente:", err);
+    alert("Error al cargar turnos: " + err.message);
+  }
+}
+window.loadCustomerServiceData = loadCustomerServiceData;
+
+function renderCustomerServiceModule() {
+  const tbody = document.getElementById('cs-table-body');
+  const countSpan = document.getElementById('cs-records-count');
+  
+  // KPI Elements
+  const statTurns = document.getElementById('cs-stat-total-turns');
+  const statSacos = document.getElementById('cs-stat-total-sacos');
+  const statAvgStay = document.getElementById('cs-stat-avg-stay');
+  const statWaiting = document.getElementById('cs-stat-waiting');
+
+  if (!customerServiceRecords || customerServiceRecords.length === 0) {
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="18" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
+            <span style="font-size: 32px; display: block; margin-bottom: 0.5rem;">🚚</span>
+            No hay turnos registrados para la fecha seleccionada.
+          </td>
+        </tr>
+      `;
+    }
+    if (countSpan) countSpan.textContent = '0 Registros';
+    if (statTurns) statTurns.textContent = '0';
+    if (statSacos) statSacos.textContent = '0';
+    if (statAvgStay) statAvgStay.textContent = '00:00 h';
+    if (statWaiting) statWaiting.textContent = '0';
+    return;
+  }
+
+  // Calculate KPIs
+  let totalSacosSum = 0;
+  let totalMinutesSum = 0;
+  let stayCount = 0;
+  let waitingCount = 0;
+
+  customerServiceRecords.forEach(r => {
+    totalSacosSum += (r.totalSacos || 0);
+    if (r.estatus === 'ESPERA DE CARGA') waitingCount++;
+
+    if (r.hIngreso && r.hSalida) {
+      const [hIn, mIn] = r.hIngreso.split(':').map(Number);
+      const [hOut, mOut] = r.hSalida.split(':').map(Number);
+      if (!isNaN(hIn) && !isNaN(mIn) && !isNaN(hOut) && !isNaN(mOut)) {
+        let diffMinutes = (hOut * 60 + mOut) - (hIn * 60 + mIn);
+        if (diffMinutes < 0) diffMinutes += 24 * 60;
+        totalMinutesSum += diffMinutes;
+        stayCount++;
+      }
+    }
+  });
+
+  if (statTurns) statTurns.textContent = customerServiceRecords.length.toLocaleString();
+  if (statSacos) statSacos.textContent = totalSacosSum.toLocaleString();
+  if (statWaiting) statWaiting.textContent = waitingCount.toLocaleString();
+
+  if (statAvgStay) {
+    if (stayCount > 0) {
+      const avgMin = Math.round(totalMinutesSum / stayCount);
+      const hrs = Math.floor(avgMin / 60);
+      const mins = avgMin % 60;
+      statAvgStay.textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')} h`;
+    } else {
+      statAvgStay.textContent = '00:00 h';
+    }
+  }
+
+  if (countSpan) countSpan.textContent = `${customerServiceRecords.length} Registros`;
+
+  // Render Table
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  customerServiceRecords.forEach(record => {
+    const tr = document.createElement('tr');
+    
+    // Status Badge Styling
+    let badgeClass = 'background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid #3b82f6;';
+    if (record.estatus === 'EN CARGA') {
+      badgeClass = 'background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid #f59e0b;';
+    } else if (record.estatus === 'EN BÁSCULA') {
+      badgeClass = 'background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid #8b5cf6;';
+    } else if (record.estatus === 'DESPACHADO') {
+      badgeClass = 'background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;';
+    } else if (record.estatus === 'CANCELADO') {
+      badgeClass = 'background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444;';
+    }
+
+    tr.innerHTML = `
+      <td style="text-align: center; font-weight: bold; color: #3b82f6; font-size: 0.9rem;">${record.turno}</td>
+      <td style="font-weight: 600; color: var(--text-main);">${escapeHTML(record.driver || '')}</td>
+      <td style="text-align: center; font-family: monospace; font-weight: bold; background: rgba(30, 41, 59, 0.3); border-radius: 4px;">${escapeHTML(record.plate || '')}</td>
+      <td style="font-weight: 600; color: #38bdf8;">${escapeHTML(record.client || '')}</td>
+      <td style="text-align: center; color: #10b981; font-weight: 600;">${record.ferpagro || '-'}</td>
+      <td style="text-align: center; color: #3b82f6; font-weight: 600;">${record.doyle1 || '-'}</td>
+      <td style="text-align: center; color: #f59e0b; font-weight: 600;">${record.nacional || '-'}</td>
+      <td style="text-align: center; color: #8b5cf6; font-weight: 600;">${record.sackett || '-'}</td>
+      <td style="text-align: center; font-weight: bold; font-size: 0.9rem; color: #10b981;">${(record.totalSacos || 0).toLocaleString()}</td>
+      <td style="text-align: center; font-family: monospace;">${record.hIngreso || '-'}</td>
+      <td style="text-align: center; font-family: monospace;">${record.hSalida || '-'}</td>
+      <td style="text-align: center; font-weight: bold; font-family: monospace; color: #f59e0b;">${record.tEstadia || '-'}</td>
+      <td style="text-align: center;">
+        <span style="padding: 3px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: bold; display: inline-block; cursor: pointer;" onclick="quickUpdateCSStatus('${record.id}', '${record.estatus}')" title="Haga clic para cambiar estatus">
+          <span style="padding: 2px 6px; border-radius: 10px; ${badgeClass}">
+            ${record.estatus} ▾
+          </span>
+        </span>
+      </td>
+      <td style="text-align: center; font-size: 0.78rem; color: var(--text-muted);">${record.fecha || '-'}</td>
+      <td style="text-align: right; font-family: monospace;">${(record.pNeto || 0).toFixed(2)}</td>
+      <td style="text-align: right; font-family: monospace;">${(record.pProm || 0).toFixed(2)}</td>
+      <td style="text-align: center; font-family: monospace; font-weight: 600; color: #cbd5e1;">${escapeHTML(record.ticket || '-')}</td>
+      <td style="text-align: center;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+          <button class="btn btn-sm btn-outline" style="padding: 2px 6px; font-size: 0.75rem;" onclick="openEditCustomerServiceModal('${record.id}')" title="Editar Turno">✏️</button>
+          <button class="btn btn-sm btn-outline" style="padding: 2px 6px; font-size: 0.75rem; color: #ef4444; border-color: #ef4444;" onclick="deleteCSRecord('${record.id}')" title="Eliminar Turno">🗑️</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+window.renderCustomerServiceModule = renderCustomerServiceModule;
+
+function filterCustomerServiceTable() {
+  const searchInput = document.getElementById('cs-search-input');
+  if (!searchInput) return;
+  const q = searchInput.value.toLowerCase().trim();
+  
+  if (!q) {
+    renderCustomerServiceModule();
+    return;
+  }
+
+  const tbody = document.getElementById('cs-table-body');
+  const rows = tbody.querySelectorAll('tr');
+  
+  rows.forEach(tr => {
+    const text = tr.textContent.toLowerCase();
+    tr.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+window.filterCustomerServiceTable = filterCustomerServiceTable;
+
+function calculateCSTotals() {
+  const ferpagro = Number(document.getElementById('cs-form-ferpagro')?.value) || 0;
+  const doyle1 = Number(document.getElementById('cs-form-doyle1')?.value) || 0;
+  const nacional = Number(document.getElementById('cs-form-nacional')?.value) || 0;
+  const sackett = Number(document.getElementById('cs-form-sackett')?.value) || 0;
+  
+  const totalInput = document.getElementById('cs-form-total-sacos');
+  if (totalInput) {
+    totalInput.value = ferpagro + doyle1 + nacional + sackett;
+  }
+
+  const hIn = document.getElementById('cs-form-h-ingreso')?.value || '';
+  const hOut = document.getElementById('cs-form-h-salida')?.value || '';
+  const tEstadiaInput = document.getElementById('cs-form-t-estadia');
+
+  if (hIn && hOut && tEstadiaInput) {
+    const [h1, m1] = hIn.split(':').map(Number);
+    const [h2, m2] = hOut.split(':').map(Number);
+    if (!isNaN(h1) && !isNaN(m1) && !isNaN(h2) && !isNaN(m2)) {
+      let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
+      if (diff < 0) diff += 24 * 60;
+      const hrs = Math.floor(diff / 60);
+      const mins = diff % 60;
+      tEstadiaInput.value = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+    } else {
+      tEstadiaInput.value = '00:00';
+    }
+  }
+}
+window.calculateCSTotals = calculateCSTotals;
+
+function openNewCustomerServiceModal() {
+  document.getElementById('cs-form-id').value = '';
+  document.getElementById('cs-modal-title').innerHTML = '<span>📋</span> Registrar Nuevo Turno de Atención';
+  
+  const nextTurn = customerServiceRecords.length + 1;
+  document.getElementById('cs-form-turno').value = nextTurn;
+  document.getElementById('cs-form-fecha').value = document.getElementById('cs-filter-date')?.value || new Date().toISOString().split('T')[0];
+  document.getElementById('cs-form-estatus').value = 'ESPERA DE CARGA';
+  
+  document.getElementById('cs-form-driver').value = '';
+  document.getElementById('cs-form-plate').value = '';
+  document.getElementById('cs-form-client').value = '';
+  
+  document.getElementById('cs-form-ferpagro').value = 0;
+  document.getElementById('cs-form-doyle1').value = 0;
+  document.getElementById('cs-form-nacional').value = 0;
+  document.getElementById('cs-form-sackett').value = 0;
+  document.getElementById('cs-form-total-sacos').value = 0;
+  
+  const now = new Date();
+  const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  document.getElementById('cs-form-h-ingreso').value = timeStr;
+  document.getElementById('cs-form-h-salida').value = '';
+  document.getElementById('cs-form-t-estadia').value = '';
+  
+  document.getElementById('cs-form-p-neto').value = '0.00';
+  document.getElementById('cs-form-p-prom').value = '0.00';
+  document.getElementById('cs-form-ticket').value = '';
+
+  document.getElementById('modal-customer-service').classList.remove('hidden');
+}
+window.openNewCustomerServiceModal = openNewCustomerServiceModal;
+
+function openEditCustomerServiceModal(id) {
+  const record = customerServiceRecords.find(r => r.id === id);
+  if (!record) return;
+
+  document.getElementById('cs-form-id').value = record.id;
+  document.getElementById('cs-modal-title').innerHTML = '<span>✏️</span> Editar Turno de Atención';
+  
+  document.getElementById('cs-form-turno').value = record.turno;
+  document.getElementById('cs-form-fecha').value = record.fecha;
+  document.getElementById('cs-form-estatus').value = record.estatus;
+  
+  document.getElementById('cs-form-driver').value = record.driver || '';
+  document.getElementById('cs-form-plate').value = record.plate || '';
+  document.getElementById('cs-form-client').value = record.client || '';
+  
+  document.getElementById('cs-form-ferpagro').value = record.ferpagro || 0;
+  document.getElementById('cs-form-doyle1').value = record.doyle1 || 0;
+  document.getElementById('cs-form-nacional').value = record.nacional || 0;
+  document.getElementById('cs-form-sackett').value = record.sackett || 0;
+  document.getElementById('cs-form-total-sacos').value = record.totalSacos || 0;
+  
+  document.getElementById('cs-form-h-ingreso').value = record.hIngreso || '';
+  document.getElementById('cs-form-h-salida').value = record.hSalida || '';
+  document.getElementById('cs-form-t-estadia').value = record.tEstadia || '';
+  
+  document.getElementById('cs-form-p-neto').value = record.pNeto || '0.00';
+  document.getElementById('cs-form-p-prom').value = record.pProm || '0.00';
+  document.getElementById('cs-form-ticket').value = record.ticket || '';
+
+  document.getElementById('modal-customer-service').classList.remove('hidden');
+}
+window.openEditCustomerServiceModal = openEditCustomerServiceModal;
+
+function closeCustomerServiceModal() {
+  document.getElementById('modal-customer-service').classList.add('hidden');
+}
+window.closeCustomerServiceModal = closeCustomerServiceModal;
+
+async function handleCustomerServiceSubmit(event) {
+  event.preventDefault();
+  const id = document.getElementById('cs-form-id').value;
+  
+  const payload = {
+    turno: Number(document.getElementById('cs-form-turno').value),
+    fecha: document.getElementById('cs-form-fecha').value,
+    estatus: document.getElementById('cs-form-estatus').value,
+    driver: document.getElementById('cs-form-driver').value,
+    plate: document.getElementById('cs-form-plate').value,
+    client: document.getElementById('cs-form-client').value,
+    ferpagro: Number(document.getElementById('cs-form-ferpagro').value) || 0,
+    doyle1: Number(document.getElementById('cs-form-doyle1').value) || 0,
+    nacional: Number(document.getElementById('cs-form-nacional').value) || 0,
+    sackett: Number(document.getElementById('cs-form-sackett').value) || 0,
+    totalSacos: Number(document.getElementById('cs-form-total-sacos').value) || 0,
+    hIngreso: document.getElementById('cs-form-h-ingreso').value,
+    hSalida: document.getElementById('cs-form-h-salida').value,
+    tEstadia: document.getElementById('cs-form-t-estadia').value,
+    pNeto: Number(document.getElementById('cs-form-p-neto').value) || 0,
+    pProm: Number(document.getElementById('cs-form-p-prom').value) || 0,
+    ticket: document.getElementById('cs-form-ticket').value
+  };
+
+  showLoader('Guardando turno...');
+  try {
+    let url = '/api/customer-service';
+    let method = 'POST';
+    if (id) {
+      url += '/' + id;
+      method = 'PUT';
+    }
+
+    const res = await apiFetch(url, {
+      method: method,
+      body: JSON.stringify(payload)
+    });
+
+    if (res && res.success) {
+      closeCustomerServiceModal();
+      await loadCustomerServiceData();
+    } else {
+      alert("Error: " + (res.error || 'No se pudo guardar'));
+    }
+  } catch (err) {
+    alert("Error al guardar turno: " + err.message);
+  } finally {
+    hideLoader();
+  }
+}
+window.handleCustomerServiceSubmit = handleCustomerServiceSubmit;
+
+async function quickUpdateCSStatus(id, currentStatus) {
+  const statuses = ['ESPERA DE CARGA', 'EN CARGA', 'EN BÁSCULA', 'DESPACHADO', 'CANCELADO'];
+  const currentIndex = statuses.indexOf(currentStatus);
+  const nextStatus = statuses[(currentIndex + 1) % statuses.length];
+
+  try {
+    const res = await apiFetch('/api/customer-service/' + id, {
+      method: 'PUT',
+      body: JSON.stringify({ estatus: nextStatus })
+    });
+    if (res && res.success) {
+      await loadCustomerServiceData();
+    }
+  } catch (err) {
+    alert("Error al cambiar estatus: " + err.message);
+  }
+}
+window.quickUpdateCSStatus = quickUpdateCSStatus;
+
+async function deleteCSRecord(id) {
+  if (!confirm("¿Está seguro de eliminar este turno de la lista?")) return;
+  showLoader('Eliminando turno...');
+  try {
+    const res = await apiFetch('/api/customer-service/' + id, { method: 'DELETE' });
+    if (res && res.success) {
+      await loadCustomerServiceData();
+    }
+  } catch (err) {
+    alert("Error al eliminar turno: " + err.message);
+  } finally {
+    hideLoader();
+  }
+}
+window.deleteCSRecord = deleteCSRecord;
+
+function exportCustomerServiceExcel() {
+  if (!customerServiceRecords || customerServiceRecords.length === 0) {
+    alert("No hay turnos para exportar.");
+    return;
+  }
+
+  const exportData = customerServiceRecords.map(r => ({
+    "TURNO": r.turno,
+    "TRANSPORTISTA": r.driver,
+    "PLACA": r.plate,
+    "CLIENTE": r.client,
+    "FERPAGRO": r.ferpagro || 0,
+    "DOYLE1": r.doyle1 || 0,
+    "NACIONAL": r.nacional || 0,
+    "SACKETT": r.sackett || 0,
+    "T. SACOS": r.totalSacos || 0,
+    "H / INGRESO": r.hIngreso || '',
+    "H / SALIDA": r.hSalida || '',
+    "T. ESTADÍA": r.tEstadia || '',
+    "ESTATUS": r.estatus || '',
+    "FECHA": r.fecha || '',
+    "P. NETO": r.pNeto || 0,
+    "P. PROM": r.pProm || 0,
+    "# TICKET": r.ticket || ''
+  }));
+
+  const dateVal = document.getElementById('cs-filter-date')?.value || new Date().toISOString().split('T')[0];
+  const ws = XLSX.utils.json_to_sheet(exportData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Atencion_al_Cliente");
+  XLSX.writeFile(wb, `Reporte_Atencion_Cliente_${dateVal}.xlsx`);
+}
+window.exportCustomerServiceExcel = exportCustomerServiceExcel;
+
+function exportCustomerServicePDF() {
+  window.print();
+}
+window.exportCustomerServicePDF = exportCustomerServicePDF;
+
 
 
 
