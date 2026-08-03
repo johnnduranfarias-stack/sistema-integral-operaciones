@@ -1754,10 +1754,10 @@
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <label style="font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--text-muted);">Fecha de Registro:</label>
                 <input type="date" id="ferpasur-log-date" class="form-control" style="width: 140px; padding: 4px 8px; font-size: 13px;" onchange="loadFerpasurConsumptions()">
-                <input type="text" id="search-ferpasur-grid" placeholder="Buscar código o descripción..." class="form-control" style="width: 200px; padding: 4px 8px; font-size: 13px;" oninput="renderFerpasurGrid()">
-                <button type="button" class="btn btn-sm btn-success" onclick="exportFerpasurMovementsExcel()" style="font-size: 12px; padding: 4px 10px; font-weight: 600;" title="Descargar planilla en Excel solo de los items que tuvieron movimientos, dañados o ingresos">
-                  📊 Exportar Excel Movimientos
+                <button type="button" class="btn btn-sm btn-success" onclick="exportFerpasurMovementsExcel()" style="font-size: 12.5px; padding: 5px 12px; font-weight: bold; background: #10b981; border: none; color: #ffffff; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; white-space: nowrap;" title="Descargar Planilla en Excel (Solo con Movimientos/Dañados/Ingresos)">
+                  📥 Descargar Excel
                 </button>
+                <input type="text" id="search-ferpasur-grid" placeholder="Buscar código o descripción..." class="form-control" style="width: 200px; padding: 4px 8px; font-size: 13px;" oninput="renderFerpasurGrid()">
               </div>
             </div>
             <!-- Locked status banner alert -->
