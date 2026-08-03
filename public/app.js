@@ -208,9 +208,40 @@ window.togglePasswordVisibility = togglePasswordVisibility;
   document.querySelectorAll('.dropdown-header').forEach(header => {
     header.addEventListener('click', () => {
       const dropdown = header.closest('.sidebar-dropdown');
-      dropdown.classList.toggle('open');
+      if (dropdown) dropdown.classList.toggle('open');
     });
   });
+
+function toggleSidebarDropdown(headerEl) {
+  if (!headerEl) return;
+  const dropdown = headerEl.closest('.sidebar-dropdown');
+  if (dropdown) {
+    dropdown.classList.toggle('open');
+  }
+}
+window.toggleSidebarDropdown = toggleSidebarDropdown;
+
+// Global Delegated Listener for Sidebar clicks (safeguard for all devices)
+document.addEventListener('click', (e) => {
+  const header = e.target.closest('.dropdown-header');
+  if (header) {
+    const dropdown = header.closest('.sidebar-dropdown');
+    if (dropdown) dropdown.classList.toggle('open');
+    return;
+  }
+
+  const link = e.target.closest('.sidebar-menu a[href^="#"]');
+  if (link) {
+    const href = link.getAttribute('href');
+    if (href && href.length > 1) {
+      const targetView = href.substring(1);
+      if (typeof switchView === 'function') {
+        e.preventDefault();
+        switchView(targetView);
+      }
+    }
+  }
+});
 
   const menuBindings = {
     'dashboard': 'menu-dashboard',
