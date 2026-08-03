@@ -691,6 +691,152 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    // --- CUSTOMER SERVICE (ATENCION AL CLIENTE) ENDPOINTS ---
+    if (pathname === '/api/customer-service' && req.method === 'GET') {
+      try {
+        const db = readDB();
+        if (!db.customerServiceRecords) db.customerServiceRecords = [];
+        
+        const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+        const dateFilter = parsedUrl.searchParams.get('date') || '';
+        const search = parsedUrl.searchParams.get('search') || '';
+        const statusFilter = parsedUrl.searchParams.get('status') || '';
+
+        let records = db.customerServiceRecords;
+
+        if (dateFilter) {
+          records = records.filter(r => r.fecha === dateFilter);
+        }
+        if (statusFilter) {
+          records = records.filter(r => r.estatus === statusFilter);
+        }
+        if (search) {
+          const q = search.toLowerCase().trim();
+          records = records.filter(r => 
+            (r.driver && r.driver.toLowerCase().includes(q)) ||
+            (r.plate && r.plate.toLowerCase().includes(q)) ||
+            (r.client && r.client.toLowerCase().includes(q)) ||
+            (r.ticket && String(r.ticket).toLowerCase().includes(q))
+          );
+        }
+
+        res.writeHead(200);
+        res.end(JSON.stringify({ success: true, records: records }));
+      } catch (err) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+      return;
+    }
+
+    if (pathname === '/api/customer-service' && req.method === 'POST') {
+      try {
+        const body = await readJSONBody(req);
+        const db = readDB();
+        if (!db.customerServiceRecords) db.customerServiceRecords = [];
+
+        const newId = 'CS-' + Date.now();
+        const record = {
+          id: newId,
+          turno: Number(body.turno) || (db.customerServiceRecords.length + 1),
+          driver: String(body.driver || '').trim(),
+          plate: String(body.plate || '').trim().toUpperCase(),
+          client: String(body.client || '').trim().toUpperCase(),
+          ferpagro: Number(body.ferpagro) || 0,
+          doyle1: Number(body.doyle1) || 0,
+          nacional: Number(body.nacional) || 0,
+          sackett: Number(body.sackett) || 0,
+          totalSacos: Number(body.totalSacos) || 0,
+          hIngreso: String(body.hIngreso || '').trim(),
+          hSalida: String(body.hSalida || '').trim(),
+          tEstadia: String(body.tEstadia || '').trim(),
+          estatus: String(body.estatus || 'ESPERA DE CARGA').trim(),
+          fecha: String(body.fecha || new Date().toISOString().split('T')[0]).trim(),
+          pNeto: Number(body.pNeto) || 0,
+          pProm: Number(body.pProm) || 0,
+          ticket: String(body.ticket || '').trim(),
+          createdAt: new Date().toISOString()
+        };
+
+        db.customerServiceRecords.unshift(record);
+        writeDB(db);
+
+        res.writeHead(200);
+        res.end(JSON.stringify({ success: true, record, message: 'Turno registrado exitosamente.' }));
+      } catch (err) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+      return;
+    }
+
+    if (pathname.startsWith('/api/customer-service/') && req.method === 'PUT') {
+      try {
+        const id = pathname.replace('/api/customer-service/', '').trim();
+        const body = await readJSONBody(req);
+        const db = readDB();
+        if (!db.customerServiceRecords) db.customerServiceRecords = [];
+
+        const index = db.customerServiceRecords.findIndex(r => r.id === id);
+        if (index === -1) {
+          res.writeHead(404);
+          res.end(JSON.stringify({ success: false, error: 'Registro no encontrado.' }));
+          return;
+        }
+
+        const existing = db.customerServiceRecords[index];
+        const updated = {
+          ...existing,
+          turno: body.turno !== undefined ? Number(body.turno) : existing.turno,
+          driver: body.driver !== undefined ? String(body.driver).trim() : existing.driver,
+          plate: body.plate !== undefined ? String(body.plate).trim().toUpperCase() : existing.plate,
+          client: body.client !== undefined ? String(body.client).trim().toUpperCase() : existing.client,
+          ferpagro: body.ferpagro !== undefined ? Number(body.ferpagro) : existing.ferpagro,
+          doyle1: body.doyle1 !== undefined ? Number(body.doyle1) : existing.doyle1,
+          nacional: body.nacional !== undefined ? Number(body.nacional) : existing.nacional,
+          sackett: body.sackett !== undefined ? Number(body.sackett) : existing.sackett,
+          totalSacos: body.totalSacos !== undefined ? Number(body.totalSacos) : existing.totalSacos,
+          hIngreso: body.hIngreso !== undefined ? String(body.hIngreso).trim() : existing.hIngreso,
+          hSalida: body.hSalida !== undefined ? String(body.hSalida).trim() : existing.hSalida,
+          tEstadia: body.tEstadia !== undefined ? String(body.tEstadia).trim() : existing.tEstadia,
+          estatus: body.estatus !== undefined ? String(body.estatus).trim() : existing.estatus,
+          fecha: body.fecha !== undefined ? String(body.fecha).trim() : existing.fecha,
+          pNeto: body.pNeto !== undefined ? Number(body.pNeto) : existing.pNeto,
+          pProm: body.pProm !== undefined ? Number(body.pProm) : existing.pProm,
+          ticket: body.ticket !== undefined ? String(body.ticket).trim() : existing.ticket,
+          updatedAt: new Date().toISOString()
+        };
+
+        db.customerServiceRecords[index] = updated;
+        writeDB(db);
+
+        res.writeHead(200);
+        res.end(JSON.stringify({ success: true, record: updated, message: 'Turno actualizado exitosamente.' }));
+      } catch (err) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+      return;
+    }
+
+    if (pathname.startsWith('/api/customer-service/') && req.method === 'DELETE') {
+      try {
+        const id = pathname.replace('/api/customer-service/', '').trim();
+        const db = readDB();
+        if (!db.customerServiceRecords) db.customerServiceRecords = [];
+
+        db.customerServiceRecords = db.customerServiceRecords.filter(r => r.id !== id);
+        writeDB(db);
+
+        res.writeHead(200);
+        res.end(JSON.stringify({ success: true, message: 'Registro eliminado exitosamente.' }));
+      } catch (err) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+      return;
+    }
+
     // --- DESTAJO MODULE ENDPOINTS ---
     if (pathname === '/api/destajo/data' && req.method === 'GET') {
       try {
