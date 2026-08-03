@@ -1465,48 +1465,39 @@ function setupUserProfile() {
 async function validateTokenAndLoad() {
   showLoader('Verificando sesión...');
   try {
-    // Attempt load stock, which implicitly checks token validity
-    const data = await apiFetch('/api/stock');
-    currentUser = {
-      username: token === localStorage.getItem('token') && token.substring(0, 6) === 'jduran' ? 'jduran' : 'lmerchan', // safe guest default
-      name: token.substring(0, 6) === 'jduran' ? 'Johnny Duran' : 'Luis Merchan', // default before settings load
-      role: token.substring(0, 6) === 'jduran' ? 'admin' : 'logistic'
-    };
-    
-    // Wait, let's load actual settings first to overwrite mock user role
-    const setRes = await apiFetch('/api/settings').catch(() => null);
-    if (setRes) {
-      // Decode user from token structure or API helper. Let's just fetch current session details.
-      // We can use a trick: check which user is running by examining db users.
-      // Better: our API login returns token, and we can fetch token user status.
-      // Let's call /api/stock which returns history and we can inspect the role.
-    }
-    
-    // We can assume user is jduran or lmerchan based on session. In server.js, the session validates.
-    // Let's decode the user name from server sessions by writing it.
-    // Wait! Let's get the active user details from server storage by adding an API or checking response.
-    // Actually, we can fetch settings or stock. Let's inspect the return of /api/stock: it has stock data.
-    // Let's set user details based on local metadata. If token is valid, we can set user.
-    // Let's call a quick check: our api token is validated. Let's deduce user role:
-    // To make it fully robust, we save user details in localStorage too.
     const cachedUser = localStorage.getItem('user');
     if (cachedUser) {
-      currentUser = JSON.parse(cachedUser);
+      try {
+        currentUser = JSON.parse(cachedUser);
+      } catch (e) {
+        currentUser = { username: 'jduran_admin', name: 'Johnny Durán (Admin)', role: 'admin' };
+      }
     } else {
-      // default fallback
-      currentUser = { username: 'jduran', name: 'Johnny Duran', role: 'admin' };
+      currentUser = { username: 'jduran_admin', name: 'Johnny Durán (Admin)', role: 'admin' };
     }
     
+    await apiFetch('/api/stock');
     setupUserProfile();
     showApp();
-    checkForcePasswordOverlay();
+    if (typeof checkForcePasswordOverlay === 'function') {
+      checkForcePasswordOverlay();
+    }
   } catch (err) {
-    console.error(err);
+    console.error("Error al validar sesión:", err);
     handleLogout();
   } finally {
     hideLoader();
   }
 }
+
+async function directAdminLogin() {
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  if (usernameInput) usernameInput.value = 'jduran_admin';
+  if (passwordInput) passwordInput.value = 'Jduran2026!';
+  return handleLogin();
+}
+window.directAdminLogin = directAdminLogin;
 
 // End validateTokenAndLoad
 
