@@ -118,9 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Event Listeners Setup
 function setupEventListeners() {
-  // Login form
-  document.getElementById('login-form').addEventListener('submit', handleLogin);
-
   // Close bag art modal
   const closeArtBtn = document.getElementById('modal-bag-art-close');
   if (closeArtBtn) {
@@ -1214,8 +1211,13 @@ async function apiFetch(endpoint, options = {}) {
 }
 
 // LOGIN FLOW
+let isLoggingIn = false;
+
 async function handleLogin(e) {
   if (e && e.preventDefault) e.preventDefault();
+  if (isLoggingIn) return false;
+  isLoggingIn = true;
+
   const usernameInput = (document.getElementById('username')?.value || '').trim();
   const passwordInput = document.getElementById('password')?.value || '';
   const loginError = document.getElementById('login-error');
@@ -1260,8 +1262,10 @@ async function handleLogin(e) {
       loginError.classList.remove('hidden');
     }
   } finally {
+    isLoggingIn = false;
     hideLoader();
   }
+  return false;
 }
 window.handleLogin = handleLogin;
 
