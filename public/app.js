@@ -8864,7 +8864,7 @@ function renderCustomerServiceModule() {
         <input type="number" id="cs-grid-sackett-${record.id}" class="input-field" value="${record.sackett || 0}" min="0" style="width: 55px; padding: 4px; text-align: center; color: #8b5cf6; font-weight: 600;" oninput="updateCSRowTotals('${record.id}')">
       </td>
       <td style="padding: 4px; text-align: center; font-weight: bold; font-size: 0.9rem; color: #10b981;">
-        <span id="cs-grid-tot-${record.id}">${(record.totalSacos || 0).toLocaleString()}</span>
+        <input type="number" id="cs-grid-tot-${record.id}" class="input-field" value="${record.totalSacos || 0}" min="0" style="width: 70px; padding: 4px; text-align: center; color: #10b981; font-weight: bold;" oninput="updateCSRowTotals('${record.id}', true)">
       </td>
       <td style="padding: 4px; text-align: center;">
         <input type="time" id="cs-grid-hingreso-${record.id}" class="input-field" value="${record.hIngreso || ''}" style="width: 90px; padding: 4px; text-align: center; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
@@ -8905,14 +8905,18 @@ function renderCustomerServiceModule() {
 }
 window.renderCustomerServiceModule = renderCustomerServiceModule;
 
-function updateCSRowTotals(id) {
+function updateCSRowTotals(id, isManualTotal = false) {
   const fer = Number(document.getElementById(`cs-grid-ferpagro-${id}`)?.value) || 0;
   const doy = Number(document.getElementById(`cs-grid-doyle1-${id}`)?.value) || 0;
   const nac = Number(document.getElementById(`cs-grid-nacional-${id}`)?.value) || 0;
   const sac = Number(document.getElementById(`cs-grid-sackett-${id}`)?.value) || 0;
   
-  const totSpan = document.getElementById(`cs-grid-tot-${id}`);
-  if (totSpan) totSpan.textContent = (fer + doy + nac + sac).toLocaleString();
+  if (!isManualTotal) {
+    const totInput = document.getElementById(`cs-grid-tot-${id}`);
+    if (totInput) {
+      totInput.value = fer + doy + nac + sac;
+    }
+  }
 
   const tType = document.getElementById(`cs-grid-type-${id}`)?.value || 'Camión Pesado';
   const stdMin = getTransportStandardMinutes(tType);
@@ -9005,7 +9009,10 @@ async function saveAllCSRecordsFromGrid() {
       const doyle1 = Number(document.getElementById(`cs-grid-doyle1-${id}`)?.value) || 0;
       const nacional = Number(document.getElementById(`cs-grid-nacional-${id}`)?.value) || 0;
       const sackett = Number(document.getElementById(`cs-grid-sackett-${id}`)?.value) || 0;
-      const totalSacos = ferpagro + doyle1 + nacional + sackett;
+      
+      const manualTotVal = Number(document.getElementById(`cs-grid-tot-${id}`)?.value);
+      const totalSacos = !isNaN(manualTotVal) && manualTotVal > 0 ? manualTotVal : (ferpagro + doyle1 + nacional + sackett);
+
       const hIngreso = document.getElementById(`cs-grid-hingreso-${id}`)?.value || r.hIngreso;
       const hSalida = document.getElementById(`cs-grid-hsalida-${id}`)?.value || r.hSalida;
       const estatus = document.getElementById(`cs-grid-estatus-${id}`)?.value || r.estatus;
