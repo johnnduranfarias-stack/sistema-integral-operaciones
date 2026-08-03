@@ -9048,6 +9048,155 @@ function exportCustomerServicePDF() {
 }
 window.exportCustomerServicePDF = exportCustomerServicePDF;
 
+// --- EXPORT PLANILLA DE CONSUMOS Y MERMAS (MOVIMIENTOS / DAÑADOS / INGRESOS) ---
+function exportFerpasurMovementsExcel() {
+  const dateVal = document.getElementById('ferpasur-log-date')?.value || new Date().toISOString().substring(0, 10);
+  
+  if (!currentStock || currentStock.length === 0) {
+    alert("No hay productos en inventario para exportar.");
+    return;
+  }
+
+  // Filter ONLY items with movements, damaged items, or entries
+  const filteredItems = currentStock.filter(item => {
+    const temp = ferpasurTempConsumptions[item.code] || {};
+    const totalEgresos = (temp.ferpagro || 0) + (temp.doyle1 || 0) + (temp.doyle2 || 0) + (temp.nacional || 0) + (temp.sackett || 0) + (temp.launica || 0) + (temp.storeocean || 0) + (temp.otras || 0) + (temp.clientes || 0) + (temp.damaged || 0);
+    const totalIngresos = (temp.interama || 0) + (temp.sacoplast || 0) + (temp.plasticsack || 0) + (temp.reysac || 0);
+    const hasObs = (temp.observation || '').trim().length > 0;
+
+    return totalEgresos > 0 || totalIngresos > 0 || (temp.damaged || 0) > 0 || hasObs;
+  });
+
+  if (filteredItems.length === 0) {
+    alert(`No se registraron movimientos, dañados ni ingresos para la fecha ${dateVal}.`);
+    return;
+  }
+
+  // Row 1: Group Headers
+  const row1 = [
+    "Código",
+    "Descripción Producto",
+    "Saldos Iniciales", "",
+    "Consumos Envasadoras / Salidas (Egresos)", "", "", "", "", "", "", "", "", "",
+    "Entregas Proveedores / Entradas (Ingresos)", "", "", "",
+    "Observaciones / Novedades",
+    "Saldos Finales", ""
+  ];
+
+  // Row 2: Sub-headers
+  const row2 = [
+    "Código",
+    "Descripción Producto",
+    "Sistema",
+    "Físico",
+    "Ferpagro",
+    "Doyle 1",
+    "Doyle 2",
+    "Nacional",
+    "Sackett",
+    "La Única",
+    "Storeocean",
+    "Otras Bod.",
+    "Clientes",
+    "Dañados",
+    "INTERAMA",
+    "SACOPLAST",
+    "PLASTICSACK",
+    "REYSAC",
+    "Observaciones / Novedades",
+    "Final Sist.",
+    "Final Fís."
+  ];
+
+  // Data rows
+  const dataRows = filteredItems.map(item => {
+    const temp = ferpasurTempConsumptions[item.code] || {
+      ferpagro: 0, doyle1: 0, doyle2: 0, nacional: 0, sackett: 0,
+      launica: 0, storeocean: 0, otras: 0, clientes: 0, damaged: 0,
+      interama: 0, sacoplast: 0, plasticsack: 0, reysac: 0,
+      observation: ''
+    };
+
+    const totalEgresos = (temp.ferpagro || 0) + (temp.doyle1 || 0) + (temp.doyle2 || 0) + (temp.nacional || 0) + (temp.sackett || 0) + (temp.launica || 0) + (temp.storeocean || 0) + (temp.otras || 0) + (temp.clientes || 0) + (temp.damaged || 0);
+    const totalIngresos = (temp.interama || 0) + (temp.sacoplast || 0) + (temp.plasticsack || 0) + (temp.reysac || 0);
+
+    const initSist = temp.initialSist !== undefined ? temp.initialSist : (item.total || 0);
+    const initPhys = temp.initialPhys !== undefined ? temp.initialPhys : (item.ferpasur || 0);
+    const finalSist = Math.max(0, initSist - totalEgresos + totalIngresos);
+    const finalPhys = Math.max(0, initPhys - totalEgresos + totalIngresos);
+
+    return [
+      item.code,
+      item.desc,
+      initSist,
+      initPhys,
+      temp.ferpagro || 0,
+      temp.doyle1 || 0,
+      temp.doyle2 || 0,
+      temp.nacional || 0,
+      temp.sackett || 0,
+      temp.launica || 0,
+      temp.storeocean || 0,
+      temp.otras || 0,
+      temp.clientes || 0,
+      temp.damaged || 0,
+      temp.interama || 0,
+      temp.sacoplast || 0,
+      temp.plasticsack || 0,
+      temp.reysac || 0,
+      temp.observation || '',
+      finalSist,
+      finalPhys
+    ];
+  });
+
+  const sheetData = [row1, row2, ...dataRows];
+  const ws = XLSX.utils.aoa_to_sheet(sheetData);
+
+  // Group Header Merges
+  ws['!merges'] = [
+    { s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }, // Código
+    { s: { r: 0, c: 1 }, e: { r: 1, c: 1 } }, // Descripción
+    { s: { r: 0, c: 2 }, e: { r: 0, c: 3 } }, // Saldos Iniciales
+    { s: { r: 0, c: 4 }, e: { r: 0, c: 13 } }, // Consumos / Egresos
+    { s: { r: 0, c: 14 }, e: { r: 0, c: 17 } }, // Entregas / Ingresos
+    { s: { r: 0, c: 18 }, e: { r: 1, c: 18 } }, // Observaciones
+    { s: { r: 0, c: 19 }, e: { r: 0, c: 20 } }  // Saldos Finales
+  ];
+
+  // Column widths
+  ws['!cols'] = [
+    { wch: 18 }, // Código
+    { wch: 45 }, // Descripción
+    { wch: 12 }, // Init Sist
+    { wch: 12 }, // Init Phys
+    { wch: 10 }, // Ferpagro
+    { wch: 10 }, // Doyle 1
+    { wch: 10 }, // Doyle 2
+    { wch: 10 }, // Nacional
+    { wch: 10 }, // Sackett
+    { wch: 10 }, // La Única
+    { wch: 10 }, // Storeocean
+    { wch: 10 }, // Otras Bod.
+    { wch: 10 }, // Clientes
+    { wch: 10 }, // Dañados
+    { wch: 12 }, // INTERAMA
+    { wch: 12 }, // SACOPLAST
+    { wch: 12 }, // PLASTICSACK
+    { wch: 12 }, // REYSAC
+    { wch: 25 }, // Observaciones
+    { wch: 12 }, // Final Sist
+    { wch: 12 }  // Final Phys
+  ];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Consumos_y_Mermas");
+
+  XLSX.writeFile(wb, `Planilla_Consumos_Movimientos_${dateVal}.xlsx`);
+}
+window.exportFerpasurMovementsExcel = exportFerpasurMovementsExcel;
+
+
 
 
 
