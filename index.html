@@ -203,6 +203,21 @@
           </div>
         </div>
 
+        <!-- Atención al Cliente Dropdown -->
+        <div class="sidebar-dropdown" id="dropdown-atencion-cliente">
+          <div class="dropdown-header">
+            <div class="dropdown-header-left">
+              <span class="menu-icon">🎧</span> Atención al Cliente
+            </div>
+            <span class="chevron-icon">▼</span>
+          </div>
+          <div class="dropdown-menu">
+            <a href="#customer-service" class="submenu-item" id="menu-customer-service">
+              <span>📋</span> Control de Turnos y Despachos
+            </a>
+          </div>
+        </div>
+
         <!-- Configuración Dropdown -->
         <div class="sidebar-dropdown" id="dropdown-configuracion">
           <div class="dropdown-header">
@@ -3842,6 +3857,238 @@
           </form>
         </div>
       </div>
+
+      <!-- VIEW: CUSTOMER SERVICE (ATENCION AL CLIENTE) -->
+      <section id="view-customer-service" class="app-view hidden">
+        
+        <!-- TOP KPI STAT CARDS -->
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+          <div class="stat-card" style="border-left: 4px solid #3b82f6;">
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">🚛</div>
+            <div class="stat-info">
+              <span class="stat-label">Turnos del Día</span>
+              <span class="stat-value" id="cs-stat-total-turns">0</span>
+            </div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #10b981;">
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">📦</div>
+            <div class="stat-info">
+              <span class="stat-label">Total Sacos Atendidos</span>
+              <span class="stat-value" id="cs-stat-total-sacos">0</span>
+            </div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #f59e0b;">
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">⏳</div>
+            <div class="stat-info">
+              <span class="stat-label">Promedio Estadía</span>
+              <span class="stat-value" id="cs-stat-avg-stay">00:00 h</span>
+            </div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #8b5cf6;">
+            <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">🔄</div>
+            <div class="stat-info">
+              <span class="stat-label">En Espera de Carga</span>
+              <span class="stat-value" id="cs-stat-waiting">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTROL BAR: Date, Search, Filters & Export -->
+        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <label for="cs-filter-date" style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted);">📅 Fecha:</label>
+                <input type="date" id="cs-filter-date" class="input-field" style="padding: 6px 10px; font-size: 0.85rem;" onchange="loadCustomerServiceData()">
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <label for="cs-filter-status" style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted);">🏷️ Estatus:</label>
+                <select id="cs-filter-status" class="input-field" style="padding: 6px 10px; font-size: 0.85rem;" onchange="loadCustomerServiceData()">
+                  <option value="">-- Todos los estatus --</option>
+                  <option value="ESPERA DE CARGA">ESPERA DE CARGA</option>
+                  <option value="EN CARGA">EN CARGA</option>
+                  <option value="EN BÁSCULA">EN BÁSCULA</option>
+                  <option value="DESPACHADO">DESPACHADO</option>
+                  <option value="CANCELADO">CANCELADO</option>
+                </select>
+              </div>
+              <div style="position: relative;">
+                <input type="text" id="cs-search-input" class="input-field" placeholder="🔍 Buscar cliente, chofer, placa o ticket..." style="padding: 6px 12px; font-size: 0.85rem; min-width: 260px;" onkeyup="filterCustomerServiceTable()">
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <button class="btn btn-primary" onclick="openNewCustomerServiceModal()">
+                <span>➕</span> Nuevo Turno
+              </button>
+              <button class="btn btn-outline" onclick="exportCustomerServiceExcel()">
+                <span>📊</span> Exportar Excel
+              </button>
+              <button class="btn btn-outline" onclick="exportCustomerServicePDF()">
+                <span>📄</span> Exportar PDF
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAIN TABLE CARD -->
+        <div class="card" style="padding: 0; overflow: hidden; border-radius: var(--radius-md);">
+          <div style="padding: 1rem 1.25rem; background: var(--bg-card); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+            <h3 style="margin: 0; font-size: 1.05rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+              <span>📋</span> Programación y Control de Atención a Clientes
+            </h3>
+            <span id="cs-records-count" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">0 Registros</span>
+          </div>
+
+          <div style="overflow-x: auto; width: 100%;">
+            <table class="table" id="cs-main-table" style="width: 100%; min-width: 1300px; border-collapse: collapse; font-size: 0.82rem;">
+              <thead>
+                <tr style="background: rgba(30, 41, 59, 0.6); color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;">
+                  <th style="padding: 10px; text-align: center; width: 60px;">TURNO</th>
+                  <th style="padding: 10px; text-align: left;">TRANSPORTISTA</th>
+                  <th style="padding: 10px; text-align: center;">PLACA</th>
+                  <th style="padding: 10px; text-align: left;">CLIENTE</th>
+                  <th style="padding: 10px; text-align: center; color: #10b981;">FERPAGRO</th>
+                  <th style="padding: 10px; text-align: center; color: #3b82f6;">DOYLE1</th>
+                  <th style="padding: 10px; text-align: center; color: #f59e0b;">NACIONAL</th>
+                  <th style="padding: 10px; text-align: center; color: #8b5cf6;">SACKETT</th>
+                  <th style="padding: 10px; text-align: center; font-weight: bold;">T. SACOS</th>
+                  <th style="padding: 10px; text-align: center;">H / INGRESO</th>
+                  <th style="padding: 10px; text-align: center;">H / SALIDA</th>
+                  <th style="padding: 10px; text-align: center;">T. ESTADÍA</th>
+                  <th style="padding: 10px; text-align: center;">ESTATUS</th>
+                  <th style="padding: 10px; text-align: center;">FECHA</th>
+                  <th style="padding: 10px; text-align: right;">P. NETO</th>
+                  <th style="padding: 10px; text-align: right;">P. PROM</th>
+                  <th style="padding: 10px; text-align: center;"># TICKET</th>
+                  <th style="padding: 10px; text-align: center;">ACCIONES</th>
+                </tr>
+              </thead>
+              <tbody id="cs-table-body">
+                <tr>
+                  <td colspan="18" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                    Cargando turnos de atención al cliente...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MODAL FORM: NUEVO / EDITAR TURNO -->
+        <div id="modal-customer-service" class="hidden" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.85); display: flex; align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(4px);">
+          <div class="modal-card-custom" style="width: 90%; max-width: 780px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); overflow: hidden; display: flex; flex-direction: column; max-height: 90vh;">
+            <div class="modal-header-custom" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); background: rgba(30, 41, 59, 0.5);">
+              <h3 id="cs-modal-title" style="margin: 0; font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+                <span>📋</span> Registrar Turno de Atención al Cliente
+              </h3>
+              <button onclick="closeCustomerServiceModal()" style="background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+            </div>
+            
+            <form id="cs-form" onsubmit="handleCustomerServiceSubmit(event)" style="padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem;">
+              <input type="hidden" id="cs-form-id">
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Turno #</label>
+                  <input type="number" id="cs-form-turno" class="input-field" required style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Fecha</label>
+                  <input type="date" id="cs-form-fecha" class="input-field" required style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Estatus</label>
+                  <select id="cs-form-estatus" class="input-field" required style="width: 100%;">
+                    <option value="ESPERA DE CARGA">ESPERA DE CARGA</option>
+                    <option value="EN CARGA">EN CARGA</option>
+                    <option value="EN BÁSCULA">EN BÁSCULA</option>
+                    <option value="DESPACHADO">DESPACHADO</option>
+                    <option value="CANCELADO">CANCELADO</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Transportista / Chofer</label>
+                  <input type="text" id="cs-form-driver" class="input-field" placeholder="ej. HECTOR VEGA" required style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Placa Vehículo</label>
+                  <input type="text" id="cs-form-plate" class="input-field" placeholder="ej. PXQ-0995" required style="width: 100%; text-transform: uppercase;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Cliente</label>
+                  <input type="text" id="cs-form-client" class="input-field" placeholder="ej. LOMA LARGA" required style="width: 100%; text-transform: uppercase;">
+                </div>
+              </div>
+
+              <div style="background: rgba(30, 41, 59, 0.4); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                <span style="font-size: 0.8rem; font-weight: bold; color: var(--text-main); display: block; margin-bottom: 0.75rem;">🏭 Puntos / Cantidades por Planta</span>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; align-items: center;">
+                  <div>
+                    <label style="font-size: 0.75rem; color: #10b981; font-weight: 600; display: block; margin-bottom: 2px;">FERPAGRO</label>
+                    <input type="number" id="cs-form-ferpagro" class="input-field" value="0" min="0" onchange="calculateCSTotals()" style="width: 100%;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.75rem; color: #3b82f6; font-weight: 600; display: block; margin-bottom: 2px;">DOYLE1</label>
+                    <input type="number" id="cs-form-doyle1" class="input-field" value="0" min="0" onchange="calculateCSTotals()" style="width: 100%;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.75rem; color: #f59e0b; font-weight: 600; display: block; margin-bottom: 2px;">NACIONAL</label>
+                    <input type="number" id="cs-form-nacional" class="input-field" value="0" min="0" onchange="calculateCSTotals()" style="width: 100%;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.75rem; color: #8b5cf6; font-weight: 600; display: block; margin-bottom: 2px;">SACKETT</label>
+                    <input type="number" id="cs-form-sackett" class="input-field" value="0" min="0" onchange="calculateCSTotals()" style="width: 100%;">
+                  </div>
+                  <div>
+                    <label style="font-size: 0.75rem; color: var(--text-main); font-weight: bold; display: block; margin-bottom: 2px;">T. SACOS</label>
+                    <input type="number" id="cs-form-total-sacos" class="input-field" value="0" readonly style="width: 100%; font-weight: bold; background: rgba(0,0,0,0.2);">
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Hora Ingreso</label>
+                  <input type="time" id="cs-form-h-ingreso" class="input-field" onchange="calculateCSTotals()" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Hora Salida</label>
+                  <input type="time" id="cs-form-h-salida" class="input-field" onchange="calculateCSTotals()" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Tiempo Estadía</label>
+                  <input type="text" id="cs-form-t-estadia" class="input-field" placeholder="00:00" readonly style="width: 100%; font-weight: bold; background: rgba(0,0,0,0.2);">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Peso Neto</label>
+                  <input type="number" step="0.01" id="cs-form-p-neto" class="input-field" value="0.00" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">Peso Promedio</label>
+                  <input type="number" step="0.01" id="cs-form-p-prom" class="input-field" value="0.00" style="width: 100%;">
+                </div>
+                <div>
+                  <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;"># Ticket Báscula</label>
+                  <input type="text" id="cs-form-ticket" class="input-field" placeholder="ej. T-10492" style="width: 100%;">
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                <button type="button" class="btn btn-outline" onclick="closeCustomerServiceModal()">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar Turno</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </section>
 
     </main>
   </div>
