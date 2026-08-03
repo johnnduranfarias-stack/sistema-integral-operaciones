@@ -232,7 +232,8 @@ function setupEventListeners() {
     'ships-docks': 'menu-ships-docks',
     'plan-turns': 'menu-plan-turns',
     'imports-status': 'menu-imports-status',
-    'quality-control': 'menu-quality-control'
+    'quality-control': 'menu-quality-control',
+    'customer-service': 'menu-customer-service'
   };
 
   Object.entries(menuBindings).forEach(([view, elementId]) => {
