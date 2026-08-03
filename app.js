@@ -137,18 +137,25 @@ function setupEventListeners() {
   
   // Toggle password visibility
   const togglePassBtn = document.getElementById('btn-toggle-password');
-  const passwordInput = document.getElementById('password');
-  if (togglePassBtn && passwordInput) {
-    togglePassBtn.addEventListener('click', () => {
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        togglePassBtn.textContent = '🙈';
-      } else {
-        passwordInput.type = 'password';
-        togglePassBtn.textContent = '👁️';
-      }
-    });
+  if (togglePassBtn) {
+    togglePassBtn.addEventListener('click', togglePasswordVisibility);
   }
+}
+
+function togglePasswordVisibility() {
+  const passwordInput = document.getElementById('password');
+  const togglePassBtn = document.getElementById('btn-toggle-password');
+  if (!passwordInput || !togglePassBtn) return;
+
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    togglePassBtn.textContent = '🙈';
+  } else {
+    passwordInput.type = 'password';
+    togglePassBtn.textContent = '👁️';
+  }
+}
+window.togglePasswordVisibility = togglePasswordVisibility;
   
   // Logout button
   document.getElementById('btn-logout').addEventListener('click', handleLogout);
