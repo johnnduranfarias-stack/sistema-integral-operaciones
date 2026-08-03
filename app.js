@@ -8728,7 +8728,7 @@ function renderCustomerServiceModule() {
         <tr>
           <td colspan="20" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
             <span style="font-size: 32px; display: block; margin-bottom: 0.5rem;">🚚</span>
-            No hay turnos registrados para la fecha seleccionada.
+            No hay turnos registrados. Haga clic en <strong>➕ Agregar Fila de Turno</strong> para ingresar datos.
           </td>
         </tr>
       `;
@@ -8780,26 +8780,14 @@ function renderCustomerServiceModule() {
 
   if (countSpan) countSpan.textContent = `${customerServiceRecords.length} Registros`;
 
-  // Render Table
+  // Render Table as Excel-Style Editable Grid
   if (!tbody) return;
   tbody.innerHTML = '';
 
   customerServiceRecords.forEach(record => {
     const tr = document.createElement('tr');
+    tr.id = `cs-row-${record.id}`;
     
-    // Status Badge Styling
-    let badgeClass = 'background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid #3b82f6;';
-    if (record.estatus === 'EN CARGA') {
-      badgeClass = 'background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid #f59e0b;';
-    } else if (record.estatus === 'EN BÁSCULA') {
-      badgeClass = 'background: rgba(139, 92, 246, 0.15); color: #8b5cf6; border: 1px solid #8b5cf6;';
-    } else if (record.estatus === 'DESPACHADO') {
-      badgeClass = 'background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;';
-    } else if (record.estatus === 'CANCELADO') {
-      badgeClass = 'background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444;';
-    }
-
-    // Standard Stay Calculation vs Real Stay
     const stdMin = record.standardTimeMin || getTransportStandardMinutes(record.transportType);
     let timeBadge = `<span style="color: var(--text-muted); font-size: 0.75rem;">Pendiente</span>`;
     
@@ -8836,43 +8824,240 @@ function renderCustomerServiceModule() {
       }
     }
 
+    const tType = record.transportType || 'Camión Pesado';
+    const status = record.estatus || 'ESPERA DE CARGA';
+
     tr.innerHTML = `
-      <td style="text-align: center; font-weight: bold; color: #3b82f6; font-size: 0.9rem;">${record.turno}</td>
-      <td style="font-weight: 600; color: #a7f3d0; font-size: 0.8rem;">${escapeHTML(record.vendedor || 'Marianella Zurita')}</td>
-      <td style="font-weight: 600; color: var(--text-main);">${escapeHTML(record.driver || '')}</td>
-      <td style="text-align: center; font-family: monospace; font-weight: bold; background: rgba(30, 41, 59, 0.3); border-radius: 4px;">${escapeHTML(record.plate || '')}</td>
-      <td style="text-align: center; font-size: 0.76rem; color: #cbd5e1;">${escapeHTML(record.transportType || 'Camión Pesado')}</td>
-      <td style="font-weight: 600; color: #38bdf8;">${escapeHTML(record.client || '')}</td>
-      <td style="text-align: center; color: #10b981; font-weight: 600;">${record.ferpagro || '-'}</td>
-      <td style="text-align: center; color: #3b82f6; font-weight: 600;">${record.doyle1 || '-'}</td>
-      <td style="text-align: center; color: #f59e0b; font-weight: 600;">${record.nacional || '-'}</td>
-      <td style="text-align: center; color: #8b5cf6; font-weight: 600;">${record.sackett || '-'}</td>
-      <td style="text-align: center; font-weight: bold; font-size: 0.9rem; color: #10b981;">${(record.totalSacos || 0).toLocaleString()}</td>
-      <td style="text-align: center; font-family: monospace;">${record.hIngreso || '-'}</td>
-      <td style="text-align: center; font-family: monospace;">${record.hSalida || '-'}</td>
-      <td style="text-align: center;">${timeBadge}</td>
-      <td style="text-align: center;">
-        <span style="padding: 3px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: bold; display: inline-block; cursor: pointer;" onclick="quickUpdateCSStatus('${record.id}', '${record.estatus}')" title="Haga clic para cambiar estatus">
-          <span style="padding: 2px 6px; border-radius: 10px; ${badgeClass}">
-            ${record.estatus} ▾
-          </span>
-        </span>
+      <td style="text-align: center; padding: 4px;">
+        <input type="number" id="cs-grid-turno-${record.id}" class="input-field" value="${record.turno}" style="width: 48px; padding: 4px; text-align: center; font-weight: bold; color: #3b82f6;" onchange="updateCSRowTotals('${record.id}')">
       </td>
-      <td style="text-align: center; font-size: 0.78rem; color: var(--text-muted);">${record.fecha || '-'}</td>
-      <td style="text-align: right; font-family: monospace;">${(record.pNeto || 0).toFixed(2)}</td>
-      <td style="text-align: right; font-family: monospace;">${(record.pProm || 0).toFixed(2)}</td>
-      <td style="text-align: center; font-family: monospace; font-weight: 600; color: #cbd5e1;">${escapeHTML(record.ticket || '-')}</td>
-      <td style="text-align: center;">
-        <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
-          <button class="btn btn-sm btn-outline" style="padding: 2px 6px; font-size: 0.75rem;" onclick="openEditCustomerServiceModal('${record.id}')" title="Editar Turno">✏️</button>
-          <button class="btn btn-sm btn-outline" style="padding: 2px 6px; font-size: 0.75rem; color: #ef4444; border-color: #ef4444;" onclick="deleteCSRecord('${record.id}')" title="Eliminar Turno">🗑️</button>
-        </div>
+      <td style="padding: 4px;">
+        <input type="text" id="cs-grid-vendedor-${record.id}" class="input-field" value="${escapeHTML(record.vendedor || 'Marianella Zurita')}" style="width: 120px; padding: 4px; font-weight: 600; color: #a7f3d0;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px;">
+        <input type="text" id="cs-grid-driver-${record.id}" class="input-field" value="${escapeHTML(record.driver || '')}" placeholder="Chofer..." style="width: 130px; padding: 4px;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="text" id="cs-grid-plate-${record.id}" class="input-field" value="${escapeHTML(record.plate || '')}" placeholder="Placa..." style="width: 85px; padding: 4px; text-transform: uppercase; text-align: center; font-family: monospace; font-weight: bold;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <select id="cs-grid-type-${record.id}" class="input-field" style="width: 130px; padding: 4px; font-size: 0.76rem;" onchange="updateCSRowTotals('${record.id}')">
+          <option value="Trailer / Mula" ${tType === 'Trailer / Mula' ? 'selected' : ''}>Trailer / Mula</option>
+          <option value="Camión Pesado" ${tType === 'Camión Pesado' ? 'selected' : ''}>Camión Pesado</option>
+          <option value="Camión Mediano" ${tType === 'Camión Mediano' ? 'selected' : ''}>Camión Mediano</option>
+          <option value="Camión Pequeño" ${tType === 'Camión Pequeño' ? 'selected' : ''}>Camión Pequeño</option>
+        </select>
+      </td>
+      <td style="padding: 4px;">
+        <input type="text" id="cs-grid-client-${record.id}" class="input-field" value="${escapeHTML(record.client || '')}" placeholder="Cliente..." style="width: 130px; padding: 4px; text-transform: uppercase; color: #38bdf8; font-weight: 600;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="number" id="cs-grid-ferpagro-${record.id}" class="input-field" value="${record.ferpagro || 0}" min="0" style="width: 55px; padding: 4px; text-align: center; color: #10b981; font-weight: 600;" oninput="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="number" id="cs-grid-doyle1-${record.id}" class="input-field" value="${record.doyle1 || 0}" min="0" style="width: 55px; padding: 4px; text-align: center; color: #3b82f6; font-weight: 600;" oninput="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="number" id="cs-grid-nacional-${record.id}" class="input-field" value="${record.nacional || 0}" min="0" style="width: 55px; padding: 4px; text-align: center; color: #f59e0b; font-weight: 600;" oninput="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="number" id="cs-grid-sackett-${record.id}" class="input-field" value="${record.sackett || 0}" min="0" style="width: 55px; padding: 4px; text-align: center; color: #8b5cf6; font-weight: 600;" oninput="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center; font-weight: bold; font-size: 0.9rem; color: #10b981;">
+        <span id="cs-grid-tot-${record.id}">${(record.totalSacos || 0).toLocaleString()}</span>
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="time" id="cs-grid-hingreso-${record.id}" class="input-field" value="${record.hIngreso || ''}" style="width: 90px; padding: 4px; text-align: center; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="time" id="cs-grid-hsalida-${record.id}" class="input-field" value="${record.hSalida || ''}" style="width: 90px; padding: 4px; text-align: center; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <div id="cs-grid-badge-${record.id}">${timeBadge}</div>
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <select id="cs-grid-estatus-${record.id}" class="input-field" style="width: 125px; padding: 4px; font-size: 0.76rem; font-weight: bold;" onchange="updateCSRowTotals('${record.id}')">
+          <option value="ESPERA DE CARGA" ${status === 'ESPERA DE CARGA' ? 'selected' : ''}>ESPERA DE CARGA</option>
+          <option value="EN CARGA" ${status === 'EN CARGA' ? 'selected' : ''}>EN CARGA</option>
+          <option value="EN BÁSCULA" ${status === 'EN BÁSCULA' ? 'selected' : ''}>EN BÁSCULA</option>
+          <option value="DESPACHADO" ${status === 'DESPACHADO' ? 'selected' : ''}>DESPACHADO</option>
+          <option value="CANCELADO" ${status === 'CANCELADO' ? 'selected' : ''}>CANCELADO</option>
+        </select>
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="date" id="cs-grid-fecha-${record.id}" class="input-field" value="${record.fecha || new Date().toISOString().split('T')[0]}" style="width: 115px; padding: 4px; font-size: 0.78rem;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: right;">
+        <input type="number" step="0.01" id="cs-grid-pneto-${record.id}" class="input-field" value="${record.pNeto || 0}" style="width: 70px; padding: 4px; text-align: right; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: right;">
+        <input type="number" step="0.01" id="cs-grid-pprom-${record.id}" class="input-field" value="${record.pProm || 0}" style="width: 70px; padding: 4px; text-align: right; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <input type="text" id="cs-grid-ticket-${record.id}" class="input-field" value="${escapeHTML(record.ticket || '')}" placeholder="Ticket..." style="width: 80px; padding: 4px; text-align: center; font-family: monospace;" onchange="updateCSRowTotals('${record.id}')">
+      </td>
+      <td style="padding: 4px; text-align: center;">
+        <button class="btn btn-sm btn-outline" style="padding: 3px 6px; font-size: 0.75rem; color: #ef4444; border-color: #ef4444;" onclick="deleteCSRecord('${record.id}')" title="Eliminar Turno">🗑️</button>
       </td>
     `;
     tbody.appendChild(tr);
   });
 }
 window.renderCustomerServiceModule = renderCustomerServiceModule;
+
+function updateCSRowTotals(id) {
+  const fer = Number(document.getElementById(`cs-grid-ferpagro-${id}`)?.value) || 0;
+  const doy = Number(document.getElementById(`cs-grid-doyle1-${id}`)?.value) || 0;
+  const nac = Number(document.getElementById(`cs-grid-nacional-${id}`)?.value) || 0;
+  const sac = Number(document.getElementById(`cs-grid-sackett-${id}`)?.value) || 0;
+  
+  const totSpan = document.getElementById(`cs-grid-tot-${id}`);
+  if (totSpan) totSpan.textContent = (fer + doy + nac + sac).toLocaleString();
+
+  const tType = document.getElementById(`cs-grid-type-${id}`)?.value || 'Camión Pesado';
+  const stdMin = getTransportStandardMinutes(tType);
+  const hIn = document.getElementById(`cs-grid-hingreso-${id}`)?.value || '';
+  const hOut = document.getElementById(`cs-grid-hsalida-${id}`)?.value || '';
+
+  const badgeDiv = document.getElementById(`cs-grid-badge-${id}`);
+  if (badgeDiv) {
+    if (hIn && hOut) {
+      const [h1, m1] = hIn.split(':').map(Number);
+      const [h2, m2] = hOut.split(':').map(Number);
+      if (!isNaN(h1) && !isNaN(m1) && !isNaN(h2) && !isNaN(m2)) {
+        let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
+        if (diff < 0) diff += 24 * 60;
+        const hrs = Math.floor(diff / 60);
+        const mins = diff % 60;
+        const realStr = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')} h`;
+
+        if (diff <= stdMin) {
+          badgeDiv.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <span style="font-weight: bold; color: #10b981; font-family: monospace;">${realStr}</span>
+              <span style="font-size: 0.68rem; padding: 1px 5px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;">🟢 En Tiempo (Est: ${stdMin}m)</span>
+            </div>
+          `;
+        } else {
+          const diffMin = diff - stdMin;
+          const dHrs = Math.floor(diffMin / 60);
+          const dMins = diffMin % 60;
+          const diffStr = dHrs > 0 ? `+${dHrs}h ${dMins}m` : `+${dMins}m`;
+          badgeDiv.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <span style="font-weight: bold; color: #ef4444; font-family: monospace;">${realStr}</span>
+              <span style="font-size: 0.68rem; padding: 1px 5px; border-radius: 8px; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444;">🔴 Excedido (${diffStr})</span>
+            </div>
+          `;
+        }
+      }
+    } else {
+      badgeDiv.innerHTML = `<span style="color: var(--text-muted); font-size: 0.75rem;">Pendiente</span>`;
+    }
+  }
+}
+window.updateCSRowTotals = updateCSRowTotals;
+
+function addNewEmptyCSRow() {
+  const nextTurn = customerServiceRecords.length + 1;
+  const newRecord = {
+    id: 'CS-' + Date.now(),
+    turno: nextTurn,
+    vendedor: 'Marianella Zurita',
+    driver: '',
+    plate: '',
+    transportType: 'Camión Pesado',
+    client: '',
+    ferpagro: 0,
+    doyle1: 0,
+    nacional: 0,
+    sackett: 0,
+    totalSacos: 0,
+    hIngreso: new Date().toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit', hour12: false }),
+    hSalida: '',
+    tEstadia: '',
+    standardTimeMin: 60,
+    timeStatus: 'EN TIEMPO',
+    estatus: 'ESPERA DE CARGA',
+    fecha: document.getElementById('cs-filter-date')?.value || new Date().toISOString().split('T')[0],
+    pNeto: 0,
+    pProm: 0,
+    ticket: ''
+  };
+
+  customerServiceRecords.unshift(newRecord);
+  renderCustomerServiceModule();
+}
+window.addNewEmptyCSRow = addNewEmptyCSRow;
+
+async function saveAllCSRecordsFromGrid() {
+  showLoader('Guardando tabla de turnos...');
+  try {
+    const promises = customerServiceRecords.map(async r => {
+      const id = r.id;
+      const turno = Number(document.getElementById(`cs-grid-turno-${id}`)?.value) || r.turno;
+      const vendedor = document.getElementById(`cs-grid-vendedor-${id}`)?.value || r.vendedor;
+      const driver = document.getElementById(`cs-grid-driver-${id}`)?.value || r.driver;
+      const plate = document.getElementById(`cs-grid-plate-${id}`)?.value || r.plate;
+      const transportType = document.getElementById(`cs-grid-type-${id}`)?.value || r.transportType;
+      const client = document.getElementById(`cs-grid-client-${id}`)?.value || r.client;
+      const ferpagro = Number(document.getElementById(`cs-grid-ferpagro-${id}`)?.value) || 0;
+      const doyle1 = Number(document.getElementById(`cs-grid-doyle1-${id}`)?.value) || 0;
+      const nacional = Number(document.getElementById(`cs-grid-nacional-${id}`)?.value) || 0;
+      const sackett = Number(document.getElementById(`cs-grid-sackett-${id}`)?.value) || 0;
+      const totalSacos = ferpagro + doyle1 + nacional + sackett;
+      const hIngreso = document.getElementById(`cs-grid-hingreso-${id}`)?.value || r.hIngreso;
+      const hSalida = document.getElementById(`cs-grid-hsalida-${id}`)?.value || r.hSalida;
+      const estatus = document.getElementById(`cs-grid-estatus-${id}`)?.value || r.estatus;
+      const fecha = document.getElementById(`cs-grid-fecha-${id}`)?.value || r.fecha;
+      const pNeto = Number(document.getElementById(`cs-grid-pneto-${id}`)?.value) || 0;
+      const pProm = Number(document.getElementById(`cs-grid-pprom-${id}`)?.value) || 0;
+      const ticket = document.getElementById(`cs-grid-ticket-${id}`)?.value || r.ticket;
+
+      const stdMin = getTransportStandardMinutes(transportType);
+      let tEstadiaVal = '';
+      let timeStatus = 'EN TIEMPO';
+
+      if (hIngreso && hSalida) {
+        const [h1, m1] = hIngreso.split(':').map(Number);
+        const [h2, m2] = hSalida.split(':').map(Number);
+        if (!isNaN(h1) && !isNaN(m1) && !isNaN(h2) && !isNaN(m2)) {
+          let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
+          if (diff < 0) diff += 24 * 60;
+          const hrs = Math.floor(diff / 60);
+          const mins = diff % 60;
+          tEstadiaVal = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+          if (diff > stdMin) timeStatus = 'EXCEDIDO';
+        }
+      }
+
+      const payload = {
+        turno, vendedor, driver, plate, transportType, client,
+        ferpagro, doyle1, nacional, sackett, totalSacos,
+        hIngreso, hSalida, tEstadia: tEstadiaVal,
+        standardTimeMin: stdMin, timeStatus, estatus, fecha,
+        pNeto, pProm, ticket
+      };
+
+      if (id.startsWith('CS-') && id.length > 15) {
+        // Existing record update
+        return apiFetch(`/api/customer-service/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+      } else {
+        // New record create
+        return apiFetch('/api/customer-service', { method: 'POST', body: JSON.stringify(payload) });
+      }
+    });
+
+    await Promise.all(promises);
+    await loadCustomerServiceData();
+    alert("✅ Tabla de turnos guardada exitosamente.");
+  } catch (err) {
+    alert("Error al guardar la tabla: " + err.message);
+  } finally {
+    hideLoader();
+  }
+}
+window.saveAllCSRecordsFromGrid = saveAllCSRecordsFromGrid;
 
 function renderCustomerServiceChatLogs() {
   const container = document.getElementById('cs-chat-logs');
