@@ -2,12 +2,12 @@
   "users": {
     "jduran": {
       "name": "Johnny Duran",
-      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
+      "passwordHash": "6d78cc8dcee94752a2e01a8a2b866bd536006b1a9bf053dc713a33118cec9160",
       "role": "admin"
     },
     "lmerchan": {
       "name": "Luis Merchan",
-      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
+      "passwordHash": "3dac08deb7c6ff4ca0636f1a1c67bf11ce1003b6b25cd6e602e8ff597bdb2f05",
       "role": "logistic"
     },
     "ellangari": {
@@ -37,7 +37,7 @@
     },
     "admin": {
       "name": "Administrador Ferpacific",
-      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
+      "passwordHash": "04445e6487736590d1ef50186b414e737e0164683cbbec64e00e73c000fd3bef",
       "role": "admin"
     },
     "binsumos": {
@@ -48,12 +48,12 @@
     },
     "jduran_admin": {
       "name": "Johnny Durán (Admin)",
-      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
+      "passwordHash": "6d78cc8dcee94752a2e01a8a2b866bd536006b1a9bf053dc713a33118cec9160",
       "role": "admin"
     },
     "mzurita": {
       "name": "Marianella Zurita",
-      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
+      "passwordHash": "5cfc7bb0587f8015c3330173ca994c3dbcf03e80f77a960f19877e8a8133f622",
       "role": "admin"
     }
   },
