@@ -246,6 +246,18 @@ function setupEventListeners() {
     }
   });
 
+  // Universal fallback listener for all sidebar links with href="#..."
+  document.querySelectorAll('.sidebar-menu a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      if (href && href.length > 1) {
+        const targetView = href.substring(1);
+        switchView(targetView);
+      }
+    });
+  });
+
   // Search & Filter input bindings for new departments
   const searchInputBindings = [
     { inputId: 'search-prod-planning', renderFn: () => renderProdPlanning() },
