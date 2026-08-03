@@ -438,20 +438,28 @@ function checkLoginRateLimit(ip) {
   return record.attempts > 15;
 }
 
+function sendJSONResponse(res, statusCode, data) {
+  res.writeHead(statusCode, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Bypass-Tunnel-Reminder'
+  });
+  res.end(JSON.stringify(data));
+}
+
     // 1. LOGIN API
     if (pathname === '/api/login' && req.method === 'POST') {
       try {
         const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
         if (checkLoginRateLimit(clientIp)) {
-          res.writeHead(429);
-          res.end(JSON.stringify({ success: false, error: 'Demasiados intentos. Por favor intente más tarde.' }));
+          sendJSONResponse(res, 429, { success: false, error: 'Demasiados intentos. Por favor intente más tarde.' });
           return;
         }
 
         const { username, password } = await readJSONBody(req);
         if (!username || !password) {
-          res.writeHead(400);
-          res.end(JSON.stringify({ success: false, error: 'Usuario y contraseña son requeridos' }));
+          sendJSONResponse(res, 400, { success: false, error: 'Usuario y contraseña son requeridos' });
           return;
         }
 
@@ -479,15 +487,13 @@ function checkLoginRateLimit(ip) {
         }
 
         if (!user) {
-          res.writeHead(401);
-          res.end(JSON.stringify({ success: false, error: 'Usuario o contraseña incorrectos' }));
+          sendJSONResponse(res, 401, { success: false, error: 'Usuario o contraseña incorrectos' });
           return;
         }
 
         // Active Status Check
         if (user.activo === false || user.status === 'inactive') {
-          res.writeHead(403);
-          res.end(JSON.stringify({ success: false, error: 'Usuario inactivo' }));
+          sendJSONResponse(res, 403, { success: false, error: 'Usuario inactivo' });
           return;
         }
 
@@ -529,20 +535,17 @@ function checkLoginRateLimit(ip) {
           };
           saveSessions();
           
-          res.writeHead(200);
-          res.end(JSON.stringify({
+          sendJSONResponse(res, 200, {
             success: true,
             token,
             user: sessionUser
-          }));
+          });
         } else {
-          res.writeHead(401);
-          res.end(JSON.stringify({ success: false, error: 'Usuario o contraseña incorrectos' }));
+          sendJSONResponse(res, 401, { success: false, error: 'Usuario o contraseña incorrectos' });
         }
       } catch (err) {
         console.error("Error en /api/login:", err.message);
-        res.writeHead(401);
-        res.end(JSON.stringify({ success: false, error: 'Usuario o contraseña incorrectos' }));
+        sendJSONResponse(res, 401, { success: false, error: 'Usuario o contraseña incorrectos' });
       }
       return;
     }
@@ -559,37 +562,33 @@ function checkLoginRateLimit(ip) {
         invalidTokens.add(token);
         saveSessions();
       }
-      res.writeHead(200);
-      res.end(JSON.stringify({ success: true, message: 'Sesión cerrada exitosamente' }));
+      sendJSONResponse(res, 200, { success: true, message: 'Sesión cerrada exitosamente' });
       return;
     }
 
     // AUTHENTICATED API ENDPOINTS
     const user = validateSession(req);
     if (!user) {
-      res.writeHead(401);
-      res.end(JSON.stringify({ success: false, error: 'Sesión no válida o expirada' }));
+      sendJSONResponse(res, 401, { success: false, error: 'Sesión no válida o expirada' });
       return;
     }
 
     // Role guard: Block POST requests for viewer role
     if (req.method === 'POST' && user.role === 'viewer') {
-      res.writeHead(403);
-      res.end(JSON.stringify({ success: false, error: 'Acceso denegado: los usuarios con rol de visualizador no pueden realizar modificaciones.' }));
+      sendJSONResponse(res, 403, { success: false, error: 'Acceso denegado: los usuarios con rol de visualizador no pueden realizar modificaciones.' });
       return;
     }
 
     // 2. GET STOCK DATA
     if (pathname === '/api/stock' && req.method === 'GET') {
       const db = readDB();
-      res.writeHead(200);
-      res.end(JSON.stringify({
+      sendJSONResponse(res, 200, {
         success: true,
         stock: db.stock || [],
         specialties: db.specialties || [],
         specialtiesThreshold: (db && db.settings && db.settings.specialtiesThreshold) || 1000,
         history: db.history || []
-      }));
+      });
       return;
     }
 
