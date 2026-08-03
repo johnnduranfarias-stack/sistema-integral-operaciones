@@ -24,14 +24,15 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e293b">
   <script>
-    // Register Service Worker for Offline / Online Support
+    // Auto-unregister legacy ServiceWorker and clear stale caches to ensure instant update
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(reg => {
-          console.log('ServiceWorker registrado con éxito:', reg.scope);
-        }).catch(err => {
-          console.warn('Error al registrar ServiceWorker:', err);
-        });
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(reg => reg.unregister());
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(keys => {
+        keys.forEach(key => caches.delete(key));
       });
     }
   </script>
@@ -51,7 +52,7 @@
         <img src="logo.png" alt="Ferpacific Logo" class="login-logo-img">
         <p class="login-subtitle">Sistema Integral de Operaciones Ferpacific</p>
       </div>
-      <form id="login-form">
+      <form id="login-form" onsubmit="handleLogin(event); return false;">
         <div class="form-group">
           <label for="username">Usuario</label>
           <input type="text" id="username" autocomplete="username" placeholder="Ingrese su usuario (ej. jduran)" required>
@@ -64,7 +65,7 @@
           </div>
         </div>
         <div id="login-error" class="error-message hidden">Usuario o contraseña incorrectos</div>
-        <button type="submit" id="btn-login" class="btn btn-primary btn-block">Iniciar Sesión</button>
+        <button type="submit" id="btn-login" class="btn btn-primary btn-block" onclick="handleLogin(event)">Iniciar Sesión</button>
       </form>
 
       <!-- BOTON DESCARGAR APLICACION PARA CELULAR -->
@@ -4259,6 +4260,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260803_v11"></script>
+  <script src="app.js?v=20260803_v12"></script>
 </body>
 </html>
