@@ -8696,6 +8696,7 @@ async function loadCustomerServiceData() {
       customerServiceNotifications = res.notifications || [];
       renderCustomerServiceModule();
       renderCustomerServiceChatLogs();
+      renderCustomerComplianceDashboard();
     }
   } catch (err) {
     console.error("Error al cargar datos de atención al cliente:", err);
@@ -9101,6 +9102,192 @@ function renderCustomerServiceChatLogs() {
   }).join('');
 }
 window.renderCustomerServiceChatLogs = renderCustomerServiceChatLogs;
+
+function renderCustomerComplianceDashboard() {
+  const container = document.getElementById('cs-dash-client-tbody');
+  const statPct = document.getElementById('cs-stat-on-time-pct');
+  const statCount = document.getElementById('cs-stat-on-time-count');
+
+  const mulaDiv = document.getElementById('dash-transport-mula');
+  const pesadoDiv = document.getElementById('dash-transport-pesado');
+  const medianoDiv = document.getElementById('dash-transport-mediano');
+  const pequenoDiv = document.getElementById('dash-transport-pequeno');
+
+  if (!customerServiceRecords || customerServiceRecords.length === 0) {
+    if (container) {
+      container.innerHTML = `
+        <tr>
+          <td colspan="7" style="text-align: center; padding: 1.5rem; color: var(--text-muted);">
+            No hay datos de despachos registrados para calcular el cumplimiento por cliente.
+          </td>
+        </tr>
+      `;
+    }
+    if (statPct) statPct.textContent = '0%';
+    if (statCount) statCount.textContent = '0 🟢 / 0 🔴';
+    return;
+  }
+
+  // Aggregate by Client
+  const clientMap = {};
+  const transportStats = {
+    'Trailer / Mula': { total: 0, onTime: 0 },
+    'Camión Pesado': { total: 0, onTime: 0 },
+    'Camión Mediano': { total: 0, onTime: 0 },
+    'Camión Pequeño': { total: 0, onTime: 0 }
+  };
+
+  let globalOnTime = 0;
+  let globalDelayed = 0;
+
+  customerServiceRecords.forEach(r => {
+    const clientName = (r.client || 'SIN CLIENTE').trim().toUpperCase();
+    if (!clientMap[clientName]) {
+      clientMap[clientName] = {
+        name: clientName,
+        total: 0,
+        onTime: 0,
+        delayed: 0,
+        transports: {}
+      };
+    }
+
+    const tType = r.transportType || 'Camión Pesado';
+    if (!clientMap[clientName].transports[tType]) {
+      clientMap[clientName].transports[tType] = { total: 0, onTime: 0 };
+    }
+
+    if (r.hIngreso && r.hSalida) {
+      const [hIn, mIn] = r.hIngreso.split(':').map(Number);
+      const [hOut, mOut] = r.hSalida.split(':').map(Number);
+      if (!isNaN(hIn) && !isNaN(mIn) && !isNaN(hOut) && !isNaN(mOut)) {
+        let diffMinutes = (hOut * 60 + mOut) - (hIn * 60 + mIn);
+        if (diffMinutes < 0) diffMinutes += 24 * 60;
+        
+        const stdMin = r.standardTimeMin || getTransportStandardMinutes(tType);
+
+        clientMap[clientName].total++;
+        clientMap[clientName].transports[tType].total++;
+        
+        if (!transportStats[tType]) transportStats[tType] = { total: 0, onTime: 0 };
+        transportStats[tType].total++;
+
+        if (diffMinutes <= stdMin) {
+          clientMap[clientName].onTime++;
+          clientMap[clientName].transports[tType].onTime++;
+          transportStats[tType].onTime++;
+          globalOnTime++;
+        } else {
+          clientMap[clientName].delayed++;
+          globalDelayed++;
+        }
+      }
+    }
+  });
+
+  // Update Global Stats
+  const totalDispatches = globalOnTime + globalDelayed;
+  const globalPct = totalDispatches > 0 ? Math.round((globalOnTime / totalDispatches) * 100) : 0;
+
+  if (statPct) {
+    statPct.textContent = `${globalPct}%`;
+    statPct.style.color = globalPct >= 85 ? '#10b981' : (globalPct >= 70 ? '#f59e0b' : '#ef4444');
+  }
+  if (statCount) {
+    statCount.textContent = `${globalOnTime} 🟢 / ${globalDelayed} 🔴`;
+  }
+
+  // Update Transport Cards
+  const updateTransportCard = (el, type) => {
+    if (!el) return;
+    const st = transportStats[type] || { total: 0, onTime: 0 };
+    const pct = st.total > 0 ? Math.round((st.onTime / st.total) * 100) : 0;
+    el.innerHTML = `${st.total} Despachos (<span style="color: ${pct >= 85 ? '#10b981' : '#f59e0b'};">${pct}% En Tiempo</span>)`;
+  };
+
+  updateTransportCard(mulaDiv, 'Trailer / Mula');
+  updateTransportCard(pesadoDiv, 'Camión Pesado');
+  updateTransportCard(medianoDiv, 'Camión Mediano');
+  updateTransportCard(pequenoDiv, 'Camión Pequeño');
+
+  // Render Client Table
+  if (!container) return;
+  const clientList = Object.values(clientMap).sort((a, b) => b.total - a.total);
+
+  if (clientList.length === 0 || totalDispatches === 0) {
+    container.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; padding: 1.5rem; color: var(--text-muted);">
+          No hay despachos con hora de ingreso y salida registrados para calcular el porcentaje por cliente.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  container.innerHTML = clientList.map(c => {
+    const pct = c.total > 0 ? Math.round((c.onTime / c.total) * 100) : 0;
+    
+    let badgeBg = 'background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;';
+    let barColor = '#10b981';
+    let badgeText = '🟢 EXCELENTE';
+
+    if (pct < 75) {
+      badgeBg = 'background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444;';
+      barColor = '#ef4444';
+      badgeText = '🔴 CRÍTICO';
+    } else if (pct < 90) {
+      badgeBg = 'background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid #f59e0b;';
+      barColor = '#f59e0b';
+      badgeText = '🟡 ACEPTABLE';
+    }
+
+    const transportPills = Object.entries(c.transports).map(([type, data]) => {
+      const tPct = data.total > 0 ? Math.round((data.onTime / data.total) * 100) : 0;
+      return `<span style="font-size: 0.68rem; padding: 2px 6px; border-radius: 4px; background: rgba(30, 41, 59, 0.6); border: 1px solid var(--border-color); color: var(--text-main); font-size:0.7rem;">${type}: ${data.onTime}/${data.total} (${tPct}%)</span>`;
+    }).join(' ');
+
+    return `
+      <tr>
+        <td style="font-weight: bold; color: #38bdf8; font-size: 0.85rem;">${escapeHTML(c.name)}</td>
+        <td style="text-align: center; font-weight: bold; font-family: monospace;">${c.total}</td>
+        <td style="text-align: center; font-weight: bold; color: #10b981; font-family: monospace;">${c.onTime}</td>
+        <td style="text-align: center; font-weight: bold; color: #ef4444; font-family: monospace;">${c.delayed}</td>
+        <td style="text-align: center;">
+          <span style="padding: 2px 8px; border-radius: 10px; font-size: 0.72rem; font-weight: bold; ${badgeBg}">
+            ${pct}% (${badgeText})
+          </span>
+        </td>
+        <td style="text-align: center; width: 140px; padding: 8px;">
+          <div style="width: 100%; background: rgba(30, 41, 59, 0.6); height: 8px; border-radius: 4px; overflow: hidden;">
+            <div style="width: ${pct}%; background: ${barColor}; height: 100%; border-radius: 4px; transition: width 0.4s ease;"></div>
+          </div>
+        </td>
+        <td style="padding: 6px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+            ${transportPills || '<span style="font-size:0.72rem; color:var(--text-muted);">-</span>'}
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+window.renderCustomerComplianceDashboard = renderCustomerComplianceDashboard;
+
+function toggleCSDashboardView() {
+  const container = document.getElementById('cs-dashboard-container');
+  const btn = document.getElementById('btn-toggle-cs-dash');
+  if (!container || !btn) return;
+
+  if (container.classList.contains('hidden')) {
+    container.classList.remove('hidden');
+    btn.innerHTML = '👁️ Ocultar Dashboard';
+  } else {
+    container.classList.add('hidden');
+    btn.innerHTML = '👁️ Mostrar Dashboard';
+  }
+}
+window.toggleCSDashboardView = toggleCSDashboardView;
 
 function filterCustomerServiceTable() {
   const searchInput = document.getElementById('cs-search-input');
