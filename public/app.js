@@ -1202,12 +1202,12 @@ async function apiFetch(endpoint, options = {}) {
 
 // LOGIN FLOW
 async function handleLogin(e) {
-  e.preventDefault();
-  const usernameInput = document.getElementById('username').value.trim();
-  const passwordInput = document.getElementById('password').value;
+  if (e && e.preventDefault) e.preventDefault();
+  const usernameInput = (document.getElementById('username')?.value || '').trim();
+  const passwordInput = document.getElementById('password')?.value || '';
   const loginError = document.getElementById('login-error');
   
-  loginError.classList.add('hidden');
+  if (loginError) loginError.classList.add('hidden');
   showLoader('Autenticando...');
   
   try {
@@ -1217,24 +1217,40 @@ async function handleLogin(e) {
     });
     
     if (!data || !data.token) {
-      throw new Error('Usuario o contraseña incorrectos');
+      throw new Error((data && data.error) || 'Usuario o contraseña incorrectos');
     }
 
     token = data.token;
     currentUser = data.user;
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(currentUser));
     
-    // Setup Profile Details
     setupUserProfile();
     showApp();
-    switchView('dashboard');
+    
+    if (typeof checkForcePasswordOverlay === 'function') {
+      checkForcePasswordOverlay();
+    }
+
+    if (currentUser && currentUser.role === 'quality') {
+      switchView('quality-control');
+    } else if (currentUser && currentUser.role === 'imports') {
+      switchView('imports-status');
+    } else if (currentUser && currentUser.role === 'insumos') {
+      switchView('log-physical');
+    } else {
+      switchView('dashboard');
+    }
   } catch (err) {
-    loginError.textContent = 'Usuario o contraseña incorrectos';
-    loginError.classList.remove('hidden');
+    if (loginError) {
+      loginError.textContent = err.message || 'Usuario o contraseña incorrectos';
+      loginError.classList.remove('hidden');
+    }
   } finally {
     hideLoader();
   }
 }
+window.handleLogin = handleLogin;
 
 function handleLogout() {
   token = '';
@@ -1475,43 +1491,7 @@ async function validateTokenAndLoad() {
   }
 }
 
-// Save User to localStorage
-const originalHandleLogin = handleLogin;
-handleLogin = async function(e) {
-  e.preventDefault();
-  const usernameInput = document.getElementById('username').value.trim();
-  const passwordInput = document.getElementById('password').value;
-  const loginError = document.getElementById('login-error');
-  loginError.classList.add('hidden');
-  showLoader('Autenticando...');
-  try {
-    const data = await apiFetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({ username: usernameInput, password: passwordInput })
-    });
-    token = data.token;
-    currentUser = data.user;
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    setupUserProfile();
-    showApp();
-    checkForcePasswordOverlay();
-    if (currentUser && currentUser.role === 'quality') {
-      switchView('quality-control');
-    } else if (currentUser && currentUser.role === 'imports') {
-      switchView('imports-status');
-    } else if (currentUser && currentUser.role === 'insumos') {
-      switchView('log-physical');
-    } else {
-      switchView('dashboard');
-    }
-  } catch (err) {
-    loginError.textContent = err.message || 'Usuario o contraseña incorrectos';
-    loginError.classList.remove('hidden');
-  } finally {
-    hideLoader();
-  }
-};
+// End validateTokenAndLoad
 
 // LOAD DATA
 async function loadDashboardData() {
