@@ -120,17 +120,17 @@
       <nav class="sidebar-menu">
         <!-- Reporte Gerencial Dropdown -->
         <div class="sidebar-dropdown" id="dropdown-gerencial">
-          <div class="dropdown-header">
+          <div class="dropdown-header" onclick="toggleSidebarDropdown(this)">
             <div class="dropdown-header-left">
               <span class="menu-icon">📊</span> Reporte Gerencial
             </div>
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#gerential-summary" class="submenu-item" id="menu-gerential-summary">
+            <a href="#gerential-summary" class="submenu-item" id="menu-gerential-summary" onclick="switchView('gerential-summary'); return false;">
               <span>📈</span> Resumen Ejecutivo
             </a>
-            <a href="#gerential-indicators" class="submenu-item" id="menu-gerential-indicators">
+            <a href="#gerential-indicators" class="submenu-item" id="menu-gerential-indicators" onclick="switchView('gerential-indicators'); return false;">
               <span>🎯</span> Indicadores Clave
             </a>
           </div>
@@ -138,29 +138,29 @@
 
         <!-- Master de Sacos Vacíos Dropdown -->
         <div class="sidebar-dropdown open" id="dropdown-sacos-vacios">
-          <div class="dropdown-header">
+          <div class="dropdown-header" onclick="toggleSidebarDropdown(this)">
             <div class="dropdown-header-left">
               <span class="menu-icon">📦</span> Master de Sacos Vacíos
             </div>
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#dashboard" class="submenu-item active" id="menu-dashboard">
+            <a href="#dashboard" class="submenu-item active" id="menu-dashboard" onclick="switchView('dashboard'); return false;">
               <span>📊</span> Panel Principal
             </a>
-            <a href="#inventory" class="submenu-item" id="menu-inventory">
+            <a href="#inventory" class="submenu-item" id="menu-inventory" onclick="switchView('inventory'); return false;">
               <span>📋</span> Cuadro Master
             </a>
-            <a href="#sales" class="submenu-item" id="menu-sales">
+            <a href="#sales" class="submenu-item" id="menu-sales" onclick="switchView('sales'); return false;">
               <span>📈</span> Ventas y Comercial
             </a>
-            <a href="#requisition" class="submenu-item" id="menu-requisition">
+            <a href="#requisition" class="submenu-item" id="menu-requisition" onclick="switchView('requisition'); return false;">
               <span>📝</span> Requisición Compras
             </a>
-            <a href="#logistic" class="submenu-item" id="menu-logistic">
+            <a href="#logistic" class="submenu-item" id="menu-logistic" onclick="switchView('logistic'); return false;">
               <span>🔄</span> Sincronización
             </a>
-            <a href="#log-physical-consumption" class="submenu-item" id="menu-log-physical-consumption">
+            <a href="#log-physical-consumption" class="submenu-item" id="menu-log-physical-consumption" onclick="switchView('log-physical-consumption'); return false;">
               <span>📉</span> Movimientos de Sacos
             </a>
           </div>
@@ -168,14 +168,14 @@
 
         <!-- Producción Dropdown -->
         <div class="sidebar-dropdown" id="dropdown-produccion">
-          <div class="dropdown-header">
+          <div class="dropdown-header" onclick="toggleSidebarDropdown(this)">
             <div class="dropdown-header-left">
               <span class="menu-icon">🏭</span> Producción
             </div>
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#prod-destajo" class="submenu-item" id="menu-prod-destajo">
+            <a href="#prod-destajo" class="submenu-item" id="menu-prod-destajo" onclick="switchView('prod-destajo'); return false;">
               <span>💰</span> Destajo Nómina
             </a>
           </div>
@@ -183,43 +183,41 @@
 
         <!-- Logística Dropdown -->
         <div class="sidebar-dropdown" id="dropdown-logistica">
-          <div class="dropdown-header">
+          <div class="dropdown-header" onclick="toggleSidebarDropdown(this)">
             <div class="dropdown-header-left">
               <span class="menu-icon">🚚</span> Logística
             </div>
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#log-physical" class="submenu-item" id="menu-log-physical">
+            <a href="#log-physical" class="submenu-item" id="menu-log-physical" onclick="switchView('log-physical'); return false;">
               <span>🏢</span> Inventario Físico Bodega
             </a>
-            <a href="#log-physical-client" class="submenu-item" id="menu-log-physical-client">
+            <a href="#log-physical-client" class="submenu-item" id="menu-log-physical-client" onclick="switchView('log-physical-client'); return false;">
               <span>🏢</span> Inventario Físico Cliente
             </a>
-            <a href="#log-warehouse-3d" class="submenu-item" id="menu-log-warehouse-3d">
+            <a href="#log-warehouse-3d" class="submenu-item" id="menu-log-warehouse-3d" onclick="switchView('log-warehouse-3d'); return false;">
               <span>📐</span> Bodega 3D Granel
             </a>
           </div>
         </div>
 
-
-
         <!-- Buques Dropdown -->
         <div class="sidebar-dropdown" id="dropdown-buques">
-          <div class="dropdown-header">
+          <div class="dropdown-header" onclick="toggleSidebarDropdown(this)">
             <div class="dropdown-header-left">
               <span class="menu-icon">🚢</span> Buques
             </div>
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#imports-status" class="submenu-item" id="menu-imports-status">
+            <a href="#imports-status" class="submenu-item" id="menu-imports-status" onclick="switchView('imports-status'); return false;">
               <span>🚢</span> Pizarrón de Buques
             </a>
-            <a href="#ships-discharge" class="submenu-item" id="menu-ships-discharge">
+            <a href="#ships-discharge" class="submenu-item" id="menu-ships-discharge" onclick="switchView('ships-discharge'); return false;">
               <span>📥</span> Control de Descarga
             </a>
-            <a href="#ships-docks" class="submenu-item" id="menu-ships-docks">
+            <a href="#ships-docks" class="submenu-item" id="menu-ships-docks" onclick="switchView('ships-docks'); return false;">
               <span>🗓️</span> Planificación Muelles
             </a>
           </div>
@@ -227,14 +225,14 @@
 
         <!-- Atención al Cliente Dropdown -->
         <div class="sidebar-dropdown" id="dropdown-atencion-cliente">
-          <div class="dropdown-header">
+          <div class="dropdown-header" onclick="toggleSidebarDropdown(this)">
             <div class="dropdown-header-left">
               <span class="menu-icon">🎧</span> Atención al Cliente
             </div>
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#customer-service" class="submenu-item" id="menu-customer-service">
+            <a href="#customer-service" class="submenu-item" id="menu-customer-service" onclick="switchView('customer-service'); return false;">
               <span>📋</span> Control de Turnos y Despachos
             </a>
           </div>
@@ -242,14 +240,14 @@
 
         <!-- Configuración Dropdown -->
         <div class="sidebar-dropdown" id="dropdown-configuracion">
-          <div class="dropdown-header">
+          <div class="dropdown-header" onclick="toggleSidebarDropdown(this)">
             <div class="dropdown-header-left">
               <span class="menu-icon">⚙️</span> Configuración
             </div>
             <span class="chevron-icon">▼</span>
           </div>
           <div class="dropdown-menu">
-            <a href="#settings" class="submenu-item" id="menu-settings">
+            <a href="#settings" class="submenu-item" id="menu-settings" onclick="switchView('settings'); return false;">
               <span>🛠️</span> Parámetros y Accesos
             </a>
           </div>
@@ -4281,6 +4279,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260803_v17"></script>
+  <script src="app.js?v=20260803_v18"></script>
 </body>
 </html>
