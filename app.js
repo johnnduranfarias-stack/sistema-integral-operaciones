@@ -8661,6 +8661,7 @@ window.triggerPWAInstall = triggerPWAInstall;
 
 // --- CUSTOMER SERVICE (ATENCION AL CLIENTE) MODULE LOGIC ---
 let customerServiceRecords = [];
+let customerServiceNotifications = [];
 
 async function loadCustomerServiceData() {
   const dateInput = document.getElementById('cs-filter-date');
@@ -8681,7 +8682,9 @@ async function loadCustomerServiceData() {
     const res = await apiFetch(url);
     if (res && res.records) {
       customerServiceRecords = res.records;
+      customerServiceNotifications = res.notifications || [];
       renderCustomerServiceModule();
+      renderCustomerServiceChatLogs();
     }
   } catch (err) {
     console.error("Error al cargar datos de atención al cliente:", err);
@@ -8689,6 +8692,14 @@ async function loadCustomerServiceData() {
   }
 }
 window.loadCustomerServiceData = loadCustomerServiceData;
+
+function getTransportStandardMinutes(type) {
+  if (type === 'Trailer / Mula') return 90;
+  if (type === 'Camión Pesado') return 60;
+  if (type === 'Camión Mediano') return 45;
+  if (type === 'Camión Pequeño') return 30;
+  return 60;
+}
 
 function renderCustomerServiceModule() {
   const tbody = document.getElementById('cs-table-body');
@@ -8704,7 +8715,7 @@ function renderCustomerServiceModule() {
     if (tbody) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="18" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
+          <td colspan="20" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
             <span style="font-size: 32px; display: block; margin-bottom: 0.5rem;">🚚</span>
             No hay turnos registrados para la fecha seleccionada.
           </td>
@@ -8777,10 +8788,49 @@ function renderCustomerServiceModule() {
       badgeClass = 'background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444;';
     }
 
+    // Standard Stay Calculation vs Real Stay
+    const stdMin = record.standardTimeMin || getTransportStandardMinutes(record.transportType);
+    let timeBadge = `<span style="color: var(--text-muted); font-size: 0.75rem;">Pendiente</span>`;
+    
+    if (record.hIngreso && record.hSalida) {
+      const [hIn, mIn] = record.hIngreso.split(':').map(Number);
+      const [hOut, mOut] = record.hSalida.split(':').map(Number);
+      if (!isNaN(hIn) && !isNaN(mIn) && !isNaN(hOut) && !isNaN(mOut)) {
+        let actualMin = (hOut * 60 + mOut) - (hIn * 60 + mIn);
+        if (actualMin < 0) actualMin += 24 * 60;
+        
+        const hrs = Math.floor(actualMin / 60);
+        const mins = actualMin % 60;
+        const realStr = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')} h`;
+
+        if (actualMin <= stdMin) {
+          timeBadge = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <span style="font-weight: bold; color: #10b981; font-family: monospace;">${realStr}</span>
+              <span style="font-size: 0.68rem; padding: 1px 5px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;">🟢 En Tiempo (Est: ${stdMin}m)</span>
+            </div>
+          `;
+        } else {
+          const diffMin = actualMin - stdMin;
+          const dHrs = Math.floor(diffMin / 60);
+          const dMins = diffMin % 60;
+          const diffStr = dHrs > 0 ? `+${dHrs}h ${dMins}m` : `+${dMins}m`;
+          timeBadge = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <span style="font-weight: bold; color: #ef4444; font-family: monospace;">${realStr}</span>
+              <span style="font-size: 0.68rem; padding: 1px 5px; border-radius: 8px; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444;">🔴 Excedido (${diffStr})</span>
+            </div>
+          `;
+        }
+      }
+    }
+
     tr.innerHTML = `
       <td style="text-align: center; font-weight: bold; color: #3b82f6; font-size: 0.9rem;">${record.turno}</td>
+      <td style="font-weight: 600; color: #a7f3d0; font-size: 0.8rem;">${escapeHTML(record.vendedor || 'Marianella Zurita')}</td>
       <td style="font-weight: 600; color: var(--text-main);">${escapeHTML(record.driver || '')}</td>
       <td style="text-align: center; font-family: monospace; font-weight: bold; background: rgba(30, 41, 59, 0.3); border-radius: 4px;">${escapeHTML(record.plate || '')}</td>
+      <td style="text-align: center; font-size: 0.76rem; color: #cbd5e1;">${escapeHTML(record.transportType || 'Camión Pesado')}</td>
       <td style="font-weight: 600; color: #38bdf8;">${escapeHTML(record.client || '')}</td>
       <td style="text-align: center; color: #10b981; font-weight: 600;">${record.ferpagro || '-'}</td>
       <td style="text-align: center; color: #3b82f6; font-weight: 600;">${record.doyle1 || '-'}</td>
@@ -8789,7 +8839,7 @@ function renderCustomerServiceModule() {
       <td style="text-align: center; font-weight: bold; font-size: 0.9rem; color: #10b981;">${(record.totalSacos || 0).toLocaleString()}</td>
       <td style="text-align: center; font-family: monospace;">${record.hIngreso || '-'}</td>
       <td style="text-align: center; font-family: monospace;">${record.hSalida || '-'}</td>
-      <td style="text-align: center; font-weight: bold; font-family: monospace; color: #f59e0b;">${record.tEstadia || '-'}</td>
+      <td style="text-align: center;">${timeBadge}</td>
       <td style="text-align: center;">
         <span style="padding: 3px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: bold; display: inline-block; cursor: pointer;" onclick="quickUpdateCSStatus('${record.id}', '${record.estatus}')" title="Haga clic para cambiar estatus">
           <span style="padding: 2px 6px; border-radius: 10px; ${badgeClass}">
@@ -8812,6 +8862,36 @@ function renderCustomerServiceModule() {
   });
 }
 window.renderCustomerServiceModule = renderCustomerServiceModule;
+
+function renderCustomerServiceChatLogs() {
+  const container = document.getElementById('cs-chat-logs');
+  if (!container) return;
+
+  if (!customerServiceNotifications || customerServiceNotifications.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; color: var(--text-muted); font-size: 0.82rem; padding: 1rem;">
+        💬 No hay notificaciones recientes enviadas. Al cambiar un turno a <strong>DESPACHADO</strong>, se enviará una alerta automática por correo.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = customerServiceNotifications.map(n => {
+    const timeStr = new Date(n.timestamp).toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' });
+    return `
+      <div style="background: rgba(30, 41, 59, 0.7); padding: 8px 12px; border-radius: 6px; border-left: 3px solid #10b981; font-size: 0.8rem; line-height: 1.4;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+          <span style="font-weight: bold; color: #10b981;">📩 Notificación Automática Enviada</span>
+          <span style="font-size: 0.72rem; color: var(--text-muted); font-family: monospace;">${timeStr} ➔ mzurita@ferpacific.com</span>
+        </div>
+        <div style="color: var(--text-main); font-size: 0.8rem;">
+          ${escapeHTML(n.message)}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+window.renderCustomerServiceChatLogs = renderCustomerServiceChatLogs;
 
 function filterCustomerServiceTable() {
   const searchInput = document.getElementById('cs-search-input');
@@ -8848,6 +8928,9 @@ function calculateCSTotals() {
   const hOut = document.getElementById('cs-form-h-salida')?.value || '';
   const tEstadiaInput = document.getElementById('cs-form-t-estadia');
 
+  const transportType = document.getElementById('cs-form-transport-type')?.value || 'Camión Pesado';
+  const stdMin = getTransportStandardMinutes(transportType);
+
   if (hIn && hOut && tEstadiaInput) {
     const [h1, m1] = hIn.split(':').map(Number);
     const [h2, m2] = hOut.split(':').map(Number);
@@ -8856,7 +8939,14 @@ function calculateCSTotals() {
       if (diff < 0) diff += 24 * 60;
       const hrs = Math.floor(diff / 60);
       const mins = diff % 60;
-      tEstadiaInput.value = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+      const realStr = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+
+      if (diff <= stdMin) {
+        tEstadiaInput.value = `${realStr} (🟢 En Tiempo - Est: ${stdMin}m)`;
+      } else {
+        const dMin = diff - stdMin;
+        tEstadiaInput.value = `${realStr} (🔴 Excedido +${dMin}m)`;
+      }
     } else {
       tEstadiaInput.value = '00:00';
     }
@@ -8871,6 +8961,8 @@ function openNewCustomerServiceModal() {
   const nextTurn = customerServiceRecords.length + 1;
   document.getElementById('cs-form-turno').value = nextTurn;
   document.getElementById('cs-form-fecha').value = document.getElementById('cs-filter-date')?.value || new Date().toISOString().split('T')[0];
+  document.getElementById('cs-form-vendedor').value = 'Marianella Zurita';
+  document.getElementById('cs-form-transport-type').value = 'Camión Pesado';
   document.getElementById('cs-form-estatus').value = 'ESPERA DE CARGA';
   
   document.getElementById('cs-form-driver').value = '';
@@ -8906,6 +8998,8 @@ function openEditCustomerServiceModal(id) {
   
   document.getElementById('cs-form-turno').value = record.turno;
   document.getElementById('cs-form-fecha').value = record.fecha;
+  document.getElementById('cs-form-vendedor').value = record.vendedor || 'Marianella Zurita';
+  document.getElementById('cs-form-transport-type').value = record.transportType || 'Camión Pesado';
   document.getElementById('cs-form-estatus').value = record.estatus;
   
   document.getElementById('cs-form-driver').value = record.driver || '';
@@ -8939,9 +9033,33 @@ async function handleCustomerServiceSubmit(event) {
   event.preventDefault();
   const id = document.getElementById('cs-form-id').value;
   
+  const transportType = document.getElementById('cs-form-transport-type').value;
+  const stdMin = getTransportStandardMinutes(transportType);
+  const hIn = document.getElementById('cs-form-h-ingreso').value;
+  const hOut = document.getElementById('cs-form-h-salida').value;
+  let tEstadiaVal = document.getElementById('cs-form-t-estadia').value;
+
+  let timeStatus = 'EN TIEMPO';
+  if (hIn && hOut) {
+    const [h1, m1] = hIn.split(':').map(Number);
+    const [h2, m2] = hOut.split(':').map(Number);
+    if (!isNaN(h1) && !isNaN(m1) && !isNaN(h2) && !isNaN(m2)) {
+      let diff = (h2 * 60 + m2) - (h1 * 60 + m1);
+      if (diff < 0) diff += 24 * 60;
+      const hrs = Math.floor(diff / 60);
+      const mins = diff % 60;
+      tEstadiaVal = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+      if (diff > stdMin) {
+        timeStatus = 'EXCEDIDO';
+      }
+    }
+  }
+
   const payload = {
     turno: Number(document.getElementById('cs-form-turno').value),
     fecha: document.getElementById('cs-form-fecha').value,
+    vendedor: document.getElementById('cs-form-vendedor').value,
+    transportType: transportType,
     estatus: document.getElementById('cs-form-estatus').value,
     driver: document.getElementById('cs-form-driver').value,
     plate: document.getElementById('cs-form-plate').value,
@@ -8951,9 +9069,11 @@ async function handleCustomerServiceSubmit(event) {
     nacional: Number(document.getElementById('cs-form-nacional').value) || 0,
     sackett: Number(document.getElementById('cs-form-sackett').value) || 0,
     totalSacos: Number(document.getElementById('cs-form-total-sacos').value) || 0,
-    hIngreso: document.getElementById('cs-form-h-ingreso').value,
-    hSalida: document.getElementById('cs-form-h-salida').value,
-    tEstadia: document.getElementById('cs-form-t-estadia').value,
+    hIngreso: hIn,
+    hSalida: hOut,
+    tEstadia: tEstadiaVal,
+    standardTimeMin: stdMin,
+    timeStatus: timeStatus,
     pNeto: Number(document.getElementById('cs-form-p-neto').value) || 0,
     pProm: Number(document.getElementById('cs-form-p-prom').value) || 0,
     ticket: document.getElementById('cs-form-ticket').value
