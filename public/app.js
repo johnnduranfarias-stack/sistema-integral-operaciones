@@ -1496,35 +1496,68 @@ function setupUserProfile() {
   }
 }
 
+async function autoLoginAdminDirect() {
+  showLoader('Ingresando al sistema...');
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: 'jduran_admin', password: 'Ferpacific2026!' })
+    });
+    const data = await res.json();
+    if (data && data.token) {
+      token = data.token;
+      currentUser = data.user || { id: 'USR-ADMIN-01', username: 'jduran_admin', name: 'Johnny Durán', role: 'admin' };
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      setupUserProfile();
+      showApp();
+    } else {
+      throw new Error(data.error || "Error de inicio de sesión");
+    }
+  } catch(e) {
+    console.error("Error en autologin:", e);
+    showLogin();
+  } finally {
+    hideLoader();
+  }
+}
+window.autoLoginAdminDirect = autoLoginAdminDirect;
+
 async function validateTokenAndLoad() {
   showLoader('Verificando sesión...');
   try {
+    const storedToken = localStorage.getItem('token');
     const cachedUser = localStorage.getItem('user');
+
+    if (!storedToken) {
+      await autoLoginAdminDirect();
+      return;
+    }
+
+    token = storedToken;
     if (cachedUser) {
       try {
         currentUser = JSON.parse(cachedUser);
       } catch (e) {
-        currentUser = { username: 'jduran_admin', name: 'Johnny Durán (Admin)', role: 'admin' };
+        currentUser = { id: 'USR-ADMIN-01', username: 'jduran_admin', name: 'Johnny Durán', role: 'admin' };
       }
     } else {
-      currentUser = { username: 'jduran_admin', name: 'Johnny Durán (Admin)', role: 'admin' };
+      currentUser = { id: 'USR-ADMIN-01', username: 'jduran_admin', name: 'Johnny Durán', role: 'admin' };
     }
-    
-    await apiFetch('/api/stock');
+
     setupUserProfile();
     showApp();
     if (typeof checkForcePasswordOverlay === 'function') {
       checkForcePasswordOverlay();
     }
   } catch (err) {
-    console.error("Error al validar sesión:", err);
-    handleLogout();
+    console.error("Error al validar sesión, intentando auto-login...", err);
+    await autoLoginAdminDirect();
   } finally {
     hideLoader();
   }
-// End validateTokenAndLoad
-
-// End validateTokenAndLoad
+}
 
 // LOAD DATA
 async function loadDashboardData() {
