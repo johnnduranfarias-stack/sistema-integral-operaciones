@@ -716,12 +716,19 @@ const server = http.createServer(async (req, res) => {
             (r.driver && r.driver.toLowerCase().includes(q)) ||
             (r.plate && r.plate.toLowerCase().includes(q)) ||
             (r.client && r.client.toLowerCase().includes(q)) ||
+            (r.vendedor && r.vendedor.toLowerCase().includes(q)) ||
             (r.ticket && String(r.ticket).toLowerCase().includes(q))
           );
         }
 
+        if (!db.customerServiceNotifications) db.customerServiceNotifications = [];
+
         res.writeHead(200);
-        res.end(JSON.stringify({ success: true, records: records }));
+        res.end(JSON.stringify({ 
+          success: true, 
+          records: records,
+          notifications: db.customerServiceNotifications.slice(0, 50)
+        }));
       } catch (err) {
         res.writeHead(500);
         res.end(JSON.stringify({ success: false, error: err.message }));
@@ -742,6 +749,8 @@ const server = http.createServer(async (req, res) => {
           driver: String(body.driver || '').trim(),
           plate: String(body.plate || '').trim().toUpperCase(),
           client: String(body.client || '').trim().toUpperCase(),
+          vendedor: String(body.vendedor || 'Marianella Zurita').trim(),
+          transportType: String(body.transportType || 'Camión Pesado').trim(),
           ferpagro: Number(body.ferpagro) || 0,
           doyle1: Number(body.doyle1) || 0,
           nacional: Number(body.nacional) || 0,
@@ -750,6 +759,8 @@ const server = http.createServer(async (req, res) => {
           hIngreso: String(body.hIngreso || '').trim(),
           hSalida: String(body.hSalida || '').trim(),
           tEstadia: String(body.tEstadia || '').trim(),
+          standardTimeMin: Number(body.standardTimeMin) || 60,
+          timeStatus: String(body.timeStatus || 'EN TIEMPO').trim(),
           estatus: String(body.estatus || 'ESPERA DE CARGA').trim(),
           fecha: String(body.fecha || new Date().toISOString().split('T')[0]).trim(),
           pNeto: Number(body.pNeto) || 0,
@@ -785,12 +796,16 @@ const server = http.createServer(async (req, res) => {
         }
 
         const existing = db.customerServiceRecords[index];
+        const prevStatus = existing.estatus;
+
         const updated = {
           ...existing,
           turno: body.turno !== undefined ? Number(body.turno) : existing.turno,
           driver: body.driver !== undefined ? String(body.driver).trim() : existing.driver,
           plate: body.plate !== undefined ? String(body.plate).trim().toUpperCase() : existing.plate,
           client: body.client !== undefined ? String(body.client).trim().toUpperCase() : existing.client,
+          vendedor: body.vendedor !== undefined ? String(body.vendedor).trim() : existing.vendedor,
+          transportType: body.transportType !== undefined ? String(body.transportType).trim() : existing.transportType,
           ferpagro: body.ferpagro !== undefined ? Number(body.ferpagro) : existing.ferpagro,
           doyle1: body.doyle1 !== undefined ? Number(body.doyle1) : existing.doyle1,
           nacional: body.nacional !== undefined ? Number(body.nacional) : existing.nacional,
@@ -799,6 +814,8 @@ const server = http.createServer(async (req, res) => {
           hIngreso: body.hIngreso !== undefined ? String(body.hIngreso).trim() : existing.hIngreso,
           hSalida: body.hSalida !== undefined ? String(body.hSalida).trim() : existing.hSalida,
           tEstadia: body.tEstadia !== undefined ? String(body.tEstadia).trim() : existing.tEstadia,
+          standardTimeMin: body.standardTimeMin !== undefined ? Number(body.standardTimeMin) : existing.standardTimeMin,
+          timeStatus: body.timeStatus !== undefined ? String(body.timeStatus).trim() : existing.timeStatus,
           estatus: body.estatus !== undefined ? String(body.estatus).trim() : existing.estatus,
           fecha: body.fecha !== undefined ? String(body.fecha).trim() : existing.fecha,
           pNeto: body.pNeto !== undefined ? Number(body.pNeto) : existing.pNeto,
@@ -808,10 +825,51 @@ const server = http.createServer(async (req, res) => {
         };
 
         db.customerServiceRecords[index] = updated;
+
+        // Auto-Generate Chat/Email Notification when status changes to DESPACHADO
+        if (prevStatus !== 'DESPACHADO' && updated.estatus === 'DESPACHADO') {
+          if (!db.customerServiceNotifications) db.customerServiceNotifications = [];
+          const notif = {
+            id: 'NOTIF-' + Date.now(),
+            recordId: updated.id,
+            timestamp: new Date().toISOString(),
+            message: `🚛 NOTIFICACIÓN DE SALIDA: El vehículo [${updated.plate}] manejado por [${updated.driver}] para el cliente [${updated.client}] (Vendedor: ${updated.vendedor}) con ${updated.totalSacos} sacos ha finalizado su carga y ha sido DESPACHADO a las ${updated.hSalida || 'N/A'}.`,
+            recipients: ['mzurita@ferpacific.com'],
+            sent: true
+          };
+          db.customerServiceNotifications.unshift(notif);
+        }
+
         writeDB(db);
 
         res.writeHead(200);
         res.end(JSON.stringify({ success: true, record: updated, message: 'Turno actualizado exitosamente.' }));
+      } catch (err) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+      return;
+    }
+
+    if (pathname === '/api/customer-service/notify-dispatch' && req.method === 'POST') {
+      try {
+        const body = await readJSONBody(req);
+        const db = readDB();
+        if (!db.customerServiceNotifications) db.customerServiceNotifications = [];
+
+        const notif = {
+          id: 'NOTIF-' + Date.now(),
+          timestamp: new Date().toISOString(),
+          message: String(body.message || '').trim(),
+          recipients: body.recipients || ['mzurita@ferpacific.com'],
+          sent: true
+        };
+
+        db.customerServiceNotifications.unshift(notif);
+        writeDB(db);
+
+        res.writeHead(200);
+        res.end(JSON.stringify({ success: true, notification: notif, message: 'Notificación enviada a mzurita@ferpacific.com' }));
       } catch (err) {
         res.writeHead(500);
         res.end(JSON.stringify({ success: false, error: err.message }));
