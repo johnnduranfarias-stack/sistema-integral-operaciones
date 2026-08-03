@@ -3897,6 +3897,87 @@
               <span class="stat-value" id="cs-stat-waiting">0</span>
             </div>
           </div>
+          <div class="stat-card" style="border-left: 4px solid #10b981;">
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🎯</div>
+            <div class="stat-info">
+              <span class="stat-label">% Despachados En Tiempo</span>
+              <span class="stat-value" id="cs-stat-on-time-pct" style="color: #10b981;">0%</span>
+            </div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #3b82f6;">
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">🚛</div>
+            <div class="stat-info">
+              <span class="stat-label">Despachos En Tiempo vs Retraso</span>
+              <span class="stat-value" id="cs-stat-on-time-count" style="font-size: 0.95rem; font-weight: bold;">0 🟢 / 0 🔴</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DASHBOARD DE CUMPLIMIENTO DE ESTADÍA POR CLIENTE Y TIPO DE VEHÍCULO -->
+        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.1rem; font-weight: bold; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+                <span>📊</span> Dashboard de Cumplimiento de Estadía por Cliente
+              </h3>
+              <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: var(--text-muted);">
+                Porcentaje de despachos completados dentro del tiempo estándar según tipo de vehículo (Trailer 90m | Camión Pesado 60m | Mediano 45m | Pequeño 30m)
+              </p>
+            </div>
+            <button class="btn btn-sm btn-outline" onclick="toggleCSDashboardView()" id="btn-toggle-cs-dash">
+              👁️ Ocultar Dashboard
+            </button>
+          </div>
+
+          <div id="cs-dashboard-container">
+            <!-- CARDS DE TIEMPO ESTÁNDAR POR TIPO DE TRANSPORTE -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.25rem;">
+              <div style="background: rgba(30, 41, 59, 0.5); padding: 0.85rem; border-radius: var(--radius-sm); border-top: 3px solid #3b82f6;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; display: block; text-transform: uppercase;">🚛 Trailer / Mula</span>
+                <span style="font-size: 0.72rem; color: #60a5fa; display: block; margin-top: 2px;">Capacidad: >500 sacos | Estándar: <strong>1h 30m</strong></span>
+                <div id="dash-transport-mula" style="margin-top: 6px; font-size: 0.85rem; font-weight: bold; color: var(--text-main);">0 Despachos (0% En Tiempo)</div>
+              </div>
+              <div style="background: rgba(30, 41, 59, 0.5); padding: 0.85rem; border-radius: var(--radius-sm); border-top: 3px solid #10b981;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; display: block; text-transform: uppercase;">🚚 Camión Pesado</span>
+                <span style="font-size: 0.72rem; color: #34d399; display: block; margin-top: 2px;">Capacidad: 301-500 sacos | Estándar: <strong>1h 00m</strong></span>
+                <div id="dash-transport-pesado" style="margin-top: 6px; font-size: 0.85rem; font-weight: bold; color: var(--text-main);">0 Despachos (0% En Tiempo)</div>
+              </div>
+              <div style="background: rgba(30, 41, 59, 0.5); padding: 0.85rem; border-radius: var(--radius-sm); border-top: 3px solid #f59e0b;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; display: block; text-transform: uppercase;">🚐 Camión Mediano</span>
+                <span style="font-size: 0.72rem; color: #fbbf24; display: block; margin-top: 2px;">Capacidad: 101-300 sacos | Estándar: <strong>0h 45m</strong></span>
+                <div id="dash-transport-mediano" style="margin-top: 6px; font-size: 0.85rem; font-weight: bold; color: var(--text-main);">0 Despachos (0% En Tiempo)</div>
+              </div>
+              <div style="background: rgba(30, 41, 59, 0.5); padding: 0.85rem; border-radius: var(--radius-sm); border-top: 3px solid #8b5cf6;">
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; display: block; text-transform: uppercase;">🛻 Camión Pequeño</span>
+                <span style="font-size: 0.72rem; color: #a78bfa; display: block; margin-top: 2px;">Capacidad: 1-100 sacos | Estándar: <strong>0h 30m</strong></span>
+                <div id="dash-transport-pequeno" style="margin-top: 6px; font-size: 0.85rem; font-weight: bold; color: var(--text-main);">0 Despachos (0% En Tiempo)</div>
+              </div>
+            </div>
+
+            <!-- TABLA DE CUMPLIMIENTO POR CLIENTE -->
+            <div style="overflow-x: auto; width: 100%;">
+              <table class="table" style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+                <thead>
+                  <tr style="background: #0f172a; border-bottom: 2px solid #3b82f6; color: #f8fafc; font-size: 0.75rem; text-transform: uppercase; font-weight: bold;">
+                    <th style="padding: 8px 12px; text-align: left; color: #38bdf8;">CLIENTE</th>
+                    <th style="padding: 8px 12px; text-align: center;">TOTAL DESPACHOS</th>
+                    <th style="padding: 8px 12px; text-align: center; color: #10b981;">EN TIEMPO (🟢)</th>
+                    <th style="padding: 8px 12px; text-align: center; color: #ef4444;">EXCEDIDOS (🔴)</th>
+                    <th style="padding: 8px 12px; text-align: center; color: #fbbf24;">% CUMPLIMIENTO</th>
+                    <th style="padding: 8px 12px; text-align: center;">BARRA CUMPLIMIENTO</th>
+                    <th style="padding: 8px 12px; text-align: left;">DESGLOSE TRANSPORTE</th>
+                  </tr>
+                </thead>
+                <tbody id="cs-dash-client-tbody">
+                  <tr>
+                    <td colspan="7" style="text-align: center; padding: 1.5rem; color: var(--text-muted);">
+                      Cargando métricas de clientes...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         <!-- CONTROL BAR: Date, Search, Filters & Export -->
@@ -4172,6 +4253,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260803_v8"></script>
+  <script src="app.js?v=20260803_v9"></script>
 </body>
 </html>
