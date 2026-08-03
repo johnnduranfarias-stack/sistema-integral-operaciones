@@ -1517,33 +1517,23 @@ async function autoLoginAdminDirect() {
     }
   } catch(e) {
     console.error("Error en autologin:", e);
-    showLogin();
-  } finally {
-    hideLoader();
-  }
-}
-window.autoLoginAdminDirect = autoLoginAdminDirect;
-
 async function validateTokenAndLoad() {
   showLoader('Verificando sesión...');
   try {
     const storedToken = localStorage.getItem('token');
     const cachedUser = localStorage.getItem('user');
 
-    if (!storedToken) {
-      await autoLoginAdminDirect();
+    if (!storedToken || !cachedUser) {
+      showLogin();
       return;
     }
 
     token = storedToken;
-    if (cachedUser) {
-      try {
-        currentUser = JSON.parse(cachedUser);
-      } catch (e) {
-        currentUser = { id: 'USR-ADMIN-01', username: 'jduran_admin', name: 'Johnny Durán', role: 'admin' };
-      }
-    } else {
-      currentUser = { id: 'USR-ADMIN-01', username: 'jduran_admin', name: 'Johnny Durán', role: 'admin' };
+    try {
+      currentUser = JSON.parse(cachedUser);
+    } catch (e) {
+      showLogin();
+      return;
     }
 
     setupUserProfile();
@@ -1552,8 +1542,8 @@ async function validateTokenAndLoad() {
       checkForcePasswordOverlay();
     }
   } catch (err) {
-    console.error("Error al validar sesión, intentando auto-login...", err);
-    await autoLoginAdminDirect();
+    console.error("Error al validar sesión:", err);
+    showLogin();
   } finally {
     hideLoader();
   }
