@@ -1,14 +1,27 @@
 {
   "users": {
     "jduran_admin": {
-      "name": "Johnny Durán (Admin)",
-      "passwordHash": "45db69dc007024a7b34b9e8abeb0ab45bac15abeb1b36708eb3999098a959c70",
-      "role": "admin"
+      "id": "USR-ADMIN-01",
+      "username": "jduran_admin",
+      "alias": "jduran",
+      "name": "Johnny Durán",
+      "passwordHash": "$2b$10$gHLWFpefY843Aj/Tx5vQLOeAFndlizxCStTRFL/fOkb3wJakAZTCG",
+      "role": "admin",
+      "displayRole": "Administrador General",
+      "activo": true,
+      "updatedAt": "2026-08-03T21:06:14.081Z"
     },
     "jduran": {
-      "name": "Johnny Durán (Admin)",
-      "passwordHash": "45db69dc007024a7b34b9e8abeb0ab45bac15abeb1b36708eb3999098a959c70",
-      "role": "admin"
+      "id": "USR-ADMIN-01",
+      "username": "jduran_admin",
+      "alias": "jduran",
+      "name": "Johnny Durán",
+      "passwordHash": "$2b$10$gHLWFpefY843Aj/Tx5vQLOeAFndlizxCStTRFL/fOkb3wJakAZTCG",
+      "role": "admin",
+      "displayRole": "Administrador General",
+      "activo": true,
+      "isAlias": true,
+      "updatedAt": "2026-08-03T21:06:14.084Z"
     },
     "lmerchan": {
       "name": "Luis Merchán",
@@ -44,6 +57,13 @@
       "name": "Bodega Insumos",
       "passwordHash": "d344c34d6bc582c451640ddf0f5042e12eb79105d46fec030dc0d17282df1abe",
       "role": "insumos"
+    },
+    "user_inactivo_test": {
+      "id": "USR-INACTIVO",
+      "username": "user_inactivo_test",
+      "passwordHash": "$2a$10$abcdefghijklmnopqrstuuu",
+      "role": "viewer",
+      "activo": false
     }
   }
 }
