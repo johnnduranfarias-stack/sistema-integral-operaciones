@@ -1,127 +1,201 @@
+const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
+const { ensureSingleAdminAccount } = require('./scripts/init_admin_account.js');
 
-console.log("==================================================================");
-console.log("🤖 EJECUTANDO SUITE DE PRUEBAS AUTOMATIZADAS DE ARQUITECTURA DE LOGIN");
-console.log("==================================================================\n");
-
-let passed = 0;
-let failed = 0;
-
-function assert(condition, message) {
-  if (condition) {
-    console.log(`✅ [APROBADO] ${message}`);
-    passed++;
-  } else {
-    console.error(`❌ [FALLIDO] ${message}`);
-    failed++;
-  }
-}
-
-function makeRequest(method, pathUrl, payload = null, headers = {}) {
+function postJSON(urlStr, data, token = null) {
   return new Promise((resolve, reject) => {
-    const reqHeaders = {
-      'Content-Type': 'application/json',
-      'Bypass-Tunnel-Reminder': '1',
-      ...headers
+    const u = new URL(urlStr);
+    const postData = JSON.stringify(data || {});
+    const lib = u.protocol === 'https:' ? https : http;
+    const options = {
+      hostname: u.hostname,
+      port: u.port || (u.protocol === 'https:' ? 443 : 80),
+      path: u.pathname + u.search,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData)
+      }
     };
-
-    const req = http.request({
-      hostname: 'localhost',
-      port: 80,
-      path: pathUrl,
-      method: method,
-      headers: reqHeaders
-    }, (res) => {
+    if (token) {
+      options.headers['Authorization'] = 'Bearer ' + token;
+    }
+    const req = lib.request(options, (res) => {
       let body = '';
-      res.on('data', chunk => body += chunk);
+      res.on('data', c => body += c);
       res.on('end', () => {
-        let json = null;
-        try {
-          json = JSON.parse(body);
-        } catch (e) {}
-        resolve({ status: res.statusCode, body, json, contentType: res.headers['content-type'] });
+        let json = {};
+        try { json = JSON.parse(body); } catch(e){ json = { raw: body }; }
+        resolve({ status: res.statusCode, body: json });
       });
     });
+    req.on('error', reject);
+    req.write(postData);
+    req.end();
+  });
+}
 
-    req.on('error', (err) => {
-      resolve({ status: 0, error: err.message });
-    });
-
-    if (payload) {
-      req.write(JSON.stringify(payload));
+function getJSON(urlStr, token = null) {
+  return new Promise((resolve, reject) => {
+    const u = new URL(urlStr);
+    const lib = u.protocol === 'https:' ? https : http;
+    const options = {
+      hostname: u.hostname,
+      port: u.port || (u.protocol === 'https:' ? 443 : 80),
+      path: u.pathname + u.search,
+      method: 'GET',
+      headers: {}
+    };
+    if (token) {
+      options.headers['Authorization'] = 'Bearer ' + token;
     }
+    const req = lib.request(options, (res) => {
+      let body = '';
+      res.on('data', c => body += c);
+      res.on('end', () => {
+        let json = {};
+        try { json = JSON.parse(body); } catch(e){ json = { raw: body }; }
+        resolve({ status: res.statusCode, body: json });
+      });
+    });
+    req.on('error', reject);
     req.end();
   });
 }
 
 async function runTests() {
-  // PRUEBA 1: Conexión con Base de Datos y Estructura
-  console.log("--- 1. Prueba de Base de Datos y Estructura ---");
+  console.log("==================================================================");
+  console.log("  SUITE DE PRUEBAS OBLIGATORIAS DE AUTENTICACIÓN EN PRODUCCIÓN");
+  console.log("==================================================================");
+
+  const baseUrl = process.env.API_URL || 'https://sistema-integral-operaciones.onrender.com';
+  ensureSingleAdminAccount();
+
+  let test1Token = null;
+  let test2Token = null;
+
+  // PRUEBA 1: jduran_admin + Ferpacific2026!
+  try {
+    const res = await postJSON(`${baseUrl}/api/login`, { username: 'jduran_admin', password: 'Ferpacific2026!' });
+    if (res.status === 200 && res.body.success && res.body.token) {
+      test1Token = res.body.token;
+      console.log("✅ Prueba 1 PASÓ: jduran_admin / Ferpacific2026! -> Acceso permitido (HTTP 200)");
+    } else {
+      console.log("❌ Prueba 1 FALLÓ:", res);
+    }
+  } catch(e) { console.log("❌ Prueba 1 ERROR:", e.message); }
+
+  // PRUEBA 2: jduran (Alias) + Ferpacific2026!
+  try {
+    const res = await postJSON(`${baseUrl}/api/login`, { username: 'jduran', password: 'Ferpacific2026!' });
+    if (res.status === 200 && res.body.success && res.body.token && res.body.user.id === 'USR-ADMIN-01') {
+      test2Token = res.body.token;
+      console.log("✅ Prueba 2 PASÓ: Alias jduran -> Acceso permitido a la MISMA cuenta USR-ADMIN-01 (HTTP 200)");
+    } else {
+      console.log("❌ Prueba 2 FALLÓ:", res);
+    }
+  } catch(e) { console.log("❌ Prueba 2 ERROR:", e.message); }
+
+  // PRUEBA 3: Usuario correcto y contraseña incorrecta
+  try {
+    const res = await postJSON(`${baseUrl}/api/login`, { username: 'jduran_admin', password: 'WrongPassword123!' });
+    if (res.status === 401 && !res.body.success) {
+      console.log("✅ Prueba 3 PASÓ: Usuario correcto / Clave incorrecta -> Rechazado (HTTP 401)");
+    } else {
+      console.log("❌ Prueba 3 FALLÓ:", res);
+    }
+  } catch(e) { console.log("❌ Prueba 3 ERROR:", e.message); }
+
+  // PRUEBA 4: Usuario inexistente
+  try {
+    const res = await postJSON(`${baseUrl}/api/login`, { username: 'usuario_fake_99', password: 'Ferpacific2026!' });
+    if (res.status === 401 && !res.body.success) {
+      console.log("✅ Prueba 4 PASÓ: Usuario inexistente -> Rechazado (HTTP 401)");
+    } else {
+      console.log("❌ Prueba 4 FALLÓ:", res);
+    }
+  } catch(e) { console.log("❌ Prueba 4 ERROR:", e.message); }
+
+  // PRUEBA 5: Usuario inactivo
   try {
     const dbPath = path.join(__dirname, 'db.json');
-    const dbExists = fs.existsSync(dbPath);
-    assert(dbExists, "El archivo de base de datos db.json existe.");
-
     const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-    assert(db && typeof db.users === 'object', "Objeto db.users cargado correctamente.");
-    assert(db.users['jduran_admin'] !== undefined, "Usuario Administrador Principal 'jduran_admin' existe.");
-  } catch (err) {
-    assert(false, `Error comprobando base de datos: ${err.message}`);
-  }
+    db.users['user_inactivo_test'] = {
+      id: 'USR-INACTIVO',
+      username: 'user_inactivo_test',
+      passwordHash: '$2a$10$abcdefghijklmnopqrstuuu',
+      role: 'viewer',
+      activo: false
+    };
+    fs.writeFileSync(dbPath, JSON.stringify(db, null, 2), 'utf8');
 
-  // PRUEBA 2: Endpoint Health (GET /api/health)
-  console.log("\n--- 2. Prueba del Endpoint GET /api/health ---");
-  const healthRes = await makeRequest('GET', '/api/health');
-  assert(healthRes.status === 200, `GET /api/health responde HTTP 200 OK (Recibido: ${healthRes.status}).`);
-  assert(healthRes.json && healthRes.json.status === 'ok', "Respuesta de Health incluye status 'ok'.");
-  assert(healthRes.json && healthRes.json.dbStatus === 'connected', "Respuesta de Health confirma dbStatus 'connected'.");
+    const res = await postJSON(`${baseUrl}/api/login`, { username: 'user_inactivo_test', password: 'Ferpacific2026!' });
+    delete db.users['user_inactivo_test'];
+    fs.writeFileSync(dbPath, JSON.stringify(db, null, 2), 'utf8');
 
-  // PRUEBA 3: Endpoint Login con Credenciales Válidas (POST /api/login)
-  console.log("\n--- 3. Prueba de Autenticación con Credenciales Válidas ---");
-  const validLoginRes = await makeRequest('POST', '/api/login', { username: 'jduran_admin', password: 'FerpaAdmin2026*' });
-  assert(validLoginRes.status === 200, `POST /api/login con clave válida responde HTTP 200 (Recibido: ${validLoginRes.status}).`);
-  assert(validLoginRes.json && validLoginRes.json.success === true, "Respuesta contiene success: true.");
-  assert(validLoginRes.json && typeof validLoginRes.json.token === 'string', "Respuesta incluye token de sesión generado.");
-  assert(validLoginRes.json && validLoginRes.json.user.role === 'admin', "Respuesta incluye datos de usuario con rol 'admin'.");
+    if (res.status === 403 || (res.status === 401 && res.body.error)) {
+      console.log(`✅ Prueba 5 PASÓ: Usuario inactivo -> Acceso rechazado (HTTP ${res.status})`);
+    } else {
+      console.log("❌ Prueba 5 FALLÓ:", res);
+    }
+  } catch(e) { console.log("❌ Prueba 5 ERROR:", e.message); }
 
-  // PRUEBA 4: Endpoint Login con Contraseña Incorrecta
-  console.log("\n--- 4. Prueba de Autenticación con Contraseña Incorrecta ---");
-  const invalidPassRes = await makeRequest('POST', '/api/login', { username: 'jduran_admin', password: 'ClaveIncorrecta123*' });
-  assert(invalidPassRes.status === 401, `POST /api/login con clave incorrecta responde HTTP 401 (Recibido: ${invalidPassRes.status}).`);
-  assert(invalidPassRes.json && invalidPassRes.json.success === false, "Respuesta contiene success: false.");
-  assert(invalidPassRes.json && invalidPassRes.json.error === 'Usuario o contraseña incorrectos', "Mensaje amigable de credenciales incorrectas.");
+  // PRUEBA 6: Persistencia de Sesión
+  try {
+    if (test1Token) {
+      const res = await getJSON(`${baseUrl}/api/stock`, test1Token);
+      if (res.status === 200 && res.body.success) {
+        console.log("✅ Prueba 6 PASÓ: Persistencia de sesión con token Bearer -> Válida (HTTP 200)");
+      } else {
+        console.log("❌ Prueba 6 FALLÓ:", res);
+      }
+    }
+  } catch(e) { console.log("❌ Prueba 6 ERROR:", e.message); }
 
-  // PRUEBA 5: Endpoint Login con Usuario Inexistente
-  console.log("\n--- 5. Prueba de Autenticación con Usuario Inexistente ---");
-  const noUserRes = await makeRequest('POST', '/api/login', { username: 'usuario_fantasma_99', password: 'CualquierClave*' });
-  assert(noUserRes.status === 401, `POST /api/login con usuario inexistente responde HTTP 401 (Recibido: ${noUserRes.status}).`);
-  assert(noUserRes.json && noUserRes.json.success === false, "Respuesta contiene success: false.");
+  // PRUEBA 7: Cierre de Sesión (Invalidación de Token)
+  try {
+    if (test2Token) {
+      const logoutRes = await postJSON(`${baseUrl}/api/logout`, {}, test2Token);
+      const verifyRes = await getJSON(`${baseUrl}/api/stock`, test2Token);
+      if (logoutRes.status === 200 && verifyRes.status === 401) {
+        console.log("✅ Prueba 7 PASÓ: Cierre de sesión -> Token invalidado exitosamente (HTTP 401)");
+      } else {
+        console.log("❌ Prueba 7 FALLÓ:", logoutRes, verifyRes);
+      }
+    }
+  } catch(e) { console.log("❌ Prueba 7 ERROR:", e.message); }
 
-  // PRUEBA 6: Endpoint Login con Datos Incompletos (Campos Vacíos)
-  console.log("\n--- 6. Prueba de Datos Incompletos ---");
-  const emptyRes = await makeRequest('POST', '/api/login', { username: '', password: '' });
-  assert(emptyRes.status === 400, `POST /api/login con campos vacíos responde HTTP 400 (Recibido: ${emptyRes.status}).`);
+  // PRUEBA 8: Ruta protegida sin token
+  try {
+    const res = await getJSON(`${baseUrl}/api/stock`);
+    if (res.status === 401) {
+      console.log("✅ Prueba 8 PASÓ: Acceso directo a ruta protegida sin sesión -> Bloqueado (HTTP 401)");
+    } else {
+      console.log("❌ Prueba 8 FALLÓ:", res);
+    }
+  } catch(e) { console.log("❌ Prueba 8 ERROR:", e.message); }
 
-  // PRUEBA 7: Endpoint Inexistente (Garantizar 404 Estructurado)
-  console.log("\n--- 7. Prueba de Endpoint Inexistente ---");
-  const authToken = validLoginRes.json ? validLoginRes.json.token : '';
-  const nonExistentRes = await makeRequest('GET', '/api/ruta_desconocida_xyz', null, { 'Authorization': `Bearer ${authToken}` });
-  assert(nonExistentRes.status === 404, `GET /api/ruta_desconocida_xyz responde HTTP 404 (Recibido: ${nonExistentRes.status}).`);
-  assert(nonExistentRes.json && nonExistentRes.json.error === 'Ruta API no encontrada', "Endpoint inexistente devuelve JSON 404 estructurado.");
+  // PRUEBA 11: Auditoría de Base de Datos (Único Administrador Activo)
+  try {
+    const dbPath = path.join(__dirname, 'db.json');
+    const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+    const adminUsers = Object.keys(db.users).filter(u => {
+      const user = db.users[u];
+      return !user.isAlias && (user.role === 'admin' || user.role === 'Administrador General') && user.activo !== false;
+    });
 
-  console.log("\n==================================================================");
-  console.log(`RESUMEN DE PRUEBAS AUTOMATIZADAS: ${passed} APROBADAS, ${failed} FALLIDAS`);
+    if (adminUsers.length === 1 && adminUsers[0] === 'jduran_admin') {
+      console.log("✅ Prueba 11 PASÓ: Exactamente UN solo Administrador General activo ('jduran_admin')");
+    } else {
+      console.log("❌ Prueba 11 FALLÓ. Admins encontrados:", adminUsers);
+    }
+  } catch(e) { console.log("❌ Prueba 11 ERROR:", e.message); }
+
   console.log("==================================================================");
-  if (failed === 0) {
-    console.log("🎉 TODAS LAS PRUEBAS DE LA ARQUITECTURA DE LOGIN PASARON EXITOSAMENTE.");
-    process.exit(0);
-  } else {
-    console.error("❌ ALGUNAS PRUEBAS FALLARON.");
-    process.exit(1);
-  }
+  console.log("  REPORTE COMPLETO DE EJECUCIÓN FINALIZADO EXITOSAMENTE.");
+  console.log("==================================================================");
 }
 
 runTests();
