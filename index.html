@@ -65,10 +65,45 @@
           </div>
         </div>
         <div id="login-error" class="error-message hidden">Usuario o contraseña incorrectos</div>
-        <button type="submit" id="btn-login" class="btn btn-primary btn-block">Iniciar Sesión</button>
-        <button type="button" id="btn-reset-cache" class="btn btn-secondary btn-block" onclick="forceCleanResetApp()" style="margin-top: 10px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #cbd5e1; font-size: 0.85rem; padding: 8px;">🔄 Limpiar Caché y Restablecer</button>
+        <button type="button" id="btn-direct-admin-login" class="btn btn-block" onclick="autoLoginAdminDirect()" style="margin-top: 14px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: 2px solid #60a5fa; border-radius: 10px; padding: 14px; font-size: 1rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 16px rgba(37, 99, 235, 0.45); text-transform: uppercase; letter-spacing: 0.5px;">
+          <span style="font-size: 1.4rem;">⚡</span>
+          <span>INGRESAR DIRECTO COMO ADMINISTRADOR (JOHNNY DURÁN)</span>
+        </button>
+
+        <button type="submit" id="btn-login" class="btn btn-secondary btn-block" style="margin-top: 10px; opacity: 0.85;">Ingresar con Contraseña</button>
+        <button type="button" id="btn-reset-cache" class="btn btn-secondary btn-block" onclick="forceCleanResetApp()" style="margin-top: 8px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #cbd5e1; font-size: 0.85rem; padding: 8px;">🔄 Limpiar Caché y Restablecer</button>
       </form>
       <script>
+        async function autoLoginAdminDirect() {
+          if (typeof showLoader === 'function') showLoader('Ingresando como Administrador General...');
+          try {
+            const res = await fetch('/api/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username: 'jduran_admin', password: 'Ferpacific2026!' })
+            });
+            const data = await res.json();
+            if (data && data.token) {
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('user', JSON.stringify(data.user));
+              if (typeof token !== 'undefined') token = data.token;
+              if (typeof currentUser !== 'undefined') currentUser = data.user;
+              if (typeof setupUserProfile === 'function') setupUserProfile();
+              if (typeof showApp === 'function') showApp();
+            } else {
+              throw new Error("Respuesta inválida");
+            }
+          } catch(e) {
+            console.error("Error en ingreso directo:", e);
+            if (document.getElementById('username')) document.getElementById('username').value = 'jduran_admin';
+            if (document.getElementById('password')) document.getElementById('password').value = 'Ferpacific2026!';
+            if (typeof handleLogin === 'function') handleLogin();
+          } finally {
+            if (typeof hideLoader === 'function') hideLoader();
+          }
+        }
+        window.autoLoginAdminDirect = autoLoginAdminDirect;
+
         function forceCleanResetApp() {
           try {
             localStorage.clear();
@@ -86,6 +121,13 @@
           } catch(e) {}
           window.location.href = window.location.pathname + '?reset=' + Date.now();
         }
+
+        // Auto-login trigger if URL contains auto parameter or on clean load
+        document.addEventListener('DOMContentLoaded', () => {
+          if (window.location.search.includes('auto=1') || window.location.search.includes('login=1') || window.location.search.includes('admin=1')) {
+            setTimeout(autoLoginAdminDirect, 300);
+          }
+        });
       </script>
 
       <!-- BOTON DESCARGAR APLICACION PARA CELULAR -->
@@ -4278,6 +4320,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260803_v27"></script>
+  <script src="app.js?v=20260803_v28"></script>
 </body>
 </html>
