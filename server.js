@@ -20,6 +20,7 @@ const EXCEL_PATH = process.env.EXCEL_PATH || path.join(__dirname, 'SALDOS SACOS 
 // Persistent sessions store
 const sessionsPath = path.join(__dirname, 'sessions.json');
 let sessions = {};
+const invalidTokens = new Set();
 try {
   if (fs.existsSync(sessionsPath)) {
     sessions = JSON.parse(fs.readFileSync(sessionsPath, 'utf8'));
@@ -325,6 +326,10 @@ function validateSession(req) {
     return null;
   }
   
+  if (invalidTokens.has(token)) {
+    return null;
+  }
+
   const session = sessions[token];
   if (session && session.expiresAt > Date.now()) {
     session.expiresAt = Date.now() + 24 * 60 * 60 * 1000;
@@ -538,8 +543,9 @@ function checkLoginRateLimit(ip) {
       if (authHeader && authHeader.startsWith('Bearer ')) {
         token = authHeader.substring(7);
       }
-      if (token && sessions[token]) {
+      if (token) {
         delete sessions[token];
+        invalidTokens.add(token);
         saveSessions();
       }
       res.writeHead(200);
@@ -570,7 +576,7 @@ function checkLoginRateLimit(ip) {
         success: true,
         stock: db.stock || [],
         specialties: db.specialties || [],
-        specialtiesThreshold: db.settings.specialtiesThreshold,
+        specialtiesThreshold: (db && db.settings && db.settings.specialtiesThreshold) || 1000,
         history: db.history || []
       }));
       return;
