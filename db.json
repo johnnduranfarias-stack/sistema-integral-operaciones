@@ -7,7 +7,7 @@
     },
     "lmerchan": {
       "name": "Luis Merchan",
-      "passwordHash": "d41de68bce2de67ca926ba28fc75a90d9acc7a53cff3c01f572c7b0bc669daff",
+      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
       "role": "logistic"
     },
     "ellangari": {
@@ -37,9 +37,8 @@
     },
     "admin": {
       "name": "Administrador Ferpacific",
-      "passwordHash": "f1ec33a99ddbe981d076ced7d787cbb9260828202ad39673bf493feb2d2970b3",
-      "role": "admin",
-      "mustChangePassword": false
+      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
+      "role": "admin"
     },
     "binsumos": {
       "name": "Bodega Insumos",
@@ -49,9 +48,8 @@
     },
     "jduran_admin": {
       "name": "Johnny Durán (Admin)",
-      "passwordHash": "1b60090590d463d46e6cb324e5a98813a9db90f56d8c8739d66c316b5a3a0a61",
-      "role": "admin",
-      "mustChangePassword": false
+      "passwordHash": "9ca6e3f3273f14f565a9edea8bdba3d032d4122d307fcb9ce0da510924d27cf9",
+      "role": "admin"
     },
     "mzurita": {
       "name": "Marianella Zurita",
