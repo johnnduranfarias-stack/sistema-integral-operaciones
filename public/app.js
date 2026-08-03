@@ -8933,19 +8933,12 @@ function startCSLiveClock() {
 window.startCSLiveClock = startCSLiveClock;
 
 function confirmCSDepartureTime(id) {
-  const input = document.getElementById(`cs-grid-hsalida-${id}`);
-  if (!input) return;
+  const hOutInput = document.getElementById(`cs-grid-hsalida-${id}`);
+  if (!hOutInput) return;
   
-  if (!input.value) {
+  if (!hOutInput.value) {
     const now = new Date();
-    input.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-  }
-  
-  input.style.cssText = 'width: 90px; padding: 4px; text-align: center; font-family: monospace; background: #fef08a !important; color: #854d0e !important; font-weight: bold !important; border: 2px solid #eab308 !important;';
-  
-  const estatusSelect = document.getElementById(`cs-grid-estatus-${id}`);
-  if (estatusSelect && estatusSelect.value !== 'CANCELADO') {
-    estatusSelect.value = 'DESPACHADO';
+    hOutInput.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
   }
   
   updateCSRowTotals(id);
@@ -8968,14 +8961,24 @@ function updateCSRowTotals(id, isManualTotal = false) {
   const tType = document.getElementById(`cs-grid-type-${id}`)?.value || 'Camión Pesado';
   const stdMin = getTransportStandardMinutes(tType);
   const hIn = document.getElementById(`cs-grid-hingreso-${id}`)?.value || '';
-  const hOut = document.getElementById(`cs-grid-hsalida-${id}`)?.value || '';
-
-  // Auto-change status to DESPACHADO when Hora de Salida is entered
+  const hOutInput = document.getElementById(`cs-grid-hsalida-${id}`);
+  const hOut = hOutInput?.value || '';
   const estatusSelect = document.getElementById(`cs-grid-estatus-${id}`);
-  if (hOut && estatusSelect && estatusSelect.value !== 'CANCELADO') {
-    estatusSelect.value = 'DESPACHADO';
+
+  // PUNTO 2 & 3: Apply Yellow background to H. SALIDA and update ESTATUS to DESPACHADO
+  if (hOut && String(hOut).trim() !== '') {
+    if (hOutInput) {
+      hOutInput.style.cssText = 'width: 90px; padding: 4px; text-align: center; font-family: monospace; background: #fef08a !important; color: #854d0e !important; font-weight: bold !important; border: 2px solid #eab308 !important; border-radius: 4px;';
+    }
+    if (estatusSelect && estatusSelect.value !== 'CANCELADO') {
+      estatusSelect.value = 'DESPACHADO';
+      estatusSelect.style.cssText = 'width: 145px; padding: 4px; font-size: 0.76rem; font-weight: bold; background: rgba(16, 185, 129, 0.25) !important; color: #10b981 !important; border: 1px solid #10b981 !important; border-radius: 4px;';
+    }
+  } else if (hOutInput) {
+    hOutInput.style.cssText = 'width: 90px; padding: 4px; text-align: center; font-family: monospace; background: transparent; color: inherit; border: 1px solid var(--border-color);';
   }
 
+  // Update T. ESTADÍA Badge
   const badgeDiv = document.getElementById(`cs-grid-badge-${id}`);
   if (badgeDiv) {
     if (hIn && hOut) {
@@ -9011,6 +9014,41 @@ function updateCSRowTotals(id, isManualTotal = false) {
     } else {
       badgeDiv.innerHTML = `<span style="color: var(--text-muted); font-size: 0.75rem;">Pendiente</span>`;
     }
+  }
+
+  // Update record in local array memory
+  const idx = customerServiceRecords.findIndex(r => r.id === id);
+  if (idx !== -1) {
+    customerServiceRecords[idx].turno = Number(document.getElementById(`cs-grid-turno-${id}`)?.value) || customerServiceRecords[idx].turno;
+    customerServiceRecords[idx].vendedor = document.getElementById(`cs-grid-vendedor-${id}`)?.value || customerServiceRecords[idx].vendedor;
+    customerServiceRecords[idx].driver = document.getElementById(`cs-grid-driver-${id}`)?.value || '';
+    customerServiceRecords[idx].plate = document.getElementById(`cs-grid-plate-${id}`)?.value || '';
+    customerServiceRecords[idx].transportType = tType;
+    customerServiceRecords[idx].client = document.getElementById(`cs-grid-client-${id}`)?.value || '';
+    customerServiceRecords[idx].ferpagro = fer;
+    customerServiceRecords[idx].doyle1 = doy;
+    customerServiceRecords[idx].nacional = nac;
+    customerServiceRecords[idx].sackett = sac;
+    customerServiceRecords[idx].totalSacos = Number(document.getElementById(`cs-grid-tot-${id}`)?.value) || (fer + doy + nac + sac);
+    customerServiceRecords[idx].hIngreso = hIn;
+    customerServiceRecords[idx].hSalida = hOut;
+    customerServiceRecords[idx].estatus = estatusSelect ? estatusSelect.value : customerServiceRecords[idx].estatus;
+    customerServiceRecords[idx].fecha = document.getElementById(`cs-grid-fecha-${id}`)?.value || customerServiceRecords[idx].fecha;
+    customerServiceRecords[idx].pNeto = Number(document.getElementById(`cs-grid-pneto-${id}`)?.value) || 0;
+    customerServiceRecords[idx].pProm = Number(document.getElementById(`cs-grid-pprom-${id}`)?.value) || 0;
+    customerServiceRecords[idx].ticket = document.getElementById(`cs-grid-ticket-${id}`)?.value || '';
+
+    // Auto-sync update to backend API
+    const updatedRecord = customerServiceRecords[idx];
+    apiFetch(`/api/customer-service/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedRecord)
+    }).catch(e => console.warn("Aviso al guardar turno:", e));
+  }
+
+  // Real-time update Customer Compliance Dashboard
+  if (typeof renderCustomerComplianceDashboard === 'function') {
+    renderCustomerComplianceDashboard();
   }
 }
 window.updateCSRowTotals = updateCSRowTotals;
