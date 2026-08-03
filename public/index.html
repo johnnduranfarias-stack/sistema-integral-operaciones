@@ -1755,6 +1755,9 @@
                 <label style="font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--text-muted);">Fecha de Registro:</label>
                 <input type="date" id="ferpasur-log-date" class="form-control" style="width: 140px; padding: 4px 8px; font-size: 13px;" onchange="loadFerpasurConsumptions()">
                 <input type="text" id="search-ferpasur-grid" placeholder="Buscar código o descripción..." class="form-control" style="width: 200px; padding: 4px 8px; font-size: 13px;" oninput="renderFerpasurGrid()">
+                <button type="button" class="btn btn-sm btn-success" onclick="exportFerpasurMovementsExcel()" style="font-size: 12px; padding: 4px 10px; font-weight: 600;" title="Descargar planilla en Excel solo de los items que tuvieron movimientos, dañados o ingresos">
+                  📊 Exportar Excel Movimientos
+                </button>
               </div>
             </div>
             <!-- Locked status banner alert -->
@@ -1777,7 +1780,7 @@
                     </tr>
                     <tr>
                       <th class="text-right" style="width: 80px; background: rgba(255,255,255,0.02);">Sistema</th>
-                      <th class="text-right" style="width: 80px; background: rgba(255,255,255,0.02; border-right: 1px solid var(--border-color);">Físico</th>
+                      <th class="text-right" style="width: 80px; background: rgba(255,255,255,0.02); border-right: 1px solid var(--border-color);">Físico</th>
                       
                       <th style="width: 65px; background: rgba(37, 99, 235, 0.05);">Ferpagro</th>
                       <th style="width: 65px; background: rgba(37, 99, 235, 0.05);">Doyle 1</th>
@@ -1806,6 +1809,9 @@
               </div>
             </div>
             <div class="card-footer" style="display: flex; justify-content: flex-end; gap: 0.5rem; padding: 10px 15px; background: rgba(255,255,255,0.02); border-top: 1px solid var(--border-color);">
+              <button type="button" class="btn btn-outline" style="font-weight: 600; border-color: #10b981; color: #10b981;" onclick="exportFerpasurMovementsExcel()">
+                📊 Descargar Excel (Solo con Movimientos/Dañados/Ingresos)
+              </button>
               <button type="button" class="btn btn-primary" style="font-weight: 600;" onclick="saveFerpasurConsumptions()">
                 💾 Guardar Planilla Diaria
               </button>
