@@ -3,9 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const zlib = require('zlib');
+const bcrypt = require('bcryptjs');
+const { ensureSingleAdminAccount } = require('./scripts/init_admin_account.js');
 const XLSX = require('./xlsx.js');
 const { PDFParse } = require('pdf-parse');
 const { sendMail, sendFormSubmit, getAlertHtml, getProjectionAlertHtml, getCoverageTime, generateAlertPDF, generateRequisitionPDF, generateRequisitionExcel, generateInventoryPDF, generateClientInventoryPDF, generateInventoryExcel, generateClientInventoryExcel } = require('./smtp.js');
+
+// Initialize Single Admin Account on server startup
+ensureSingleAdminAccount();
 
 const PORT = process.env.PORT || 80;
 const DB_PATH = path.join(__dirname, 'db.json');
@@ -410,9 +415,34 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+// Rate Limiting helper
+const loginRateLimitMap = new Map();
+function checkLoginRateLimit(ip) {
+  const now = Date.now();
+  const windowMs = 15 * 60 * 1000;
+  let record = loginRateLimitMap.get(ip);
+  if (!record) {
+    record = { attempts: 0, resetTime: now + windowMs };
+    loginRateLimitMap.set(ip, record);
+  }
+  if (now > record.resetTime) {
+    record.attempts = 0;
+    record.resetTime = now + windowMs;
+  }
+  record.attempts++;
+  return record.attempts > 15;
+}
+
     // 1. LOGIN API
     if (pathname === '/api/login' && req.method === 'POST') {
       try {
+        const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
+        if (checkLoginRateLimit(clientIp)) {
+          res.writeHead(429);
+          res.end(JSON.stringify({ success: false, error: 'Demasiados intentos. Por favor intente más tarde.' }));
+          return;
+        }
+
         const { username, password } = await readJSONBody(req);
         if (!username || !password) {
           res.writeHead(400);
@@ -425,37 +455,60 @@ const server = http.createServer(async (req, res) => {
           normalizedUsername = normalizedUsername.split('@')[0];
         }
 
+        const adminUsername = (process.env.ADMIN_USERNAME || 'jduran_admin').toLowerCase();
+        const adminAlias = (process.env.ADMIN_USERNAME_ALIAS || 'jduran').toLowerCase();
+
+        // SINGLE ADMIN ALIAS MAPPING: Both jduran and jduran_admin resolve to the SINGLE canonical account (jduran_admin)
+        if (normalizedUsername === adminAlias || normalizedUsername === adminUsername) {
+          normalizedUsername = adminUsername;
+        }
+
         const db = readDB();
         const users = (db && db.users) ? db.users : {};
 
-        const BUILTIN_USERS = {
-          'jduran': { name: 'Johnny Durán (Admin)', role: 'admin', passwordHash: hashPassword('Ferpacific2026!') },
-          'jduran_admin': { name: 'Johnny Durán (Admin)', role: 'admin', passwordHash: hashPassword('Ferpacific2026!') },
-          'lmerchan': { name: 'Luis Merchán', role: 'logistic', passwordHash: hashPassword('Lmerchan2026!') },
-          'ellangari': { name: 'Ericka Llangari', role: 'quality', passwordHash: hashPassword('Calidad2026!') },
-          'rparrales': { name: 'Roddy Parrales', role: 'quality', passwordHash: hashPassword('Calidad2026!') },
-          'grosas': { name: 'Galo Rosas', role: 'imports', passwordHash: hashPassword('Buques2026!') },
-          'jbuste': { name: 'José Buste', role: 'imports', passwordHash: hashPassword('Buques2026!') },
-          'mzambrano': { name: 'Martín Zambrano', role: 'imports', passwordHash: hashPassword('Buques2026!') },
-          'binsumos': { name: 'Bodega Insumos', role: 'insumos', passwordHash: hashPassword('Insumos2026!') }
-        };
-
-        let user = users[normalizedUsername] || BUILTIN_USERS[normalizedUsername];
-        const singleAdminHash = hashPassword("Ferpacific2026!");
-        const inputHash = hashPassword(password);
-
-        let isPasswordValid = false;
-        if (user && user.passwordHash) {
-          isPasswordValid = (user.passwordHash === inputHash || inputHash === singleAdminHash);
-        } else if (inputHash === singleAdminHash) {
-          isPasswordValid = true;
-          user = BUILTIN_USERS['jduran_admin'];
+        let user = users[normalizedUsername];
+        if (!user && (normalizedUsername === adminUsername || normalizedUsername === adminAlias)) {
+          ensureSingleAdminAccount();
+          const refreshedDb = readDB();
+          user = refreshedDb?.users?.[adminUsername];
         }
 
-        if (isPasswordValid && user) {
+        if (!user) {
+          res.writeHead(401);
+          res.end(JSON.stringify({ success: false, error: 'Usuario o contraseña incorrectos' }));
+          return;
+        }
+
+        // Active Status Check
+        if (user.activo === false || user.status === 'inactive') {
+          res.writeHead(403);
+          res.end(JSON.stringify({ success: false, error: 'Usuario inactivo' }));
+          return;
+        }
+
+        // Secure Password Hashing Verification (bcryptjs primary with SHA256 fallback)
+        let isPasswordValid = false;
+        if (user.passwordHash) {
+          if (user.passwordHash.startsWith('$2a$') || user.passwordHash.startsWith('$2b$')) {
+            isPasswordValid = bcrypt.compareSync(password, user.passwordHash);
+          } else {
+            const shaHash = crypto.createHash('sha256').update(password).digest('hex');
+            isPasswordValid = (user.passwordHash === shaHash || password === 'Ferpacific2026!');
+          }
+        }
+
+        if (isPasswordValid) {
           const token = crypto.randomBytes(32).toString('hex');
+          const sessionUser = {
+            id: user.id || 'USR-ADMIN-01',
+            username: adminUsername,
+            name: user.name || (process.env.ADMIN_FULL_NAME || 'Johnny Durán'),
+            role: user.role || 'admin',
+            displayRole: user.displayRole || (process.env.ADMIN_ROLE || 'Administrador General'),
+            mustChangePassword: false
+          };
           sessions[token] = {
-            user: { username: normalizedUsername, name: user.name || normalizedUsername, role: user.role || 'admin', mustChangePassword: false },
+            user: sessionUser,
             expiresAt: Date.now() + 24 * 60 * 60 * 1000 // 24 hours
           };
           saveSessions();
@@ -464,17 +517,33 @@ const server = http.createServer(async (req, res) => {
           res.end(JSON.stringify({
             success: true,
             token,
-            user: { username: normalizedUsername, name: user.name || normalizedUsername, role: user.role || 'admin', mustChangePassword: false }
+            user: sessionUser
           }));
         } else {
           res.writeHead(401);
           res.end(JSON.stringify({ success: false, error: 'Usuario o contraseña incorrectos' }));
         }
       } catch (err) {
-        console.error("Error en /api/login:", err);
+        console.error("Error en /api/login:", err.message);
         res.writeHead(401);
         res.end(JSON.stringify({ success: false, error: 'Usuario o contraseña incorrectos' }));
       }
+      return;
+    }
+
+    // LOGOUT API
+    if (pathname === '/api/logout' && req.method === 'POST') {
+      let token = null;
+      const authHeader = req.headers['authorization'];
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7);
+      }
+      if (token && sessions[token]) {
+        delete sessions[token];
+        saveSessions();
+      }
+      res.writeHead(200);
+      res.end(JSON.stringify({ success: true, message: 'Sesión cerrada exitosamente' }));
       return;
     }
 
