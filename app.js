@@ -8923,6 +8923,12 @@ function updateCSRowTotals(id, isManualTotal = false) {
   const hIn = document.getElementById(`cs-grid-hingreso-${id}`)?.value || '';
   const hOut = document.getElementById(`cs-grid-hsalida-${id}`)?.value || '';
 
+  // Auto-change status to DESPACHADO when Hora de Salida is entered
+  const estatusSelect = document.getElementById(`cs-grid-estatus-${id}`);
+  if (hOut && estatusSelect && estatusSelect.value !== 'CANCELADO') {
+    estatusSelect.value = 'DESPACHADO';
+  }
+
   const badgeDiv = document.getElementById(`cs-grid-badge-${id}`);
   if (badgeDiv) {
     if (hIn && hOut) {
@@ -9130,6 +9136,11 @@ function calculateCSTotals() {
   const hIn = document.getElementById('cs-form-h-ingreso')?.value || '';
   const hOut = document.getElementById('cs-form-h-salida')?.value || '';
   const tEstadiaInput = document.getElementById('cs-form-t-estadia');
+
+  const estatusForm = document.getElementById('cs-form-estatus');
+  if (hOut && estatusForm && estatusForm.value !== 'CANCELADO') {
+    estatusForm.value = 'DESPACHADO';
+  }
 
   const transportType = document.getElementById('cs-form-transport-type')?.value || 'Camión Pesado';
   const stdMin = getTransportStandardMinutes(transportType);
