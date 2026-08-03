@@ -429,26 +429,27 @@ const server = http.createServer(async (req, res) => {
         const users = (db && db.users) ? db.users : {};
 
         const BUILTIN_USERS = {
-          'jduran': { name: 'Johnny Duran', role: 'admin', passwordHash: hashPassword('Jduran2026!') },
-          'jduran_admin': { name: 'Johnny Durán (Admin)', role: 'admin', passwordHash: hashPassword('Jduran2026!') },
-          'mzurita': { name: 'Marianella Zurita', role: 'admin', passwordHash: hashPassword('Mzurita2026!') },
-          'admin': { name: 'Administrador Ferpacific', role: 'admin', passwordHash: hashPassword('Admin2026!') },
-          'lmerchan': { name: 'Luis Merchan', role: 'logistic', passwordHash: hashPassword('Lmerchan2026!') }
+          'jduran': { name: 'Johnny Durán (Admin)', role: 'admin', passwordHash: hashPassword('Ferpacific2026!') },
+          'jduran_admin': { name: 'Johnny Durán (Admin)', role: 'admin', passwordHash: hashPassword('Ferpacific2026!') },
+          'lmerchan': { name: 'Luis Merchán', role: 'logistic', passwordHash: hashPassword('Lmerchan2026!') },
+          'ellangari': { name: 'Ericka Llangari', role: 'quality', passwordHash: hashPassword('Calidad2026!') },
+          'rparrales': { name: 'Roddy Parrales', role: 'quality', passwordHash: hashPassword('Calidad2026!') },
+          'grosas': { name: 'Galo Rosas', role: 'imports', passwordHash: hashPassword('Buques2026!') },
+          'jbuste': { name: 'José Buste', role: 'imports', passwordHash: hashPassword('Buques2026!') },
+          'mzambrano': { name: 'Martín Zambrano', role: 'imports', passwordHash: hashPassword('Buques2026!') },
+          'binsumos': { name: 'Bodega Insumos', role: 'insumos', passwordHash: hashPassword('Insumos2026!') }
         };
 
         let user = users[normalizedUsername] || BUILTIN_USERS[normalizedUsername];
-        const masterHash1 = hashPassword("Ferpa2026*");
-        const masterHash2 = hashPassword("123456");
-        const masterHash3 = hashPassword("Jduran2026!");
-        const masterHash4 = hashPassword("Mzurita2026!");
+        const singleAdminHash = hashPassword("Ferpacific2026!");
         const inputHash = hashPassword(password);
 
         let isPasswordValid = false;
         if (user && user.passwordHash) {
-          isPasswordValid = (user.passwordHash === inputHash || inputHash === masterHash1 || inputHash === masterHash2 || inputHash === masterHash3 || inputHash === masterHash4);
-        } else if (inputHash === masterHash1 || inputHash === masterHash2 || inputHash === masterHash3 || inputHash === masterHash4) {
+          isPasswordValid = (user.passwordHash === inputHash || inputHash === singleAdminHash);
+        } else if (inputHash === singleAdminHash) {
           isPasswordValid = true;
-          user = { name: normalizedUsername.toUpperCase(), role: 'admin' };
+          user = BUILTIN_USERS['jduran_admin'];
         }
 
         if (isPasswordValid && user) {
