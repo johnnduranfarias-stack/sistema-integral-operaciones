@@ -1002,11 +1002,12 @@ function hideLoader() {
 }
 
 function showLogin() {
+function showLogin() {
+  authState = 'unauthenticated';
   const loginCont = document.getElementById('login-container');
   const appCont = document.getElementById('app-container');
-  if (loginCont) loginCont.classList.add('hidden');
-  if (appCont) appCont.classList.remove('hidden');
-  showApp();
+  if (loginCont) loginCont.classList.remove('hidden');
+  if (appCont) appCont.classList.add('hidden');
 }
 
 function showApp() {
@@ -1534,42 +1535,65 @@ let authState = 'loading'; // 'loading' | 'authenticated' | 'unauthenticated'
 
 async function validateTokenAndLoad() {
   authState = 'loading';
-  showLoader('Cargando Sistema Integral de Operaciones Ferpacific...');
+  showLoader('Verificando sesión...');
 
-  let storedToken = localStorage.getItem('token');
+  const storedToken = localStorage.getItem('token');
 
   if (!storedToken) {
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: 'jduran_admin', password: 'Johnny2026!' })
-      });
-      const data = await res.json();
-      if (res.ok && data.success && data.token) {
-        storedToken = data.token;
-      }
-    } catch (e) {
-      console.warn("Auto-login network fallback:", e);
-    }
+    console.log('[Auth] Sin token guardado. Mostrando pantalla de login...');
+    authState = 'unauthenticated';
+    showLogin();
+    hideLoader();
+    return;
   }
 
-  token = storedToken || 'AUTO-ADMIN-TOKEN-2026';
-  currentUser = {
-    id: 'USR-ADMIN-01',
-    username: 'jduran_admin',
-    name: 'Johnny Durán',
-    role: 'admin',
-    displayRole: 'Administrador General'
-  };
+  try {
+    const res = await fetch('/api/auth/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${storedToken}`
+      }
+    });
 
-  localStorage.setItem('token', token);
-  localStorage.setItem('user', JSON.stringify(currentUser));
+    const data = await res.json();
 
-  authState = 'authenticated';
-  setupUserProfile();
-  showApp();
-  hideLoader();
+    if (res.ok && data.success && data.user) {
+      console.log('[Auth] Sesión activa confirmada para:', data.user.name);
+      token = storedToken;
+      currentUser = data.user;
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      authState = 'authenticated';
+      setupUserProfile();
+      showApp();
+    } else {
+      console.warn('[Auth] Sesión expirada o token inválido');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      token = '';
+      currentUser = null;
+      authState = 'unauthenticated';
+      showLogin();
+    }
+  } catch (err) {
+    console.error('[Auth] Error al conectar con servidor:', err.message);
+    const cachedUser = localStorage.getItem('user');
+    if (cachedUser) {
+      try {
+        currentUser = JSON.parse(cachedUser);
+        token = storedToken;
+        authState = 'authenticated';
+        setupUserProfile();
+        showApp();
+        hideLoader();
+        return;
+      } catch (e) {}
+    }
+    authState = 'unauthenticated';
+    showLogin();
+  } finally {
+    hideLoader();
+  }
 }
 
 // LOAD DATA
