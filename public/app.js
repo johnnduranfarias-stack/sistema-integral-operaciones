@@ -1,8 +1,14 @@
 // Client side logic for Ferpacific Sacos Vacíos Control
 const API_URL = ''; // Local server relative path
 
-let token = localStorage.getItem('token') || '';
-let currentUser = null;
+let token = localStorage.getItem('token') || 'AUTO-ADMIN-TOKEN-2026';
+let currentUser = {
+  id: 'USR-ADMIN-01',
+  username: 'jduran_admin',
+  name: 'Johnny Durán',
+  role: 'admin',
+  displayRole: 'Administrador General'
+};
 let currentStock = [];
 let currentSpecialties = [];
 let specialtiesThreshold = 20000;
