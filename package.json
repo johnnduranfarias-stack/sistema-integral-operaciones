@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "prestart": "node --check server.js",
+    "check:syntax": "node --check server.js",
     "preflight": "node preflight_check.js",
     "test": "node test_login_architecture.js"
   },
