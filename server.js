@@ -327,6 +327,8 @@ function writeDB(data) {
 // Hash password helper
 function hashPassword(password) {
   return crypto.createHash('sha256').update(password).digest('hex');
+}
+
 const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'ferpacific_secure_jwt_secret_key_2026_xyz';
 
 function signJWT(payload, expiresInSeconds = 86400) {
@@ -4164,18 +4166,8 @@ server.listen(PORT, '0.0.0.0', () => {
     console.log("Seeded default admin user to db.json");
   }
 
-  // Seed default credentials
-  if (!db.credentials || db.credentials.length === 0) {
-    db.credentials = [
-      { id: "1", category: "Sistema de Operaciones", name: "Administrador", username: "admin", password: "ValentinA041()" },
-      { id: "2", category: "Sistema de Operaciones", name: "Logística", username: "grosas", password: "ValentinA041()" },
-      { id: "3", category: "Sistema de Operaciones", name: "Calidad / Insumos", username: "binsumos", password: "ValentinA041()" },
-      { id: "4", category: "Sistema de Operaciones", name: "Importaciones", username: "importaciones", password: "ValentinA041()" },
-      { id: "5", category: "Correo Corporativo", name: "SMTP de Alertas (jduran)", username: "jduran@ferpacific.com", password: "ValentinA042" },
-      { id: "6", category: "Correo Corporativo", name: "SMTP Soporte (lmerchan)", username: "lmerchan@ferpacific.com", password: "ValentinA042" }
-    ];
-    dbChanged = true;
-    console.log("Seeded default credentials to db.json");
+  if (!db.credentials) {
+    db.credentials = [];
   }
 
   // Seed default links
