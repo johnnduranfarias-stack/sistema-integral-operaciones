@@ -9511,7 +9511,8 @@ function openNewCustomerServiceModal() {
   const nextTurn = customerServiceRecords.length + 1;
   document.getElementById('cs-form-turno').value = nextTurn;
   document.getElementById('cs-form-fecha').value = document.getElementById('cs-filter-date')?.value || new Date().toISOString().split('T')[0];
-  document.getElementById('cs-form-vendedor').value = 'Marianella Zurita';
+  const sellerEl = document.getElementById('cs-form-seller') || document.getElementById('cs-form-vendedor');
+  if (sellerEl) sellerEl.value = 'JOHNNY DURAN';
   document.getElementById('cs-form-transport-type').value = 'Camión Pesado';
   document.getElementById('cs-form-estatus').value = 'ESPERA DE CARGA';
   
@@ -9548,7 +9549,8 @@ function openEditCustomerServiceModal(id) {
   
   document.getElementById('cs-form-turno').value = record.turno;
   document.getElementById('cs-form-fecha').value = record.fecha;
-  document.getElementById('cs-form-vendedor').value = record.vendedor || 'Marianella Zurita';
+  const sellerEl = document.getElementById('cs-form-seller') || document.getElementById('cs-form-vendedor');
+  if (sellerEl) sellerEl.value = record.vendedor || 'JOHNNY DURAN';
   document.getElementById('cs-form-transport-type').value = record.transportType || 'Camión Pesado';
   document.getElementById('cs-form-estatus').value = record.estatus;
   
@@ -9605,10 +9607,12 @@ async function handleCustomerServiceSubmit(event) {
     }
   }
 
+  const sellerVal = (document.getElementById('cs-form-seller') || document.getElementById('cs-form-vendedor'))?.value || 'JOHNNY DURAN';
+
   const payload = {
     turno: Number(document.getElementById('cs-form-turno').value),
     fecha: document.getElementById('cs-form-fecha').value,
-    vendedor: document.getElementById('cs-form-vendedor').value,
+    vendedor: sellerVal,
     transportType: transportType,
     estatus: document.getElementById('cs-form-estatus').value,
     driver: document.getElementById('cs-form-driver').value,
