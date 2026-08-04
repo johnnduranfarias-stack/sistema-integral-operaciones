@@ -1008,11 +1008,15 @@ function hideLoader() {
 }
 
 function showLogin() {
-  document.getElementById('login-container').classList.remove('hidden');
-  document.getElementById('app-container').classList.add('hidden');
+  authState = 'unauthenticated';
+  const loginCont = document.getElementById('login-container');
+  const appCont = document.getElementById('app-container');
+  if (loginCont) loginCont.classList.remove('hidden');
+  if (appCont) appCont.classList.add('hidden');
 }
 
 function showApp() {
+  authState = 'authenticated';
   const loginCont = document.getElementById('login-container');
   const appCont = document.getElementById('app-container');
   if (loginCont) loginCont.classList.add('hidden');
@@ -1190,7 +1194,9 @@ async function apiFetch(endpoint, options = {}) {
       clearTimeout(timeoutId);
 
       if (res.status === 401 && endpoint !== '/api/login') {
-        handleLogout();
+        if (endpoint === '/api/auth/me') {
+          handleLogout();
+        }
         throw new Error("Su sesión ha expirado o no es válida. Por favor, inicie sesión nuevamente.");
       }
 
@@ -1304,9 +1310,11 @@ async function handleLogin(e) {
 window.handleLogin = handleLogin;
 
 function handleLogout() {
+  console.log('[Auth] Cerrando sesión y limpiando datos...');
   token = '';
   currentUser = null;
   localStorage.removeItem('token');
+  localStorage.removeItem('user');
   showLogin();
 }
 
@@ -1515,34 +1523,68 @@ async function autoLoginAdminDirect() {
     } else {
       throw new Error(data.error || "Error de inicio de sesión");
     }
-  } catch(e) {
-    console.error("Error en autologin:", e);
+let authState = 'loading'; // 'loading' | 'authenticated' | 'unauthenticated'
+
 async function validateTokenAndLoad() {
+  authState = 'loading';
   showLoader('Verificando sesión...');
+  
+  const storedToken = localStorage.getItem('token');
+  console.log('[Auth] Validando sesión inicial... Token encontrado:', storedToken ? 'Sí' : 'No');
+
+  if (!storedToken) {
+    console.log('[Auth] Sin token en localStorage. Estado: unauthenticated');
+    authState = 'unauthenticated';
+    showLogin();
+    hideLoader();
+    return;
+  }
+
   try {
-    const storedToken = localStorage.getItem('token');
-    const cachedUser = localStorage.getItem('user');
+    const res = await fetch('/api/auth/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${storedToken}`
+      }
+    });
 
-    if (!storedToken || !cachedUser) {
+    const data = await res.json();
+    console.log('[Auth] Respuesta de /api/auth/me:', res.status, data.success);
+
+    if (res.ok && data.success && data.user) {
+      console.log('[Auth] Sesión confirmada por servidor para:', data.user.name, `(${data.user.role})`);
+      token = storedToken;
+      currentUser = data.user;
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      
+      authState = 'authenticated';
+      setupUserProfile();
+      showApp();
+    } else {
+      console.warn('[Auth] Token rechazado por servidor:', data.error || 'Sesión inválida');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      token = '';
+      currentUser = null;
+      authState = 'unauthenticated';
       showLogin();
-      return;
-    }
-
-    token = storedToken;
-    try {
-      currentUser = JSON.parse(cachedUser);
-    } catch (e) {
-      showLogin();
-      return;
-    }
-
-    setupUserProfile();
-    showApp();
-    if (typeof checkForcePasswordOverlay === 'function') {
-      checkForcePasswordOverlay();
     }
   } catch (err) {
-    console.error("Error al validar sesión:", err);
+    console.error('[Auth] Error al conectar con /api/auth/me:', err.message);
+    const cachedUser = localStorage.getItem('user');
+    if (cachedUser) {
+      try {
+        currentUser = JSON.parse(cachedUser);
+        token = storedToken;
+        authState = 'authenticated';
+        setupUserProfile();
+        showApp();
+        hideLoader();
+        return;
+      } catch(e) {}
+    }
+    authState = 'unauthenticated';
     showLogin();
   } finally {
     hideLoader();
