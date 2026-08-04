@@ -96,6 +96,12 @@
         </button>
         <p style="font-size: 11px; color: #94a3b8; margin-top: 7px; margin-bottom: 0;">Instala la App Oficial de Ferpacific en tu Android o iPhone</p>
       </div>
+
+      <!-- BUILD VERSION FOOTER -->
+      <div style="margin-top: 14px; text-align: center; font-size: 11px; color: var(--text-muted);">
+        <span>Build: <strong style="color: #38bdf8;">v2026.08.04-3c84f9a</strong></span> | 
+        <span>Env: <strong style="color: #10b981;">Production</strong></span>
+      </div>
     </div>
   </div>
 
@@ -1153,65 +1159,7 @@
                 </div>
               </div>
 
-              <!-- ACCESS CONTROL CHEATSHEET (ONLY VISIBLE FOR jduran) -->
-              <div class="card mt-4 hidden" id="card-access-control-cheatsheet" style="border-top: 4px solid var(--warning);">
-                <div class="card-header">
-                  <h3>🔑 Bitácora Privada de Credenciales y Accesos</h3>
-                  <p class="card-subtitle">Exclusivo para el Administrador Principal (Johnny Durán)</p>
-                </div>
-                <div class="card-body" style="padding: 0;">
-                  <div class="table-responsive">
-                    <table class="table" style="font-size: 11px; margin-bottom: 0; width: 100%;">
-                      <thead>
-                        <tr style="background: rgba(254, 220, 0, 0.15);">
-                          <th style="padding: 0.5rem; text-align: left;">Usuario</th>
-                          <th style="padding: 0.5rem; text-align: left;">Nombre</th>
-                          <th style="padding: 0.5rem; text-align: left;">Contraseña Inicial</th>
-                          <th style="padding: 0.5rem; text-align: left;">Rol</th>
-                          <th style="padding: 0.5rem; text-align: left;">Módulos Autorizados y Límites</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td style="font-family: monospace; font-weight: bold; padding: 0.5rem;">jduran</td>
-                          <td style="padding: 0.5rem;">Johnny Durán</td>
-                          <td style="font-family: monospace; color: var(--accent); font-weight: bold; padding: 0.5rem;">FerpVacios2026</td>
-                          <td style="padding: 0.5rem;"><span class="badge badge-danger">Admin</span></td>
-                          <td style="padding: 0.5rem;"><strong>Control Total.</strong> Acceso a todos los departamentos, de extremo a extremo, incluyendo configuraciones generales, SMTP, y gestión de usuarios.</td>
-                        </tr>
-                        <tr>
-                          <td style="font-family: monospace; font-weight: bold; padding: 0.5rem;">lmerchan</td>
-                          <td style="padding: 0.5rem;">Luis Merchán</td>
-                          <td style="font-family: monospace; color: var(--accent); font-weight: bold; padding: 0.5rem;">operacioneslm</td>
-                          <td style="padding: 0.5rem;"><span class="badge badge-success">Logística</span></td>
-                          <td style="padding: 0.5rem;">Acceso al Dashboard, Cuadro Master, Sincronización, Producción, Logística, Mantenimiento y Buques. <em>Bloqueado: Configuraciones y SMTP.</em></td>
-                        </tr>
-                        <tr>
-                          <td style="font-family: monospace; font-weight: bold; padding: 0.5rem;">ellangari</td>
-                          <td style="padding: 0.5rem;">Ericka Llangari</td>
-                          <td style="font-family: monospace; color: var(--accent); font-weight: bold; padding: 0.5rem;">Ericka2026</td>
-                          <td style="padding: 0.5rem;"><span class="badge badge-warning">Calidad</span></td>
-                          <td style="padding: 0.5rem;"><strong>Acceso Restringido.</strong> Únicamente visualiza el módulo de <strong>Control de Calidad</strong> (Inventario de Sacos Vacíos y Registro de Liberaciones). El resto de la barra lateral se oculta.</td>
-                        </tr>
-                        <tr>
-                          <td style="font-family: monospace; font-weight: bold; padding: 0.5rem;">rparrales</td>
-                          <td style="padding: 0.5rem;">Roddy Parrales</td>
-                          <td style="font-family: monospace; color: var(--accent); font-weight: bold; padding: 0.5rem;">Roddy2026</td>
-                          <td style="padding: 0.5rem;"><span class="badge badge-warning">Calidad</span></td>
-                          <td style="padding: 0.5rem;"><strong>Acceso Restringido.</strong> Únicamente visualiza el módulo de <strong>Control de Calidad</strong> (Inventario de Sacos Vacíos y Registro de Liberaciones). El resto de la barra lateral se oculta.</td>
-                        </tr>
-                        <tr>
-                          <td style="font-family: monospace; font-weight: bold; padding: 0.5rem;">grosas</td>
-                          <td style="padding: 0.5rem;">Galo Rosas</td>
-                          <td style="font-family: monospace; color: var(--accent); font-weight: bold; padding: 0.5rem;">GaloFerp#2026!</td>
-                          <td style="padding: 0.5rem;"><span class="badge badge-info" style="background: #007bff; color: white;">Importaciones</span></td>
-                          <td style="padding: 0.5rem;"><strong>Acceso Restringido.</strong> Únicamente visualiza el módulo de <strong>Importaciones</strong> (Status de Importaciones y Liquidación de Báscula). El resto de la barra lateral se oculta.</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
+
             </div>
 
           </div>
@@ -4282,6 +4230,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260803_v36"></script>
+  <script src="app.js?v=20260803_v37_jwt"></script>
 </body>
 </html>
