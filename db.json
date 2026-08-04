@@ -65,50 +65,7 @@
       "mustChangePassword": true
     }
   },
-  "credentials": [
-    {
-      "id": "1",
-      "category": "Sistema de Operaciones",
-      "name": "Administrador",
-      "username": "admin",
-      "password": "ValentinA041()"
-    },
-    {
-      "id": "2",
-      "category": "Sistema de Operaciones",
-      "name": "Logística",
-      "username": "grosas",
-      "password": "ValentinA041()"
-    },
-    {
-      "id": "3",
-      "category": "Sistema de Operaciones",
-      "name": "Calidad / Insumos",
-      "username": "binsumos",
-      "password": "ValentinA041()"
-    },
-    {
-      "id": "4",
-      "category": "Sistema de Operaciones",
-      "name": "Importaciones",
-      "username": "importaciones",
-      "password": "ValentinA041()"
-    },
-    {
-      "id": "5",
-      "category": "Correo Corporativo",
-      "name": "SMTP de Alertas (jduran)",
-      "username": "jduran@ferpacific.com",
-      "password": "ValentinA042"
-    },
-    {
-      "id": "6",
-      "category": "Correo Corporativo",
-      "name": "SMTP Soporte (lmerchan)",
-      "username": "lmerchan@ferpacific.com",
-      "password": "ValentinA042"
-    }
-  ],
+  "credentials": [],
   "links": [
     {
       "id": "1",
