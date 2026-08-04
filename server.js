@@ -327,9 +327,53 @@ function writeDB(data) {
 // Hash password helper
 function hashPassword(password) {
   return crypto.createHash('sha256').update(password).digest('hex');
+const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'ferpacific_secure_jwt_secret_key_2026_xyz';
+
+function signJWT(payload, expiresInSeconds = 86400) {
+  const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
+  const now = Math.floor(Date.now() / 1000);
+  const fullPayload = Buffer.from(JSON.stringify({
+    ...payload,
+    iat: now,
+    exp: now + expiresInSeconds
+  })).toString('base64url');
+
+  const signature = crypto
+    .createHmac('sha256', JWT_SECRET)
+    .update(`${header}.${fullPayload}`)
+    .digest('base64url');
+
+  return `${header}.${fullPayload}.${signature}`;
 }
 
-// Session validator
+function verifyJWT(token) {
+  if (!token || typeof token !== 'string') return null;
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+
+  const [header, payload, signature] = parts;
+  const expectedSignature = crypto
+    .createHmac('sha256', JWT_SECRET)
+    .update(`${header}.${payload}`)
+    .digest('base64url');
+
+  if (signature !== expectedSignature) {
+    return { error: 'TOKEN_INVALID' };
+  }
+
+  try {
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    const now = Math.floor(Date.now() / 1000);
+    if (data.exp && data.exp < now) {
+      return { error: 'TOKEN_EXPIRED' };
+    }
+    return { user: data.user || data };
+  } catch (e) {
+    return { error: 'TOKEN_INVALID' };
+  }
+}
+
+// Session & JWT validator
 function validateSession(req) {
   let token = null;
   const authHeader = req.headers['authorization'];
@@ -352,10 +396,15 @@ function validateSession(req) {
     return null;
   }
 
+  // 1. JWT Stateless Verification
+  const jwtResult = verifyJWT(token);
+  if (jwtResult && jwtResult.user) {
+    return jwtResult.user;
+  }
+
+  // 2. Legacy Session Map Fallback
   const session = sessions[token];
   if (session && session.expiresAt > Date.now()) {
-    session.expiresAt = Date.now() + 24 * 60 * 60 * 1000;
-    saveSessions();
     return session.user;
   }
 
@@ -382,7 +431,12 @@ function serveStaticFile(res, filePath) {
       res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end('Archivo no encontrado');
     } else {
-      res.writeHead(200, { 'Content-Type': contentType });
+      res.writeHead(200, {
+        'Content-Type': contentType,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      });
       res.end(content);
     }
   });
@@ -427,6 +481,17 @@ const server = http.createServer(async (req, res) => {
         dbStatus: dbOk ? 'connected' : 'degraded',
         timestamp: new Date().toISOString(),
         uptime: process.uptime()
+      });
+      return;
+    }
+
+    // 0.05 PUBLIC VERSION ENDPOINT (/api/version)
+    if (pathname === '/api/version' && req.method === 'GET') {
+      sendJSONResponse(res, 200, {
+        commit: '3c84f9a',
+        buildTime: '2026-08-04T03:59:00.000Z',
+        environment: process.env.NODE_ENV || 'production',
+        service: 'Sistema Integral de Operaciones Ferpacific'
       });
       return;
     }
@@ -552,7 +617,6 @@ function sendJSONResponse(res, statusCode, data) {
         }
 
         if (isPasswordValid) {
-          const token = crypto.randomBytes(32).toString('hex');
           const sessionUser = {
             id: user.id || 'USR-ADMIN-01',
             username: adminUsername,
@@ -561,17 +625,20 @@ function sendJSONResponse(res, statusCode, data) {
             displayRole: user.displayRole || (process.env.ADMIN_ROLE || 'Administrador General'),
             mustChangePassword: false
           };
+          const token = signJWT(sessionUser, 86400); // 24-hour stateless JWT
           sessions[token] = {
             user: sessionUser,
-            expiresAt: Date.now() + 24 * 60 * 60 * 1000 // 24 hours
+            expiresAt: Date.now() + 24 * 60 * 60 * 1000
           };
           saveSessions();
-          
+
           sendJSONResponse(res, 200, {
             success: true,
-            token,
-            user: sessionUser
+            token: token,
+            user: sessionUser,
+            message: 'Inicio de sesión exitoso.'
           });
+          return;
         } else {
           sendJSONResponse(res, 401, { success: false, error: 'Usuario o contraseña incorrectos' });
         }
