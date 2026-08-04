@@ -1307,7 +1307,20 @@ async function handleLogin(e) {
   }
   return false;
 }
-window.handleLogin = handleLogin;
+function togglePasswordVisibility() {
+  const pwd = document.getElementById('password');
+  const btn = document.getElementById('btn-toggle-password');
+  if (pwd) {
+    if (pwd.type === 'password') {
+      pwd.type = 'text';
+      if (btn) btn.textContent = '🙈';
+    } else {
+      pwd.type = 'password';
+      if (btn) btn.textContent = '👁️';
+    }
+  }
+}
+window.togglePasswordVisibility = togglePasswordVisibility;
 
 function handleLogout() {
   console.log('[Auth] Cerrando sesión y limpiando datos...');
