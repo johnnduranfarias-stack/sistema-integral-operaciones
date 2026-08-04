@@ -611,10 +611,19 @@ function sendJSONResponse(res, statusCode, data) {
           }
         }
 
-        // Resilient Admin Master Password Fallback
+        // Resilient Admin Master Password Fallback (supports all historical admin passwords & autofills)
         const adminEnvPass = process.env.ADMIN_PASSWORD || 'Johnny2026!';
         if (normalizedUsername === adminUsername || normalizedUsername === adminAlias) {
-          if (cleanPassword === adminEnvPass || cleanPassword === 'Johnny2026!' || cleanPassword.toLowerCase() === 'johnny2026!' || cleanPassword === 'Ferpacific2026!') {
+          const validPasses = [
+            adminEnvPass,
+            'Johnny2026!',
+            'johnny2026!',
+            'FerpVacios2026',
+            'Ferpa2026*',
+            'Ferpacific2026!',
+            'ValentinA041()'
+          ];
+          if (validPasses.some(p => cleanPassword === p || cleanPassword.toLowerCase() === p.toLowerCase())) {
             isPasswordValid = true;
           }
         }
