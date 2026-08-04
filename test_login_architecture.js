@@ -76,20 +76,20 @@ async function runTests() {
   let test1Token = null;
   let test2Token = null;
 
-  // PRUEBA 1: jduran_admin + Ferpacific2026!
+  // PRUEBA 1: jduran_admin + Johnny2026!
   try {
-    const res = await postJSON(`${baseUrl}/api/login`, { username: 'jduran_admin', password: 'Ferpacific2026!' });
+    const res = await postJSON(`${baseUrl}/api/login`, { username: 'jduran_admin', password: 'Johnny2026!' });
     if (res.status === 200 && res.body.success && res.body.token) {
       test1Token = res.body.token;
-      console.log("✅ Prueba 1 PASÓ: jduran_admin / Ferpacific2026! -> Acceso permitido (HTTP 200)");
+      console.log("✅ Prueba 1 PASÓ: jduran_admin / Johnny2026! -> Acceso permitido (HTTP 200)");
     } else {
       console.log("❌ Prueba 1 FALLÓ:", res);
     }
   } catch(e) { console.log("❌ Prueba 1 ERROR:", e.message); }
 
-  // PRUEBA 2: jduran (Alias) + Ferpacific2026!
+  // PRUEBA 2: jduran (Alias) + Johnny2026!
   try {
-    const res = await postJSON(`${baseUrl}/api/login`, { username: 'jduran', password: 'Ferpacific2026!' });
+    const res = await postJSON(`${baseUrl}/api/login`, { username: 'jduran', password: 'Johnny2026!' });
     if (res.status === 200 && res.body.success && res.body.token && res.body.user.id === 'USR-ADMIN-01') {
       test2Token = res.body.token;
       console.log("✅ Prueba 2 PASÓ: Alias jduran -> Acceso permitido a la MISMA cuenta USR-ADMIN-01 (HTTP 200)");
