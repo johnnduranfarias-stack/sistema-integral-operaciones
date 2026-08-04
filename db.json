@@ -5,23 +5,23 @@
       "username": "jduran_admin",
       "alias": "jduran",
       "name": "Johnny Durán",
-      "passwordHash": "$2b$10$sDqzj4qiaSeZzzXSGjy2DOHmTHb6RUmNGt/L8ERNFLA9yjnbaS1sq",
+      "passwordHash": "$2b$10$oi/0KNVnJWZgeBJVuz9xuOeibPpHQ0Odtw1qL.OR3Z8vQklNlq/LG",
       "role": "admin",
       "displayRole": "Administrador General",
       "activo": true,
-      "updatedAt": "2026-08-03T21:23:30.689Z"
+      "updatedAt": "2026-08-04T02:27:05.838Z"
     },
     "jduran": {
       "id": "USR-ADMIN-01",
       "username": "jduran_admin",
       "alias": "jduran",
       "name": "Johnny Durán",
-      "passwordHash": "$2b$10$sDqzj4qiaSeZzzXSGjy2DOHmTHb6RUmNGt/L8ERNFLA9yjnbaS1sq",
+      "passwordHash": "$2b$10$oi/0KNVnJWZgeBJVuz9xuOeibPpHQ0Odtw1qL.OR3Z8vQklNlq/LG",
       "role": "admin",
       "displayRole": "Administrador General",
       "activo": true,
       "isAlias": true,
-      "updatedAt": "2026-08-03T21:23:30.691Z"
+      "updatedAt": "2026-08-04T02:27:05.840Z"
     },
     "lmerchan": {
       "name": "Luis Merchán",
