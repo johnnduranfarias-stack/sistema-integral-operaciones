@@ -344,18 +344,22 @@ function validateSession(req) {
     }
   }
   
-  if (token && sessions[token] && sessions[token].expiresAt > Date.now()) {
-    return sessions[token].user;
+  if (!token) {
+    return null;
   }
 
-  // Open Direct Access Policy: Default fallback to Administrator user
-  return {
-    id: 'USR-ADMIN-01',
-    username: 'jduran_admin',
-    name: 'Johnny Durán',
-    role: 'admin',
-    displayRole: 'Administrador General'
-  };
+  if (invalidTokens.has(token)) {
+    return null;
+  }
+
+  const session = sessions[token];
+  if (session && session.expiresAt > Date.now()) {
+    session.expiresAt = Date.now() + 24 * 60 * 60 * 1000;
+    saveSessions();
+    return session.user;
+  }
+
+  return null;
 }
 
 // Serve Static Files
