@@ -9,7 +9,7 @@ function ensureSingleAdminAccount() {
   const adminAlias = process.env.ADMIN_USERNAME_ALIAS || 'jduran';
   const adminFullName = process.env.ADMIN_FULL_NAME || 'Johnny Durán';
   const adminRole = process.env.ADMIN_ROLE || 'Administrador General';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'Ferpacific2026!';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Johnny2026!';
 
   try {
     let db = {};
