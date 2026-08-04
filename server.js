@@ -916,6 +916,20 @@ function sendJSONResponse(res, statusCode, data) {
         };
 
         db.customerServiceRecords.unshift(record);
+
+        if (record.estatus === 'DESPACHADO') {
+          if (!db.customerServiceNotifications) db.customerServiceNotifications = [];
+          const notif = {
+            id: 'NOTIF-' + Date.now(),
+            recordId: record.id,
+            timestamp: new Date().toISOString(),
+            message: `🚛 Notificación de Salida: El vehículo [${record.plate}] manejado por [${record.driver}] para el cliente [${record.client}] (Vendedor: ${record.vendedor}) con ${record.totalSacos} sacos ha finalizado su carga y ha sido DESPACHADO a las ${record.hSalida || 'N/A'}.`,
+            recipients: ['mzurita@ferpacific.com', 'logistica@ferpacific.com'],
+            sent: true
+          };
+          db.customerServiceNotifications.unshift(notif);
+        }
+
         writeDB(db);
 
         res.writeHead(200);
