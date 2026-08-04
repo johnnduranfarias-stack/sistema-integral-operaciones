@@ -1189,10 +1189,18 @@ async function apiFetch(endpoint, options = {}) {
       clearTimeout(timeoutId);
 
       if (res.status === 401 && endpoint !== '/api/login') {
-        if (endpoint === '/api/auth/me') {
-          handleLogout();
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const errJson = await res.clone().json().catch(() => ({}));
+          const code = errJson.code || '';
+          console.warn(`[ApiFetch 401 Log] Endpoint: ${endpoint}, Method: ${options.method || 'GET'}, Code: ${code}`);
+          if (code === 'TOKEN_INVALID' || code === 'TOKEN_EXPIRED') {
+            if (typeof handleLogout === 'function' && endpoint === '/api/auth/me') {
+              handleLogout();
+            }
+          }
+          throw new Error(errJson.error || "Autenticación requerida");
         }
-        throw new Error("Su sesión ha expirado o no es válida. Por favor, inicie sesión nuevamente.");
       }
 
       const contentType = res.headers.get('content-type') || '';
@@ -1500,37 +1508,8 @@ function setupUserProfile() {
       }
     });
   });
-
-  // Toggle private credentials cheatsheet visibility for jduran admin username
-  const cheatsheetCard = document.getElementById('card-access-control-cheatsheet');
-  if (cheatsheetCard) {
-    if (currentUser && (currentUser.username === 'jduran' || currentUser.username === 'jduran_admin')) {
-      cheatsheetCard.classList.remove('hidden');
-    } else {
-      cheatsheetCard.classList.add('hidden');
-    }
-  }
 }
 
-async function autoLoginAdminDirect() {
-  showLoader('Ingresando al sistema...');
-  try {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: 'jduran_admin', password: 'Ferpacific2026!' })
-    });
-    const data = await res.json();
-    if (data && data.token) {
-      token = data.token;
-      currentUser = data.user || { id: 'USR-ADMIN-01', username: 'jduran_admin', name: 'Johnny Durán', role: 'admin' };
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(currentUser));
-      setupUserProfile();
-      showApp();
-    } else {
-      throw new Error(data.error || "Error de inicio de sesión");
-    }
 let authState = 'loading'; // 'loading' | 'authenticated' | 'unauthenticated'
 
 async function validateTokenAndLoad() {
