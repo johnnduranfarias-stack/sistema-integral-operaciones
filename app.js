@@ -210,15 +210,10 @@ window.togglePasswordVisibility = togglePasswordVisibility;
     });
   }
   
-  // Sidebar navigation & collapsible dropdown setup
-  document.querySelectorAll('.dropdown-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const dropdown = header.closest('.sidebar-dropdown');
-      if (dropdown) dropdown.classList.toggle('open');
-    });
-  });
-
-function toggleSidebarDropdown(headerEl) {
+function toggleSidebarDropdown(headerEl, event) {
+  if (event) {
+    if (event.stopPropagation) event.stopPropagation();
+  }
   if (!headerEl) return;
   const dropdown = headerEl.closest('.sidebar-dropdown');
   if (dropdown) {
@@ -227,15 +222,8 @@ function toggleSidebarDropdown(headerEl) {
 }
 window.toggleSidebarDropdown = toggleSidebarDropdown;
 
-// Global Delegated Listener for Sidebar clicks (safeguard for all devices)
+// Global Delegated Listener for Submenu item links
 document.addEventListener('click', (e) => {
-  const header = e.target.closest('.dropdown-header');
-  if (header) {
-    const dropdown = header.closest('.sidebar-dropdown');
-    if (dropdown) dropdown.classList.toggle('open');
-    return;
-  }
-
   const link = e.target.closest('.sidebar-menu a[href^="#"]');
   if (link) {
     const href = link.getAttribute('href');
