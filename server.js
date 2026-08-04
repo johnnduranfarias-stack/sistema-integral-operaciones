@@ -337,16 +337,6 @@ function validateSession(req) {
     return session.user;
   }
 
-  // Resilient session recovery for valid token strings (prevents 401 loop after server restart)
-  if (token && token.length >= 16) {
-    sessions[token] = {
-      user: { username: 'jduran_admin', name: 'Johnny Durán (Admin)', role: 'admin' },
-      expiresAt: Date.now() + 24 * 60 * 60 * 1000
-    };
-    saveSessions();
-    return sessions[token].user;
-  }
-
   return null;
 }
 
@@ -408,15 +398,34 @@ const server = http.createServer(async (req, res) => {
         dbOk = false;
       }
 
-      res.writeHead(200);
-      res.end(JSON.stringify({
+      sendJSONResponse(res, 200, {
         status: 'ok',
         service: 'Sistema Integral de Operaciones Ferpacific',
         version: '1.0.0',
         dbStatus: dbOk ? 'connected' : 'degraded',
         timestamp: new Date().toISOString(),
         uptime: process.uptime()
-      }));
+      });
+      return;
+    }
+
+    // 0.1 SESSION VALIDATION ENDPOINT (/api/auth/me)
+    if (pathname === '/api/auth/me' && req.method === 'GET') {
+      const user = validateSession(req);
+      if (!user) {
+        sendJSONResponse(res, 401, { success: false, error: 'Sesión no válida o expirada' });
+        return;
+      }
+      sendJSONResponse(res, 200, {
+        success: true,
+        user: {
+          id: user.id || 'USR-ADMIN-01',
+          username: user.username,
+          name: user.name,
+          role: user.role,
+          displayRole: user.displayRole || (user.role === 'admin' ? 'Administrador General' : user.role)
+        }
+      });
       return;
     }
 
